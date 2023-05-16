@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">KanteWala</string>
+    <string name="login_welcome">Welcome to Kantewale</string>
+    <string name="signUp">Sign Up</string>
 </resources>

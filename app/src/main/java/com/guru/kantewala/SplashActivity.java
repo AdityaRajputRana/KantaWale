@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.guru.kantewala.Tools.ProfileUtils;
 
@@ -20,6 +21,7 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(getApplicationContext());
         signUpChecks();
     }
 
