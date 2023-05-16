@@ -3,4 +3,5 @@
     <string name="login_welcome">Welcome to Kantewale</string>
     <string name="signUp">Sign Up</string>
     <string name="loginCta">Continue</string>
+    <string name="verify_sign_in"><![CDATA[Verify & Sign In]]></string>
 </resources>

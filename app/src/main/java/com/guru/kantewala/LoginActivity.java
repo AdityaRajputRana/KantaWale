@@ -12,6 +12,7 @@ import android.view.View;
 import com.guru.kantewala.Helpers.PhoneAuthHelper;
 import com.guru.kantewala.databinding.ActivityLoginBinding;
 import com.guru.kantewala.databinding.DialogLoadingBinding;
+import com.guru.kantewala.databinding.DialogOtpBinding;
 
 public class LoginActivity extends AppCompatActivity implements PhoneAuthHelper.PhoneAuthListener {
 
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements PhoneAuthHelper.
 
         helper = new PhoneAuthHelper(this, this);
         setListeners();
+        showOTPLayout();
     }
 
 
@@ -153,7 +155,23 @@ public class LoginActivity extends AppCompatActivity implements PhoneAuthHelper.
     }
 
 
+    DialogOtpBinding otpBinding;
+    AlertDialog otpDialog;
     private void showOTPLayout() {
         dismissProgressDialog();
+        if (otpBinding == null){
+            otpBinding = DialogOtpBinding.inflate(getLayoutInflater());
+        }
+        otpBinding.bodyTxt.setText("Enter OTP code sent to " + countryCode + " " + binding.phoneNumberEt.getText().toString());
+        if (otpDialog == null){
+            otpDialog = new AlertDialog.Builder(this)
+                    .setView(otpBinding.getRoot())
+                    .setOnDismissListener(d->{
+                        otpDialog = null;
+                        otpBinding = null;
+                    })
+                    .show();
+            otpDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
     }
 }

@@ -97,6 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:padding="16dp"
+            android:textColor="@color/colorOnPrimary"
             android:text="@string/loginCta"
             android:backgroundTint="@color/color_cta"
             android:fontFamily="@font/inter_semibold"

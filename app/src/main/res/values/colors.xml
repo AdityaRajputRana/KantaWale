@@ -19,6 +19,7 @@
     <color name="colorBorder">#C3C3C3</color>
 
     <color name="primaryText">#1C1C1C</color>
+    <color name="secondaryText">#CC1C1C1C</color> //hints
     <color name="tertiaryText">#661C1C1C</color> //hints
     <color name="markerColor">#331C1C1C</color> //borders
 </resources>
