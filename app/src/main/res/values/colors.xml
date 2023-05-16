@@ -8,9 +8,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="statusBar">#2F4C73</color>
+
     <color name="color_bg">#332D9CDB</color>
     <color name="color_fg">#FFFFFF</color>
     <color name="tint_overlay">#244065</color>
+    <color name="color_cta">#244065</color>
 
     <color name="primaryText">#1C1C1C</color>
     <color name="tertiaryText">#661C1C1C</color> //hints
