@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1082828039178",
+    "project_id": "kantewala-1efe6",
+    "storage_bucket": "kantewala-1efe6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082828039178:android:b9611e0c2bac2fcc6b2bf3",
+        "android_client_info": {
+          "package_name": "com.guru.kantewala"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082828039178-qllli42vjjrq9dt95mbjb8q2dvouielm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmPw4M0LWCe61TwXa6qyMpMBuz9Kx-Pws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082828039178-qllli42vjjrq9dt95mbjb8q2dvouielm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
