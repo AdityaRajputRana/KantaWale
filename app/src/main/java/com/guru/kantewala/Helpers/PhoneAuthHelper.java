@@ -50,10 +50,10 @@ public class PhoneAuthHelper {
             Code Meanings for UI Changes or Logs
             0 - Unknown Error: Check String message
             1 - Phone Number is verified -
-            2 - "Invalid Phone number", -
+            2 - "Invalid Phone number",
             3 - SMS Quota
             4 - reCaptcha Failed
-            5 - OTP sent -
+            5 - OTP sent
             6 - Wrong OTP -
             7 - Sign in failure: Check String message
          */
@@ -126,7 +126,10 @@ public class PhoneAuthHelper {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            authMessage(true, "Sign In Successful!", 10);
+                            if (task.getResult().getAdditionalUserInfo().isNewUser())
+                                authMessage(true, "New user joined!", 11);
+                            else
+                                authMessage(true, "Sign In Successful!", 10);
                         } else {
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 authMessage(false, "The otp entered was incorrect", 6);

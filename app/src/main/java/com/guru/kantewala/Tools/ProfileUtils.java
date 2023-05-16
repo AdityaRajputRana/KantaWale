@@ -21,4 +21,10 @@ public class ProfileUtils {
         return getProfilePrefs(context).getBoolean(key(ProfileKeys.signUpPending), false);
     }
 
+    public static void saveProfileEditRequired(Context context, boolean isRequired){
+        getProfilePrefs(context).edit()
+                .putBoolean(key(ProfileKeys.signUpPending), isRequired)
+                .commit();
+    }
+
 }
