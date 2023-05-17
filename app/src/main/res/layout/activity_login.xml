@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:textSize="28sp"
             android:fontFamily="@font/inter_bold"
-            android:text="@string/signUp"
+            android:text="@string/signIp"
             android:textColor="@color/primaryText" />
 
         <TextView

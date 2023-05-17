@@ -3,6 +3,8 @@ package com.guru.kantewala.Tools;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class ProfileUtils {
     private enum ProfileKeys{signUpPending};
     private static String key(ProfileKeys key){
@@ -18,7 +20,8 @@ public class ProfileUtils {
 
 
     public static boolean isProfileEditRequired(Context context){
-        return getProfilePrefs(context).getBoolean(key(ProfileKeys.signUpPending), false);
+        return FirebaseAuth.getInstance().getCurrentUser() == null || FirebaseAuth.getInstance().getCurrentUser().getDisplayName() == null || FirebaseAuth.getInstance().getCurrentUser().getDisplayName().isEmpty();
+//        return getProfilePrefs(context).getBoolean(key(ProfileKeys.signUpPending), false);
     }
 
     public static void saveProfileEditRequired(Context context, boolean isRequired){
