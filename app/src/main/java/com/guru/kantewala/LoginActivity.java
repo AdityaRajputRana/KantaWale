@@ -143,10 +143,13 @@ public class LoginActivity extends AppCompatActivity implements PhoneAuthHelper.
                 break;
             case 1:
                 handlePhoneVerification();
+                break;
             case 10:
                 signIn();
+                break;
             case 11:
                 registerNewUser();
+                break;
             default:
                 showError(message);
                 break;
@@ -258,7 +261,6 @@ public class LoginActivity extends AppCompatActivity implements PhoneAuthHelper.
             otpDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
     }
-
     private boolean validateOTPInput() {
         if (otpBinding.pinview.getText().toString().length() == 0){
             otpBinding.pinview.setLineColor(Color.RED);

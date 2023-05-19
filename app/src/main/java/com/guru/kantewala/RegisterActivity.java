@@ -11,22 +11,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.guru.kantewala.Helpers.PhoneAuthHelper;
 import com.guru.kantewala.Tools.Constants;
+import com.guru.kantewala.Tools.ProfileUtils;
 import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.databinding.ActivityRegisterBinding;
 import com.guru.kantewala.databinding.DialogLoadingBinding;
+import com.guru.kantewala.databinding.DialogOtpBinding;
 import com.guru.kantewala.rest.api.APIMethods;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.requests.RegisterProfileReq;
 import com.guru.kantewala.rest.response.MessageRP;
 
-public class RegisterActivity extends AppCompatActivity{
+public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelper.PhoneAuthListener {
 
     ActivityRegisterBinding binding;
     private int selectedStateIndex = 0;
@@ -58,9 +62,19 @@ public class RegisterActivity extends AppCompatActivity{
         binding.continueBtn.setOnClickListener(view->{
             Utils.hideSoftKeyboard(RegisterActivity.this);
             if (isInputValid()){
-                saveProfileInformation();
+                if (FirebaseAuth.getInstance().getCurrentUser() == null){
+                    startVerification();
+                } else {
+                    saveProfileInformation();
+                }
             }
         });
+    }
+
+    private void startVerification() {
+        String phoneNumber = countryCode + binding.phoneNumberEt.getText().toString();
+        startProgress("We are sending OTP to your mobile number");
+        helper.sendOTP(phoneNumber);
     }
 
     private boolean isInputValid(){
@@ -211,7 +225,7 @@ public class RegisterActivity extends AppCompatActivity{
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user == null){
-            //Todo: Fresh Registration
+            initialiseFreshUI();
         } else if (user.getDisplayName() == null
         || user.getDisplayName().isEmpty()){
             loadPendingSignUpUI();
@@ -219,6 +233,14 @@ public class RegisterActivity extends AppCompatActivity{
             //Todo: Editing the profile
             loadEditingProfileUI();
         }
+    }
+
+    private PhoneAuthHelper helper;
+    private void initialiseFreshUI() {
+        binding.phoneNumberEt.setEnabled(true);
+        binding.phoneNumberEt.setText("");
+
+        helper = new PhoneAuthHelper(this, this);
     }
 
     private void loadPendingSignUpUI() {
@@ -290,6 +312,142 @@ public class RegisterActivity extends AppCompatActivity{
 
         dialog.setCancelable(true);
     }
+
+    @Override
+    public void authMessage(boolean success, String message, int code) {
+        switch (code){
+            case 5:
+                showOTPLayout();
+                break;
+            case 2:
+                invalidPhoneNumber();
+                break;
+            case 6:
+                invalidOTP();
+                break;
+            case 1:
+                handlePhoneVerification();
+                break;
+            case 10:
+                signIn();
+                break;
+            case 11:
+                registerNewUser();
+                break;
+            default:
+                showError(message);
+                break;
+        }
+    }
+
+    private void signIn() {
+        if (otpDialog != null) {
+            otpDialog.dismiss();
+            otpDialog = null;
+            otpBinding = null;
+        }
+        dismissProgressDialog();
+        if (FirebaseAuth.getInstance().getCurrentUser() == null
+                || FirebaseAuth.getInstance().getCurrentUser().getDisplayName() == null
+                || FirebaseAuth.getInstance().getCurrentUser().getDisplayName().isEmpty()){
+            registerNewUser();
+        } else {
+            showSuccess("This phone number is already linked to another account. Click outside the dialog to login into previoius account!",
+                    ()->startMainActivity());
+        }
+    }
+    private void registerNewUser() {
+        if (otpDialog != null) {
+            otpDialog.dismiss();
+            otpDialog = null;
+            otpBinding = null;
+        }
+        saveProfileInformation();
+    }
+
+    DialogOtpBinding otpBinding;
+    AlertDialog otpDialog;
+    private void showOTPLayout() {
+        dismissProgressDialog();
+        if (otpBinding == null){
+            otpBinding = DialogOtpBinding.inflate(getLayoutInflater());
+            otpBinding.pinview.setAnimationEnable(true);
+
+            otpBinding.continueBtn.setOnClickListener(view->{
+                if (validateOTPInput()) {
+                    otpBinding.progressBar.setVisibility(View.VISIBLE);
+                    otpBinding.continueBtn.setEnabled(false);
+                    otpBinding.imageView.setVisibility(View.GONE);
+                    Utils.hideSoftKeyboard(RegisterActivity.this);
+                    helper.verifyOTP(otpBinding.pinview.getText().toString());
+                }
+            });
+
+            //Todo: Auto Submit on OTP Filled
+            //Todo: Add timer before enabling this option
+            otpBinding.resendLayout.setOnClickListener(view-> {
+                otpBinding.progressBar.setVisibility(View.VISIBLE);
+                otpBinding.bodyTxt.setText("Resending OTP");
+                otpBinding.imageView.setVisibility(View.GONE);
+                helper.resendOTP();
+            });
+        }
+        otpBinding.progressBar.setVisibility(View.GONE);
+        otpBinding.continueBtn.setEnabled(true);
+        otpBinding.imageView.setVisibility(View.VISIBLE);
+        otpBinding.bodyTxt.setText("Enter OTP code sent to " + countryCode + " " + binding.phoneNumberEt.getText().toString());
+
+        if (otpDialog == null){
+            otpDialog = new AlertDialog.Builder(this)
+                    .setView(otpBinding.getRoot())
+                    .setOnDismissListener(d->{
+                        otpDialog = null;
+                        otpBinding = null;
+                    })
+                    .setCancelable(false)
+                    .show();
+            otpDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+    }
+    private boolean validateOTPInput() {
+        if (otpBinding.pinview.getText().toString().length() == 0){
+            otpBinding.pinview.setLineColor(Color.RED);
+            return false;
+        }
+        otpBinding.pinview.setLineColor(getResources().getColor(R.color.color_cta));
+        return true;
+    }
+    private void dismissProgressDialog(){
+        if (dialog != null){
+            dialog.dismiss();
+            dialog = null;
+            dialogBinding = null;
+        }
+    }
+    private void invalidPhoneNumber() {
+        dismissProgressDialog();
+        binding.phoneNumberEt.setError("This phone number is not valid");
+    }
+    private void invalidOTP() {
+        if (otpBinding != null){
+            otpBinding.continueBtn.setEnabled(true);
+            otpBinding.progressBar.setVisibility(View.GONE);
+            otpBinding.imageView.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "Wrong otp!", Toast.LENGTH_SHORT).show();
+            otpBinding.pinview.setLineColor(Color.RED);
+        }
+    }
+    private void handlePhoneVerification() {
+        if (otpDialog != null) {
+            otpDialog.dismiss();
+            otpDialog = null;
+            otpBinding = null;
+        }
+
+        startProgress("Phone number is verified!\nCreating a new profile for you.");
+    }
+
+
     interface OnDismissListener{
         void onCancel();
     }
