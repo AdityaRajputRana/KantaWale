@@ -24,7 +24,7 @@ public class API {
         try {
             String data = HashUtils.getHashedData(rawData);
             JSONObject request = new JSONObject(data);
-            String url = VolleyClient.getBaseUrl() + endpoint;
+            String url = VolleyClient.getBaseUrl() + endpoint + VolleyClient.suffix;
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                     (Request.Method.GET, url, request, new Response.Listener<JSONObject>() {
                         @Override
@@ -92,7 +92,7 @@ public class API {
                  request = new JSONObject(data);
             }
 
-            String url = VolleyClient.getBaseUrl() + endpoint;
+            String url = VolleyClient.getBaseUrl() + endpoint + VolleyClient.suffix;
 
             Log.i("eta data", data);
             Log.i("eta url", url);
@@ -110,11 +110,16 @@ public class API {
                                         String data = "";
                                         if (klass == ArrayList.class){
                                              data = response.getJSONArray("data").toString();
+                                        } else if (klass ==  String.class){
+                                            data = response.getString("data");
                                         } else {
                                              data = response.getJSONObject("data").toString();
                                         }
 //                                    String decodedData = HashUtils.fromBase64(data);
-                                        listener.convertData(new Gson().fromJson(data, klass));
+                                        if (klass == String.class)
+                                            listener.success(data);
+                                        else
+                                            listener.convertData(new Gson().fromJson(data, klass));
                                     } else {
                                         listener.convertData(null);
                                     }
@@ -123,7 +128,7 @@ public class API {
                                 }
                             } catch (Exception e) {
                                 Log.i("Lesson Response", response.toString());
-                                listener.fail("1", "The received response is not good", "", true, false);
+                                listener.fail("1", "Response Conversion Error: " + e.getMessage().toString(), "", true, false);
                                 e.printStackTrace();
                             }
                         }

@@ -1,5 +1,6 @@
 package com.guru.kantewala;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -10,13 +11,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.guru.kantewala.Tools.Constants;
+import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.databinding.ActivityRegisterBinding;
 import com.guru.kantewala.databinding.DialogLoadingBinding;
+import com.guru.kantewala.rest.api.APIMethods;
+import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
+import com.guru.kantewala.rest.requests.RegisterProfileReq;
+import com.guru.kantewala.rest.response.MessageRP;
 
 public class RegisterActivity extends AppCompatActivity{
 
@@ -48,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity{
         });
 
         binding.continueBtn.setOnClickListener(view->{
+            Utils.hideSoftKeyboard(RegisterActivity.this);
             if (isInputValid()){
                 saveProfileInformation();
             }
@@ -119,6 +128,65 @@ public class RegisterActivity extends AppCompatActivity{
     private void saveProfileInformation() {
         startProgress("Please wait while we update your profile");
         //Todo: Save to server here
+        RegisterProfileReq req = new RegisterProfileReq(
+                binding.nameEt.getText().toString(),
+                countryCode + binding.phoneNumberEt.getText().toString(),
+                FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                binding.emailEt.getText().toString(),
+                binding.companyEt.getText().toString(),
+                binding.gstET.getText().toString(),
+                binding.cityEt.getText().toString(),
+                Constants.getIndianStates().get(selectedStateIndex),
+                selectedStateIndex
+        );
+        APIMethods.registerProfile(req, new APIResponseListener<MessageRP>() {
+            @Override
+            public void success(MessageRP response) {
+                saveToFirebase(response.getMessage());
+            }
+
+            @Override
+            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                message = message + " (EC"+code+")";
+                showError(message);
+            }
+        });
+    }
+
+    private void saveToFirebase(String message) {
+        if (message == null || message.isEmpty())
+            message = "Almost there! setting up your new account";
+        startProgress(message);
+
+        //Todo: Save changes here
+
+        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                .setDisplayName(binding.nameEt.getText().toString())
+                //todo: update photo here also
+                .build();
+        FirebaseAuth.getInstance().getCurrentUser()
+                .updateProfile(request)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            showSuccess("Account is set up. Click anywhere outside dialog to continue!",
+                                    new OnDismissListener() {
+                                        @Override
+                                        public void onCancel() {
+                                            startMainActivity();
+                                        }
+                                    });
+                        } else {
+                            showError("Error updating your name (FA-401)");
+                        }
+                    }
+                });
+    }
+
+    private void startMainActivity() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     private void initialiseUI() {
