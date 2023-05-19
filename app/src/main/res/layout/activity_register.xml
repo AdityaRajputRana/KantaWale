@@ -24,7 +24,7 @@
         android:src="@drawable/il_login_top"
         app:layout_constraintTop_toTopOf="parent"
         android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio="1.7" />
+        app:layout_constraintDimensionRatio="2.4" />
 
     <LinearLayout
         app:layout_constraintTop_toBottomOf="@id/topImg"
@@ -265,6 +265,7 @@
                 android:textSize="16sp"  />
 
             <TextView
+                android:id="@+id/loginTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sign In"
