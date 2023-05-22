@@ -4,4 +4,6 @@
     <string name="signIp">Sign In</string>
     <string name="loginCta">Continue</string>
     <string name="verify_sign_in"><![CDATA[Verify & Sign In]]></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

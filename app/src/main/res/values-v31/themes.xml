@@ -8,7 +8,7 @@
         <item name="android:windowSplashScreenBrandingImage">@drawable/logo_full</item>
         <item name="postSplashScreenTheme">@style/Theme.AppCompat.Light.NoActionBar</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/color_cta</item>
         <item name="colorPrimaryVariant">@color/statusBar</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->

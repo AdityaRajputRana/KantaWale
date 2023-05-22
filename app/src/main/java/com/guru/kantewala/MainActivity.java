@@ -1,10 +1,16 @@
 package com.guru.kantewala;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationBarView;
+import com.guru.kantewala.MainFragments.HomeFragment;
+import com.guru.kantewala.MainFragments.ProfileFragment;
+import com.guru.kantewala.MainFragments.SubscriptionFragment;
 import com.guru.kantewala.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,6 +22,49 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        Toast.makeText(this, "Main Activity!", Toast.LENGTH_SHORT).show();
+
+        setUpFragmentsAndNavigation();
+    }
+
+
+
+    HomeFragment homeFragment;
+    SubscriptionFragment subscriptionFragment;
+    ProfileFragment profileFragment;
+
+    private void setUpFragmentsAndNavigation() {
+        homeFragment = new HomeFragment();
+        subscriptionFragment = new SubscriptionFragment();
+        profileFragment = new ProfileFragment();
+
+        binding.bottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.home:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.frameLayout, homeFragment)
+                                .commit();
+                        return true;
+                    case R.id.premium:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.frameLayout, subscriptionFragment)
+                                .commit();
+                        return true;
+                    case R.id.profile:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.frameLayout, profileFragment)
+                                .commit();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
+        binding.bottomNavigation.setSelectedItemId(R.id.home);
     }
 }
