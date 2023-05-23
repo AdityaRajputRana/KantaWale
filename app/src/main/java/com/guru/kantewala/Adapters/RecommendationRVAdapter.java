@@ -3,6 +3,7 @@ package com.guru.kantewala.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,18 +61,20 @@ public class RecommendationRVAdapter extends RecyclerView.Adapter<Recommendation
     }
 
     private void handleCompanyClick(int index) {
+        Log.i("KW-QL-Index", String.valueOf(index));
         Company company = dashboardRP.getRecommendedCompanies().get(index);
         if (company.isLocked()){
             Toast.makeText(context, "Buy premium to unlock!", Toast.LENGTH_SHORT).show();
             return;
+        } else {
+
+            Intent intent = new Intent(context, CompanyActivity.class);
+            intent.putExtra("companyId", company.getId());
+            intent.putExtra("hasCompanyAttached", true);
+            intent.putExtra("company", new Gson().toJson(company));
+
+            context.startActivity(intent);
         }
-
-        Intent intent = new Intent(context, CompanyActivity.class);
-        intent.putExtra("companyId", company.getId());
-        intent.putExtra("hasCompanyAttached", true);
-        intent.putExtra("company", new Gson().toJson(company));
-
-        context.startActivity(intent);
     }
 
     @Override
