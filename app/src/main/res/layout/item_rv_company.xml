@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_fg"
+    android:padding="16dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="2dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<!--    Todo: Match this UI to figma-->
+
+    <ImageView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/companyLogoImg"
+        android:src="@drawable/ic_profile_inactive"
+        app:layout_constraintTop_toTopOf="@id/companyNameTxt"
+        app:layout_constraintBottom_toBottomOf="@id/companyNameTxt"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/companyNameTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/companyLogoImg"
+        android:text="Kantewala"
+        android:layout_marginStart="8dp"
+        android:textSize="24sp"
+        android:textColor="@color/primaryText"
+        android:fontFamily="@font/inter_bold" />
+
+
+    <TextView
+        android:id="@+id/locationTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/companyNameTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Unlock Premium"
+        android:layout_marginTop="8dp"
+        android:textSize="18sp"
+        android:textColor="@color/secondaryText"
+        android:fontFamily="@font/inter_medium" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/locationTxt"
+        android:id="@+id/tagsTxt"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_medium"
+        android:textSize="18sp"
+        android:textColor="@color/color_cta"
+        android:text="Chips, are, shown, here, soon, would, be, new, layout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
