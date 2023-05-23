@@ -32,9 +32,57 @@
 
                 android:elevation="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:id="@+id/titleImg"
                 android:src="@drawable/logo_full" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/recommendationToggle"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/color_cta"
+                    android:text="Recommended"
+                    android:fontFamily="@font/inter_semibold"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="8dp"
+                    app:strokeWidth="2dp"
+                    app:strokeColor="@color/color_cta"
+                    android:elevation="0dp"
+                    android:padding="16dp"
+                    android:textColor="@color/color_fg"
+                    android:textAllCaps="false"
+                    app:cornerRadius="50dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/categoryToggle"
+                    android:layout_width="0dp"
+                    android:textSize="16dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_semibold"
+                    android:layout_height="wrap_content"
+                    android:text="Categories"
+                    android:textAllCaps="false"
+
+                    android:textColor="@color/color_cta"
+                    app:strokeColor="@color/color_cta"
+                    app:strokeWidth="2dp"
+                    android:backgroundTint="@color/color_fg"
+
+                    android:elevation="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:padding="16dp"
+                    app:cornerRadius="50dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>

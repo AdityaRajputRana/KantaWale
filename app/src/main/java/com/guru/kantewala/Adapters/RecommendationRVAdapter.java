@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.guru.kantewala.CompanyActivity;
 import com.guru.kantewala.Models.Company;
 import com.guru.kantewala.R;
+import com.guru.kantewala.Tools.BlurUtils;
 import com.guru.kantewala.Tools.Transformations.CircleTransform;
 import com.guru.kantewala.rest.response.DashboardRP;
 import com.squareup.picasso.Picasso;
@@ -71,7 +72,12 @@ public class RecommendationRVAdapter extends RecyclerView.Adapter<Recommendation
         holder.itemView.setOnClickListener(view->{
             handleCompanyClick(holder.getAdapterPosition());
         });
-        //Todo: Implement onClick
+
+        if (company.isLocked()){
+            BlurUtils.blur(holder.locationTxt, 20f);
+        } else {
+            BlurUtils.blur(holder.locationTxt, 0f);
+        }
     }
 
     private void handleCompanyClick(int index) {

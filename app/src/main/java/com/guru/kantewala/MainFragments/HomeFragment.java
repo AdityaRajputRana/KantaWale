@@ -1,5 +1,6 @@
 package com.guru.kantewala.MainFragments;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.guru.kantewala.Adapters.RecommendationRVAdapter;
+import com.guru.kantewala.R;
 import com.guru.kantewala.Tools.Methods;
 import com.guru.kantewala.databinding.FragmentHomeBinding;
 import com.guru.kantewala.rest.api.APIMethods;
@@ -41,8 +43,33 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        setUpToggle();
         loadDashboard();
         return binding.getRoot();
+    }
+
+    private void setUpToggle() {
+        binding.recommendationToggle.setOnClickListener(view->{
+            binding.recommendationToggle.setBackgroundTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.color_cta)));
+            binding.recommendationToggle.setTextColor(getActivity().getResources().getColor(R.color.color_fg));
+
+            binding.categoryToggle.setBackgroundTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.color_fg)));
+            binding.categoryToggle.setTextColor(getActivity().getResources().getColor(R.color.color_cta));
+
+            binding.dashboardLayout.setVisibility(View.VISIBLE);
+            binding.categoryLayout.setVisibility(View.GONE);
+        });
+
+        binding.categoryToggle.setOnClickListener(view->{
+            binding.categoryToggle.setBackgroundTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.color_cta)));
+            binding.categoryToggle.setTextColor(getActivity().getResources().getColor(R.color.color_fg));
+
+            binding.recommendationToggle.setBackgroundTintList(ColorStateList.valueOf(getActivity().getResources().getColor(R.color.color_fg)));
+            binding.recommendationToggle.setTextColor(getActivity().getResources().getColor(R.color.color_cta));
+
+            binding.categoryLayout.setVisibility(View.VISIBLE);
+            binding.dashboardLayout.setVisibility(View.GONE);
+        });
     }
 
     private void loadDashboard() {
