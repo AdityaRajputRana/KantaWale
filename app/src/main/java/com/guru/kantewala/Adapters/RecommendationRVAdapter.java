@@ -2,6 +2,8 @@ package com.guru.kantewala.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,10 +16,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.gson.Gson;
 import com.guru.kantewala.CompanyActivity;
 import com.guru.kantewala.Models.Company;
 import com.guru.kantewala.R;
+import com.guru.kantewala.Tools.Transformations.CircleTransform;
 import com.guru.kantewala.rest.response.DashboardRP;
 import com.squareup.picasso.Picasso;
 
@@ -45,14 +50,23 @@ public class RecommendationRVAdapter extends RecyclerView.Adapter<Recommendation
             holder.locationTxt.setText(company.getLocation());
         Picasso.get()
                 .load(company.getLogoUrl())
+                .transform(new CircleTransform())
                 .into(holder.logoImg);
 
-        //Todo: Replace Later by chips
-        String tagsTxt = "";
+
         for (String tag: company.getTags()){
-            tagsTxt = tagsTxt + " " + tag;
+            Chip chip = new Chip(context);
+            chip.setText(tag);
+            chip.setClickable(false);
+            chip.setCheckable(false);
+            chip.setChipStrokeColor(ColorStateList.valueOf(context.getResources().getColor(R.color.color_cta)));
+            chip.setChipStrokeWidth(5);
+            chip.setChipBackgroundColor(ColorStateList.valueOf(Color.TRANSPARENT));
+            chip.setRippleColor(ColorStateList.valueOf(context
+                    .getResources().getColor(R.color.color_bg)));
+            chip.setTextColor(context.getResources().getColor(R.color.color_cta));
+            holder.tagsGroup.addView(chip);
         }
-        holder.tagsTxt.setText(tagsTxt);
 
         holder.itemView.setOnClickListener(view->{
             handleCompanyClick(holder.getAdapterPosition());
@@ -88,7 +102,7 @@ public class RecommendationRVAdapter extends RecyclerView.Adapter<Recommendation
 
         TextView nameTxt;
         TextView locationTxt;
-        TextView tagsTxt;
+        ChipGroup tagsGroup;
         ImageView logoImg;
 
         public CompanyViewHolder(@NonNull View itemView) {
@@ -96,7 +110,7 @@ public class RecommendationRVAdapter extends RecyclerView.Adapter<Recommendation
 
             nameTxt = itemView.findViewById(R.id.companyNameTxt);
             locationTxt = itemView.findViewById(R.id.locationTxt);
-            tagsTxt = itemView.findViewById(R.id.tagsTxt);
+            tagsGroup = itemView.findViewById(R.id.tagsGroup);
             logoImg = itemView.findViewById(R.id.companyLogoImg);
         }
     }

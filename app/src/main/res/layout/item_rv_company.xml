@@ -2,63 +2,80 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_fg"
-    android:padding="16dp"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginTop="14dp"
     android:layout_marginBottom="2dp"
+    android:clipToPadding="false"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--    Todo: Match this UI to figma-->
-
     <ImageView
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:padding="8dp"
         android:id="@+id/companyLogoImg"
         android:src="@drawable/ic_profile_inactive"
-        app:layout_constraintTop_toTopOf="@id/companyNameTxt"
-        app:layout_constraintBottom_toBottomOf="@id/companyNameTxt"
+        android:translationZ="1dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/bg_company_logo"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/companyNameTxt"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/companyLogoImg"
-        android:text="Kantewala"
-        android:layout_marginStart="8dp"
-        android:textSize="24sp"
-        android:textColor="@color/primaryText"
-        android:fontFamily="@font/inter_bold" />
-
-
-    <TextView
-        android:id="@+id/locationTxt"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/companyNameTxt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="Unlock Premium"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp"
-        android:textColor="@color/secondaryText"
-        android:fontFamily="@font/inter_medium" />
-
-
-    <TextView
+        android:background="@drawable/bg_company"
+        android:layout_marginTop="26dp"
+        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/locationTxt"
-        android:id="@+id/tagsTxt"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/inter_medium"
-        android:textSize="18sp"
-        android:textColor="@color/color_cta"
-        android:text="Chips, are, shown, here, soon, would, be, new, layout" />
+        android:layout_height="wrap_content">
 
+
+        <!--    Todo: Match this UI to figma-->
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="18dp"
+
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/companyNameTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Kantewala"
+                android:textSize="18sp"
+                android:textColor="@color/primaryText"
+                android:fontFamily="@font/inter_bold" />
+
+
+            <TextView
+                android:id="@+id/locationTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/companyNameTxt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Unlock Premium"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp"
+                android:textColor="@color/secondaryText"
+                android:fontFamily="@font/inter_medium" />
+
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:selectionRequired="false"
+                android:clickable="false"
+                android:id="@+id/tagsGroup"
+                android:layout_marginTop="16dp" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

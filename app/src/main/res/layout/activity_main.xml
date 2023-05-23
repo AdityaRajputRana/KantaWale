@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/darker_gray"
+    android:background="@color/color_fg"
     tools:context=".MainActivity">
 
     <FrameLayout
@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:menu="@menu/nav_main"
+        android:elevation="200dp"
         android:padding="8dp"
         android:background="@drawable/bg_bottom_nav"
         android:id="@+id/bottomNavigation" />
