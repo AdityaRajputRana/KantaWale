@@ -1,5 +1,6 @@
 package com.guru.kantewala.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -16,23 +17,26 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.gson.Gson;
 import com.guru.kantewala.CompanyActivity;
+import com.guru.kantewala.Helpers.SubscriptionUIHelper;
 import com.guru.kantewala.Models.Company;
 import com.guru.kantewala.R;
 import com.guru.kantewala.Tools.BlurUtils;
 import com.guru.kantewala.Tools.Transformations.CircleTransform;
+import com.guru.kantewala.databinding.SheetSubscribeBinding;
 import com.guru.kantewala.rest.response.DashboardRP;
 import com.squareup.picasso.Picasso;
 
 public class RecommendationRVAdapter extends RecyclerView.Adapter<RecommendationRVAdapter.CompanyViewHolder> {
 
     DashboardRP dashboardRP;
-    Context context;
+    Activity context;
 
-    public RecommendationRVAdapter(DashboardRP dashboardRP, Context context) {
+    public RecommendationRVAdapter(DashboardRP dashboardRP, Activity context) {
         this.dashboardRP = dashboardRP;
         this.context = context;
     }
@@ -84,7 +88,7 @@ public class RecommendationRVAdapter extends RecyclerView.Adapter<Recommendation
         Log.i("KW-QL-Index", String.valueOf(index));
         Company company = dashboardRP.getRecommendedCompanies().get(index);
         if (company.isLocked()){
-            Toast.makeText(context, "Buy premium to unlock!", Toast.LENGTH_SHORT).show();
+            askToSubscribe();
             return;
         } else {
 
@@ -95,6 +99,21 @@ public class RecommendationRVAdapter extends RecyclerView.Adapter<Recommendation
 
             context.startActivity(intent);
         }
+    }
+
+    private void askToSubscribe() {
+
+        SheetSubscribeBinding sheet = SheetSubscribeBinding.inflate(context.getLayoutInflater());
+        BottomSheetDialog dialog = new BottomSheetDialog(context, R.style.BottomSheetDialogTheme);
+        //Todo: handle Starting from price
+        //Todo: handle subscribed already click
+        sheet.continueBtn.setOnClickListener(view->{
+            if (context instanceof SubscriptionUIHelper.AskToSubListener)
+                ((SubscriptionUIHelper.AskToSubListener) context).redirectToSubscribeFragment();
+            dialog.dismiss();
+        });
+        dialog.setContentView(sheet.getRoot());
+        dialog.show();
     }
 
     @Override

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    android:background="@drawable/bg_bottom_nav"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="See Premium Content"
+        android:fontFamily="@font/inter_bold"
+        android:textSize="20sp"
+        android:textColor="@color/primaryText"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="You will get access to all manufacturer’s details and information."
+        android:fontFamily="@font/inter_medium"
+        android:textSize="17sp"
+        android:textColor="@color/secondaryText"
+        android:layout_marginTop="8dp" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/continueBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:padding="16dp"
+        android:textColor="@color/colorOnPrimary"
+        android:text="Choose your plan"
+        android:backgroundTint="@color/color_cta"
+        android:fontFamily="@font/inter_semibold"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        app:cornerRadius="8dp"
+        android:elevation="0dp"
+        app:elevation="0dp" />
+
+    <TextView
+        android:id="@+id/subscribedAlreadyTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Subscribed already?"
+        android:fontFamily="@font/inter_semibold"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/color_cta"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

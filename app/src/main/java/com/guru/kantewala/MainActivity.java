@@ -8,12 +8,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationBarView;
+import com.guru.kantewala.Helpers.SubscriptionUIHelper;
 import com.guru.kantewala.MainFragments.HomeFragment;
 import com.guru.kantewala.MainFragments.ProfileFragment;
 import com.guru.kantewala.MainFragments.SubscriptionFragment;
 import com.guru.kantewala.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SubscriptionUIHelper.AskToSubListener {
 
     ActivityMainBinding binding;
 
@@ -66,5 +67,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.bottomNavigation.setSelectedItemId(R.id.home);
+    }
+
+    @Override
+    public void redirectToSubscribeFragment() {
+        binding.bottomNavigation.setSelectedItemId(R.id.premium);
     }
 }
