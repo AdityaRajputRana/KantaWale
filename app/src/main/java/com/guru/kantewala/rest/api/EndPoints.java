@@ -2,7 +2,8 @@ package com.guru.kantewala.rest.api;
 
 public class EndPoints {
 
-   public static String registerProfile = "editProfile";
+   public static String editProfile = "editProfile";
+   public static String registerProfile = "registerUser";
    public static String dashboard = "getDashboard";
    public static String categories = "getCategories";
    public static String companyDetails = "getCompany";

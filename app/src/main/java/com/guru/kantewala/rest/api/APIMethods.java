@@ -1,6 +1,7 @@
 package com.guru.kantewala.rest.api;
 
 import com.guru.kantewala.Models.Company;
+import com.guru.kantewala.RegisterActivity;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.requests.CompanyReq;
 import com.guru.kantewala.rest.requests.HomeReq;
@@ -12,8 +13,11 @@ import com.guru.kantewala.rest.response.UserRP;
 
 public class APIMethods {
 
-    public static void registerProfile(RegisterProfileReq req, APIResponseListener<MessageRP> listener) {
-        API.postData(listener, req, EndPoints.registerProfile, MessageRP.class);
+    public static void registerProfile(RegisterActivity.Mode mode, RegisterProfileReq req, APIResponseListener<MessageRP> listener) {
+        String endpoint = EndPoints.registerProfile;
+        if (mode == RegisterActivity.Mode.EDIT)
+            endpoint = EndPoints.editProfile;
+        API.postData(listener, req, endpoint, MessageRP.class);
     }
 
     public static void getDashboard(APIResponseListener<DashboardRP> listener) {

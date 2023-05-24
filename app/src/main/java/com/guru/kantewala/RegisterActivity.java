@@ -9,6 +9,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ import com.guru.kantewala.rest.api.APIMethods;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.requests.RegisterProfileReq;
 import com.guru.kantewala.rest.response.MessageRP;
+import com.guru.kantewala.rest.response.UserRP;
 
 public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelper.PhoneAuthListener {
 
@@ -41,6 +44,8 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
 
     AlertDialog dialog;
     DialogLoadingBinding dialogBinding;
+
+    private UserRP userRP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +146,6 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
 
     private void saveProfileInformation() {
         startProgress("Please wait while we update your profile");
-        //Todo: Save to server here
         RegisterProfileReq req = new RegisterProfileReq(
                 binding.nameEt.getText().toString(),
                 countryCode + binding.phoneNumberEt.getText().toString(),
@@ -151,9 +155,9 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
                 binding.gstET.getText().toString(),
                 binding.cityEt.getText().toString(),
                 Constants.getIndianStates().get(selectedStateIndex),
-                selectedStateIndex
+                selectedStateIndex, userRP.getPhotoUrl()
         );
-        APIMethods.registerProfile(req, new APIResponseListener<MessageRP>() {
+        APIMethods.registerProfile(mode, req, new APIResponseListener<MessageRP>() {
             @Override
             public void success(MessageRP response) {
                 saveToFirebase(response.getMessage());
@@ -169,28 +173,23 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
 
     private void saveToFirebase(String message) {
         if (message == null || message.isEmpty())
-            message = "Almost there! setting up your new account";
+            if (mode == Mode.EDIT)
+                message = "Almost there!";
+            else
+                message = "Almost there! setting up your new account";
         startProgress(message);
 
-        //Todo: Save changes here
-
-        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
-                .setDisplayName(binding.nameEt.getText().toString())
+        UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder()
+                .setDisplayName(binding.nameEt.getText().toString());
                 //todo: update photo here also
-                .build();
+        UserProfileChangeRequest request = builder.build();
         FirebaseAuth.getInstance().getCurrentUser()
                 .updateProfile(request)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
-                            showSuccess("Account is set up. Click anywhere outside dialog to continue!",
-                                    new OnDismissListener() {
-                                        @Override
-                                        public void onCancel() {
-                                            startMainActivity();
-                                        }
-                                    });
+                            startMainActivity();
                         } else {
                             showError("Error updating your name (FA-401)");
                         }
@@ -199,7 +198,14 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
     }
 
     private void startMainActivity() {
-        startActivity(new Intent(this, MainActivity.class));
+        if (mode == Mode.EDIT){
+            Toast.makeText(this, "Saved changes!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Account created!", Toast.LENGTH_SHORT).show();
+        }
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
         finish();
     }
 
@@ -221,16 +227,20 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
         });
     }
 
+    public enum Mode{NONE, FRESH, PENDING, EDIT};
+    private Mode mode = Mode.NONE;
     private void initialise() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user == null){
+            mode = Mode.FRESH;
             initialiseFreshUI();
         } else if (user.getDisplayName() == null
-        || user.getDisplayName().isEmpty()){
+                || user.getDisplayName().isEmpty()){
+            mode = Mode.PENDING;
             loadPendingSignUpUI();
         } else {
-            //Todo: Editing the profile
+            mode = Mode.EDIT;
             loadEditingProfileUI();
         }
     }
@@ -261,6 +271,42 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
     private void loadEditingProfileUI() {
         binding.phoneNumberEt.setEnabled(false);
         binding.loginLayout.setVisibility(View.GONE);
+        ViewGroup.LayoutParams params = binding.topImg.getLayoutParams();
+        params.height = params.height/4;
+        binding.topImg.setLayoutParams(params);
+        binding.welcomeTxt.setVisibility(View.GONE);
+        binding.headingTxt.setText("Edit Profile");
+        binding.continueBtn.setText("Save Profile");
+        //Todo: give option or instructions to change it
+
+        startProgress("Loading your user profile details");
+        APIMethods.getUserProfile(new APIResponseListener<UserRP>() {
+            @Override
+            public void success(UserRP response) {
+                dismissProgressDialog();
+                userRP = response;
+                updateUIForEdit();
+            }
+
+            @Override
+            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                showError("(EC-"+code+") " + message);
+            }
+        });
+    }
+
+    String imageUrl = "";
+
+    private void updateUIForEdit() {
+        binding.nameEt.setText(userRP.getName());
+        binding.emailEt.setText(userRP.getEmail());
+        //Todo: handle country codes
+        binding.phoneNumberEt.setText(userRP.getPhone().replace(countryCode, ""));
+        binding.companyEt.setText(userRP.getCompany());
+        binding.gstET.setText(userRP.getCompanyGST());
+        binding.cityEt.setText(userRP.getCity());
+        selectedStateIndex = userRP.getStateCode();
+        binding.stateSpinner.setSelection(selectedStateIndex);
     }
 
 

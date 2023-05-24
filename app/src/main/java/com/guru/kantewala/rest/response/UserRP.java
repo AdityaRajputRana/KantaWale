@@ -38,6 +38,8 @@ public class UserRP {
     }
 
     public String getPhotoUrl() {
+        if (photoUrl == null)
+            return "";
         return photoUrl;
     }
 
