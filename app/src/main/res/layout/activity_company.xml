@@ -76,7 +76,7 @@
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="16dp"
+                    android:paddingTop="16dp"
                     android:clipToPadding="false">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -86,108 +86,115 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            >
-
-                            <ImageView
-                                android:id="@+id/companyLogoImg"
-                                android:layout_width="52dp"
-                                android:layout_height="52dp"
-                                android:padding="8dp"
-                                android:background="@drawable/bg_indicator_round"
-                                android:src="@drawable/ic_laucher_foreground"/>
-
-
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:orientation="vertical">
                             <LinearLayout
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:orientation="horizontal"
                                 android:gravity="center"
-                                android:orientation="vertical"
-                                android:layout_marginStart="8dp">
+                                >
 
-                                <TextView
-                                    android:id="@+id/companyNameTxt"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    android:text="Kantewala"
-                                    android:textSize="18sp"
-                                    android:textColor="@color/primaryText"
-                                    android:fontFamily="@font/inter_bold" />
+                                <ImageView
+                                    android:id="@+id/companyLogoImg"
+                                    android:layout_width="52dp"
+                                    android:layout_height="52dp"
+                                    android:padding="8dp"
+                                    android:background="@drawable/bg_indicator_round"
+                                    android:src="@drawable/ic_laucher_foreground"/>
 
-                                <TextView
-                                    android:id="@+id/locationTxt"
-                                    android:layout_width="match_parent"
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:drawableLeft="@drawable/ic_location"
-                                    android:drawablePadding="4dp"
-                                    android:drawableTint="@color/secondaryText"
-                                    app:layout_constraintTop_toBottomOf="@id/companyNameTxt"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    android:text="Loading..."
-                                    android:textSize="16sp"
-                                    android:textColor="@color/secondaryText"
-                                    android:fontFamily="@font/inter_medium" />
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:layout_marginStart="8dp">
+
+                                    <TextView
+                                        android:id="@+id/companyNameTxt"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        android:text="Kantewala"
+                                        android:textSize="18sp"
+                                        android:textColor="@color/primaryText"
+                                        android:fontFamily="@font/inter_bold" />
+
+                                    <TextView
+                                        android:id="@+id/locationTxt"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:drawableLeft="@drawable/ic_location"
+                                        android:drawablePadding="4dp"
+                                        android:drawableTint="@color/secondaryText"
+                                        app:layout_constraintTop_toBottomOf="@id/companyNameTxt"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        android:text="Loading..."
+                                        android:textSize="16sp"
+                                        android:textColor="@color/secondaryText"
+                                        android:fontFamily="@font/inter_medium" />
+
+                                </LinearLayout>
 
                             </LinearLayout>
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_marginTop="16dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingBottom="2dp"
-                            android:id="@+id/toggleLayout"
-                            android:clipToPadding="false"
-                            android:clipChildren="false"
-                            android:orientation="horizontal">
-
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/detailsToggle"
+                            <LinearLayout
+                                android:layout_marginTop="16dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:visibility="gone"
-                                android:backgroundTint="@color/color_cta"
-                                android:text="Details"
-                                android:fontFamily="@font/inter_medium"
-                                android:textSize="16sp"
-                                android:layout_marginEnd="8dp"
-                                app:strokeWidth="2dp"
-                                app:strokeColor="@color/color_cta"
-                                android:elevation="0dp"
-                                android:paddingTop="8dp"
-                                android:paddingBottom="8dp"
-                                android:paddingStart="16dp"
-                                android:paddingEnd="16dp"
-                                android:textColor="@color/color_fg"
-                                android:textAllCaps="false"
-                                app:cornerRadius="8dp" />
+                                android:paddingBottom="2dp"
+                                android:id="@+id/toggleLayout"
+                                android:clipToPadding="false"
+                                android:clipChildren="false"
+                                android:orientation="horizontal">
 
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/imagesToggle"
-                                android:layout_width="wrap_content"
-                                android:textSize="16sp"
-                                android:fontFamily="@font/inter_medium"
-                                android:layout_height="wrap_content"
-                                android:text="Images"
-                                android:textAllCaps="false"
-                                android:visibility="gone"
-                                android:textColor="@color/color_cta"
-                                app:strokeColor="@color/color_cta"
-                                app:strokeWidth="2dp"
-                                android:backgroundTint="@color/color_fg"
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/detailsToggle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone"
+                                    android:backgroundTint="@color/color_cta"
+                                    android:text="Details"
+                                    android:fontFamily="@font/inter_medium"
+                                    android:textSize="16sp"
+                                    android:layout_marginEnd="8dp"
+                                    app:strokeWidth="2dp"
+                                    app:strokeColor="@color/color_cta"
+                                    android:elevation="0dp"
+                                    android:paddingTop="8dp"
+                                    android:paddingBottom="8dp"
+                                    android:paddingStart="16dp"
+                                    android:paddingEnd="16dp"
+                                    android:textColor="@color/color_fg"
+                                    android:textAllCaps="false"
+                                    app:cornerRadius="8dp" />
 
-                                android:elevation="0dp"
-                                android:layout_marginEnd="8dp"
-                                android:paddingTop="8dp"
-                                android:paddingBottom="8dp"
-                                android:paddingStart="16dp"
-                                android:paddingEnd="16dp"
-                                app:cornerRadius="8dp" />
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/imagesToggle"
+                                    android:layout_width="wrap_content"
+                                    android:textSize="16sp"
+                                    android:fontFamily="@font/inter_medium"
+                                    android:layout_height="wrap_content"
+                                    android:text="Images"
+                                    android:textAllCaps="false"
+                                    android:visibility="gone"
+                                    android:textColor="@color/color_cta"
+                                    app:strokeColor="@color/color_cta"
+                                    app:strokeWidth="2dp"
+                                    android:backgroundTint="@color/color_fg"
 
+                                    android:elevation="0dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:paddingTop="8dp"
+                                    android:paddingBottom="8dp"
+                                    android:paddingStart="16dp"
+                                    android:paddingEnd="16dp"
+                                    app:cornerRadius="8dp" />
+
+                            </LinearLayout>
                         </LinearLayout>
 
                         <ProgressBar
@@ -200,6 +207,9 @@
                             android:id="@+id/detailsLayout"
                             android:visibility="gone"
                             android:orientation="vertical"
+                            android:layout_marginTop="24dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
@@ -221,11 +231,11 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="2dp"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="16dp"
                                 android:background="@color/color_bg" />
 
                             <TextView
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="16dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Address"
@@ -243,7 +253,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="2dp"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="16dp"
                                 android:background="@color/color_bg" />
 
                             <TextView
@@ -252,7 +262,7 @@
                                 android:text="Phone number"
                                 android:fontFamily="@font/inter_bold"
                                 android:textSize="16sp"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="16dp"
                                 android:textColor="@color/primaryText" />
                             <TextView
                                 android:id="@+id/phoneNumberTxt"
@@ -267,7 +277,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="2dp"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="16dp"
                                 android:background="@color/color_bg" />
 
                             <TextView
@@ -276,7 +286,7 @@
                                 android:text="Email Id"
                                 android:fontFamily="@font/inter_bold"
                                 android:textSize="16sp"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="16dp"
                                 android:textColor="@color/primaryText" />
                             <TextView
                                 android:id="@+id/emailTxt"
@@ -291,7 +301,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="2dp"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="16dp"
                                 android:background="@color/color_bg" />
 
                             <TextView
@@ -300,7 +310,7 @@
                                 android:text="GST Number"
                                 android:fontFamily="@font/inter_bold"
                                 android:textSize="16sp"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="16dp"
                                 android:textColor="@color/primaryText" />
                             <TextView
                                 android:id="@+id/gstTxt"
@@ -312,17 +322,13 @@
                                 android:fontFamily="@font/inter_medium"
                                 android:textSize="16sp"
                                 android:textColor="@color/secondaryText" />
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="2dp"
-                                android:layout_marginTop="8dp"
-                                android:background="@color/color_bg" />
 
 
                         </LinearLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:visibility="gone"
+                            android:clipToPadding="false"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/imageRV" />

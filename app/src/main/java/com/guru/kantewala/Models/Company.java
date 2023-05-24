@@ -19,6 +19,8 @@ public class Company {
     String phoneNumber;
     String emailId;
     String gst;
+    String uid;
+    int userId;
 
     CompanyImages companyImages;
 
