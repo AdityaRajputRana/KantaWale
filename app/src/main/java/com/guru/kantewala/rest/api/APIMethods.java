@@ -1,6 +1,8 @@
 package com.guru.kantewala.rest.api;
 
+import com.guru.kantewala.Models.Company;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
+import com.guru.kantewala.rest.requests.CompanyReq;
 import com.guru.kantewala.rest.requests.HomeReq;
 import com.guru.kantewala.rest.requests.RegisterProfileReq;
 import com.guru.kantewala.rest.response.CategoryRP;
@@ -21,6 +23,11 @@ public class APIMethods {
     public static void getCategories(APIResponseListener<CategoryRP> listener) {
         HomeReq req = new HomeReq();
         API.postData(listener, req, EndPoints.categories, CategoryRP.class);
+    }
+
+    public static void getCompany(int companyId, APIResponseListener<Company> listener) {
+        CompanyReq req = new CompanyReq(companyId);
+        API.postData(listener, req, EndPoints.companyDetails, Company.class);
     }
 
 }

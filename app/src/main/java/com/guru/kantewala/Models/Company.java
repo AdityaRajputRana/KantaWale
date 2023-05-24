@@ -12,6 +12,44 @@ public class Company {
     ArrayList<String> tags;
     boolean isLocked;
 
+
+    boolean showDetails;
+    String fullName;
+    String address;
+    String phoneNumber;
+    String emailId;
+    String gst;
+
+    CompanyImages companyImages;
+
+    public CompanyImages getCompanyImages() {
+        return companyImages;
+    }
+
+    public boolean isShowDetails() {
+        return showDetails;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public String getGst() {
+        return gst;
+    }
+
     public Company() {
     }
 
