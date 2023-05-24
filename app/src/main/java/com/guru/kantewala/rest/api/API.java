@@ -36,10 +36,10 @@ public class API {
 //                                    String decodedData = HashUtils.fromBase64(data);
                                     listener.convertData(new Gson().fromJson(data, klass));
                                 } else {
-                                    listener.fail("2", request.getString("message"), "", true, false);
+                                    listener.fail("2", request.getString("message"), "", true, true);
                                 }
                             } catch (Exception e) {
-                                listener.fail("1", "The received response is not good", "", true, false);
+                                listener.fail("1", "The received response is not good", "", true, true);
                                 e.printStackTrace();
                             }
                         }
@@ -63,7 +63,7 @@ public class API {
                                 if (error.getMessage() != null && !error.getMessage().isEmpty()) {
                                     message = message + " " + error.getMessage();
                                 }
-                                listener.fail(String.valueOf(error.networkResponse.statusCode), message, "", true, false);
+                                listener.fail(String.valueOf(error.networkResponse.statusCode), message, "", true, true);
                             }
                         }
                     }){
@@ -124,11 +124,11 @@ public class API {
                                         listener.convertData(null);
                                     }
                                 } else {
-                                    listener.fail("2", response.getString("message"), "", true, false);
+                                    listener.fail("2", response.getString("message"), "", true, true);
                                 }
                             } catch (Exception e) {
                                 Log.i("Lesson Response", response.toString());
-                                listener.fail("1", "Response Conversion Error: " + e.getMessage().toString(), "", true, false);
+                                listener.fail("1", "Response Conversion Error: " + e.getMessage().toString(), "", true, true);
                                 e.printStackTrace();
                             }
                         }
@@ -149,7 +149,7 @@ public class API {
                                         }
                                     }
                                     message = message +" " + error.getMessage();
-                                    listener.fail(String.valueOf(error.networkResponse.statusCode), message, "", true, false);
+                                    listener.fail(String.valueOf(error.networkResponse.statusCode), message, "", true, true);
                                 }
                             }
                         }

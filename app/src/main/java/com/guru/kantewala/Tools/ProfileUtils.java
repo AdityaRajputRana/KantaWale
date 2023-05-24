@@ -4,9 +4,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
+import com.guru.kantewala.rest.response.UserRP;
 
 public class ProfileUtils {
-    private enum ProfileKeys{signUpPending};
+    public static void signOut(Context context){
+        FirebaseAuth.getInstance().signOut();
+        getProfilePrefs(context).edit().clear();
+    }
+    private enum ProfileKeys{signUpPending, UserProfile};
     private static String key(ProfileKeys key){
         return String.valueOf(key);
     }
@@ -29,5 +35,13 @@ public class ProfileUtils {
                 .putBoolean(key(ProfileKeys.signUpPending), isRequired)
                 .commit();
     }
+
+    public static void saveProfile(Context context, UserRP userProfile){
+        String profile = new Gson().toJson(userProfile);
+        getProfilePrefs(context).edit()
+                .putString(key(ProfileKeys.UserProfile), profile)
+                .commit();
+    }
+
 
 }

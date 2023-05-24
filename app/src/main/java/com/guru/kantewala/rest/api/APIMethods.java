@@ -8,6 +8,7 @@ import com.guru.kantewala.rest.requests.RegisterProfileReq;
 import com.guru.kantewala.rest.response.CategoryRP;
 import com.guru.kantewala.rest.response.DashboardRP;
 import com.guru.kantewala.rest.response.MessageRP;
+import com.guru.kantewala.rest.response.UserRP;
 
 public class APIMethods {
 
@@ -28,6 +29,11 @@ public class APIMethods {
     public static void getCompany(int companyId, APIResponseListener<Company> listener) {
         CompanyReq req = new CompanyReq(companyId);
         API.postData(listener, req, EndPoints.companyDetails, Company.class);
+    }
+
+    public static void getUserProfile(APIResponseListener<UserRP> listener){
+        HomeReq req = new HomeReq();
+        API.postData(listener, req, EndPoints.userProfile, UserRP.class);
     }
 
 }

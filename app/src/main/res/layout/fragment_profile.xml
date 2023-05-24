@@ -3,12 +3,159 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainFragments.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Profile Fragment" />
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:elevation="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:id="@+id/titleImg"
+                android:src="@drawable/logo_full" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:fontFamily="@font/inter_bold"
+                android:textSize="24sp"
+                android:textColor="@color/primaryText" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                >
+
+                <ImageView
+                    android:id="@+id/profileImageView"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/bg_indicator_round"/>
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginStart="8dp">
+
+                    <TextView
+                        android:id="@+id/nameTxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Kantewala"
+                        android:textSize="18sp"
+                        android:textColor="@color/primaryText"
+                        android:fontFamily="@font/inter_bold" />
+
+                    <TextView
+                        android:id="@+id/locationTxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_location"
+                        android:drawablePadding="4dp"
+                        android:drawableTint="@color/secondaryText"
+                        android:text="Loading..."
+                        android:textSize="16sp"
+                        android:textColor="@color/secondaryText"
+                        android:fontFamily="@font/inter_medium" />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/color_bg" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit User Profile"
+                android:fontFamily="@font/inter_bold"
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/primaryText" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/editUserProfileBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  Edit  "
+                android:fontFamily="@font/inter_medium"
+                android:textSize="14sp"
+                android:backgroundTint="@android:color/transparent"
+                app:chipStrokeColor="@color/color_cta"
+                app:chipStrokeWidth="1dp"
+                android:textColor="@color/color_cta" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/color_bg" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit Company Profile"
+                android:fontFamily="@font/inter_bold"
+                android:textSize="18sp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/primaryText" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/editCompanyProfileBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  Edit  "
+                android:fontFamily="@font/inter_medium"
+                android:textSize="14sp"
+                android:backgroundTint="@android:color/transparent"
+                app:chipStrokeColor="@color/color_cta"
+                app:chipStrokeWidth="1dp"
+                android:textColor="@color/color_cta" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/color_bg" />
+
+            <TextView
+                android:id="@+id/logoutBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:fontFamily="@font/inter_bold"
+                android:textSize="18sp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:textColor="@color/primaryText" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
 </FrameLayout>

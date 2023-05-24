@@ -6,5 +6,6 @@ public class EndPoints {
    public static String dashboard = "getDashboard";
    public static String categories = "getCategories";
    public static String companyDetails = "getCompany";
+   public static String userProfile = "getUserProfile";
 
 }
