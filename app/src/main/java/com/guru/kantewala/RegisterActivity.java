@@ -1,5 +1,11 @@
 package com.guru.kantewala;
 
+import androidx.activity.result.ActivityResultLauncher;
+
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
+import 	androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,10 +13,11 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -22,7 +29,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.guru.kantewala.Helpers.PhoneAuthHelper;
 import com.guru.kantewala.Tools.Constants;
-import com.guru.kantewala.Tools.ProfileUtils;
 import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.databinding.ActivityRegisterBinding;
 import com.guru.kantewala.databinding.DialogLoadingBinding;
@@ -32,6 +38,7 @@ import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.requests.RegisterProfileReq;
 import com.guru.kantewala.rest.response.MessageRP;
 import com.guru.kantewala.rest.response.UserRP;
+import com.squareup.picasso.Picasso;
 
 public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelper.PhoneAuthListener {
 
@@ -46,6 +53,16 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
     DialogLoadingBinding dialogBinding;
 
     private UserRP userRP;
+
+    ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
+            registerForActivityResult(new PickVisualMedia(), uri -> {
+                if (uri != null) {
+                    Picasso.get()
+                            .load(uri)
+                            .into(binding.profileImageView);
+                    toUploadImageUri = uri;
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +91,27 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
                 }
             }
         });
+
+        binding.profileImageView.setOnClickListener(view->pickImage());
+    }
+
+    private void pickImage() {
+        ActivityResultContracts.PickVisualMedia.VisualMediaType mediaType = (ActivityResultContracts.PickVisualMedia.VisualMediaType) ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE;
+        pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(mediaType)
+                .build());
+    }
+
+    Uri toUploadImageUri = null;
+    String uploadedImageUrl = "";
+    private void uploadImage() {
+        if (toUploadImageUri == null){
+            saveProfileInformation();
+            return;
+        }
+
+        startProgress("Uploading Image");
+
     }
 
     private void startVerification() {
@@ -145,6 +183,10 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
     }
 
     private void saveProfileInformation() {
+        if (toUploadImageUri != null){
+            uploadImage();
+            return;
+        }
         startProgress("Please wait while we update your profile");
         RegisterProfileReq req = new RegisterProfileReq(
                 binding.nameEt.getText().toString(),
@@ -181,6 +223,10 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
 
         UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder()
                 .setDisplayName(binding.nameEt.getText().toString());
+        if (imageUploadUri != null){
+            Log.i("Photo", "updating");
+            builder.setPhotoUri(imageUploadUri);
+        }
                 //todo: update photo here also
         UserProfileChangeRequest request = builder.build();
         FirebaseAuth.getInstance().getCurrentUser()
@@ -307,6 +353,16 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
         binding.cityEt.setText(userRP.getCity());
         selectedStateIndex = userRP.getStateCode();
         binding.stateSpinner.setSelection(selectedStateIndex);
+        Log.i("Photo", "Printing");
+        if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl() != null){
+            Log.i("PhotoURL", String.valueOf(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()));
+        }
+        if (userRP.getPhotoUrl() != null && !userRP.getPhotoUrl().isEmpty()){
+            Picasso.get()
+                    .load(userRP.getPhotoUrl())
+                    .placeholder(R.drawable.ic_profile_placeholder)
+                    .into(binding.profileImageView);
+        }
     }
 
 
