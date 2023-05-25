@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.guru.kantewala.Helpers.PhoneAuthHelper;
 import com.guru.kantewala.Tools.Constants;
+import com.guru.kantewala.Tools.Transformations.RoundedCornerTransformation;
 import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.databinding.ActivityRegisterBinding;
 import com.guru.kantewala.databinding.DialogLoadingBinding;
@@ -59,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
                 if (uri != null) {
                     Picasso.get()
                             .load(uri)
+                            .transform(new RoundedCornerTransformation(50, 50))
                             .into(binding.profileImageView);
                     toUploadImageUri = uri;
                 }
@@ -96,7 +98,8 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
     }
 
     private void pickImage() {
-        ActivityResultContracts.PickVisualMedia.VisualMediaType mediaType = (ActivityResultContracts.PickVisualMedia.VisualMediaType) ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE;
+        ActivityResultContracts.PickVisualMedia.VisualMediaType mediaType =
+                (ActivityResultContracts.PickVisualMedia.VisualMediaType) ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE;
         pickMedia.launch(new PickVisualMediaRequest.Builder()
                 .setMediaType(mediaType)
                 .build());
@@ -111,6 +114,20 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
         }
 
         startProgress("Uploading Image");
+        APIMethods.uploadProfilePicture(toUploadImageUri, this, new APIResponseListener<MessageRP>() {
+            @Override
+            public void success(MessageRP response) {
+                uploadedImageUrl = response.getMessage();
+                toUploadImageUri = null;
+                saveProfileInformation();
+            }
+
+            @Override
+            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                message = "While uploading profile picture: " + message + " (EC"+code+")";
+                showError(message);
+            }
+        });
 
     }
 
@@ -190,14 +207,14 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
         startProgress("Please wait while we update your profile");
         RegisterProfileReq req = new RegisterProfileReq(
                 binding.nameEt.getText().toString(),
-                countryCode + binding.phoneNumberEt.getText().toString(),
+                (countryCode + binding.phoneNumberEt.getText().toString()),
                 FirebaseAuth.getInstance().getCurrentUser().getUid(),
                 binding.emailEt.getText().toString(),
                 binding.companyEt.getText().toString(),
                 binding.gstET.getText().toString(),
                 binding.cityEt.getText().toString(),
                 Constants.getIndianStates().get(selectedStateIndex),
-                selectedStateIndex, userRP.getPhotoUrl()
+                selectedStateIndex, uploadedImageUrl
         );
         APIMethods.registerProfile(mode, req, new APIResponseListener<MessageRP>() {
             @Override
@@ -223,11 +240,9 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
 
         UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder()
                 .setDisplayName(binding.nameEt.getText().toString());
-        if (imageUploadUri != null){
-            Log.i("Photo", "updating");
-            builder.setPhotoUri(imageUploadUri);
+        if (toUploadImageUri != null){
+            builder.setPhotoUri(toUploadImageUri);
         }
-                //todo: update photo here also
         UserProfileChangeRequest request = builder.build();
         FirebaseAuth.getInstance().getCurrentUser()
                 .updateProfile(request)
@@ -341,9 +356,8 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
         });
     }
 
-    String imageUrl = "";
-
     private void updateUIForEdit() {
+        uploadedImageUrl = userRP.getPhotoUrl();
         binding.nameEt.setText(userRP.getName());
         binding.emailEt.setText(userRP.getEmail());
         //Todo: handle country codes
@@ -360,6 +374,7 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
         if (userRP.getPhotoUrl() != null && !userRP.getPhotoUrl().isEmpty()){
             Picasso.get()
                     .load(userRP.getPhotoUrl())
+                    .transform(new RoundedCornerTransformation(50, 50))
                     .placeholder(R.drawable.ic_profile_placeholder)
                     .into(binding.profileImageView);
         }

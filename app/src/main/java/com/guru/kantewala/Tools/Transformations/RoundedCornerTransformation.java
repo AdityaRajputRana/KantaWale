@@ -19,9 +19,9 @@ public class RoundedCornerTransformation implements Transformation {
         DIAGONAL_FROM_TOP_LEFT, DIAGONAL_FROM_TOP_RIGHT
     }
 
-    private final int mRadius;
-    private final int mDiameter;
-    private final int mMargin;
+    private int mRadius;
+    private int mDiameter;
+    private int mMargin;
     private final CornerType mCornerType;
 
     public RoundedCornerTransformation(int radius, int margin) {
@@ -29,9 +29,9 @@ public class RoundedCornerTransformation implements Transformation {
     }
 
     public RoundedCornerTransformation(int radius, int margin, CornerType cornerType) {
-        mRadius = radius;
+        mRadius = 500;
+        mMargin = 0;
         mDiameter = radius * 2;
-        mMargin = margin;
         mCornerType = cornerType;
     }
 
@@ -40,6 +40,7 @@ public class RoundedCornerTransformation implements Transformation {
 
         int width = source.getWidth();
         int height = source.getHeight();
+
 
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 

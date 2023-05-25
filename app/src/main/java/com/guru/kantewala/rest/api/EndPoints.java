@@ -8,5 +8,6 @@ public class EndPoints {
    public static String categories = "getCategories";
    public static String companyDetails = "getCompany";
    public static String userProfile = "getUserProfile";
+   public static String updateProfilePhoto = "updateProfilePhoto";
 
 }

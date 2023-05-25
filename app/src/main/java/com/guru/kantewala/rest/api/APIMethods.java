@@ -1,9 +1,14 @@
 package com.guru.kantewala.rest.api;
 
+import android.content.Context;
+import android.net.Uri;
+
 import com.guru.kantewala.Models.Company;
 import com.guru.kantewala.RegisterActivity;
+import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.requests.CompanyReq;
+import com.guru.kantewala.rest.requests.FileReq;
 import com.guru.kantewala.rest.requests.HomeReq;
 import com.guru.kantewala.rest.requests.RegisterProfileReq;
 import com.guru.kantewala.rest.response.CategoryRP;
@@ -12,6 +17,12 @@ import com.guru.kantewala.rest.response.MessageRP;
 import com.guru.kantewala.rest.response.UserRP;
 
 public class APIMethods {
+
+    public static void uploadProfilePicture(Uri fileUri, Context context, APIResponseListener<MessageRP> listener){
+        String file = Utils.getEncodedCompressedProfilePic(fileUri, context);
+        FileReq req = new FileReq(file);
+        API.postData(listener, req, EndPoints.updateProfilePhoto, MessageRP.class);
+    }
 
     public static void registerProfile(RegisterActivity.Mode mode, RegisterProfileReq req, APIResponseListener<MessageRP> listener) {
         String endpoint = EndPoints.registerProfile;

@@ -25,6 +25,6 @@ public class RegisterProfileReq {
         this.city = city;
         this.state = state;
         this.stateCode = stateCode;
-        this.phoneNumber = photoUrl;
+        this.photoUrl = photoUrl;
     }
 }

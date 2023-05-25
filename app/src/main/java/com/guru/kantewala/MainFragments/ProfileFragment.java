@@ -124,7 +124,7 @@ public class ProfileFragment extends Fragment {
         if (user.getPhotoUrl() != null && !user.getPhotoUrl().toString().isEmpty()){
             Picasso.get()
                     .load(user.getPhotoUrl())
-                    .transform(new RoundedCornerTransformation(20, 0))
+                    .transform(new RoundedCornerTransformation(500, 0))
                     .placeholder(R.drawable.ic_profile_placeholder)
                     .into(binding.profileImageView);
         } else {
@@ -143,6 +143,7 @@ public class ProfileFragment extends Fragment {
         if (userRP.getPhotoUrl() != null && !userRP.getPhotoUrl().isEmpty()){
             Picasso.get()
                     .load(userRP.getPhotoUrl())
+                    .transform(new RoundedCornerTransformation(500, 0))
                     .placeholder(R.drawable.ic_profile_placeholder)
                     .into(binding.profileImageView);
         }

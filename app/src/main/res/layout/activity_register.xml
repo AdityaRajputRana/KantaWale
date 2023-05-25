@@ -58,6 +58,7 @@
             android:id="@+id/profileImageView"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_profile_placeholder"
             android:background="@drawable/bg_indicator_round"/>
 
