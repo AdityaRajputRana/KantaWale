@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.guru.kantewala.Adapters.CompanyImagesRVAdapter;
 import com.guru.kantewala.Models.Company;
 import com.guru.kantewala.Tools.Methods;
+import com.guru.kantewala.Tools.Transformations.RoundedCornerTransformation;
 import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.databinding.ActivityCompanyBinding;
 import com.guru.kantewala.rest.api.APIMethods;
@@ -103,6 +104,7 @@ public class CompanyActivity extends AppCompatActivity {
         } else {
             Picasso.get()
                     .load(company.getLogoUrl())
+                    .transform(new RoundedCornerTransformation(10))
                     .into(binding.companyLogoImg);
         }
 

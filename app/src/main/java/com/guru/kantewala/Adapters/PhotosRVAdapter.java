@@ -35,7 +35,7 @@ public class PhotosRVAdapter extends RecyclerView.Adapter<PhotosRVAdapter.PhotoV
     public void onBindViewHolder(@NonNull PhotoViewHolder holder, int position) {
         Picasso.get()
                 .load(block.getPhotos().get(position))
-                .transform(new RoundedCornerTransformation(16, 0))
+                .transform(new RoundedCornerTransformation(16))
                 .into(holder.imageView);
 
         //Todo: can be full screened image on click

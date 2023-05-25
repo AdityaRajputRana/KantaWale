@@ -28,6 +28,13 @@ public class RoundedCornerTransformation implements Transformation {
         this(radius, margin, CornerType.ALL);
     }
 
+    public RoundedCornerTransformation(int mRadius){
+        this.mRadius = mRadius;
+        this.mMargin = 0;
+        mDiameter = mRadius * 2;
+        mCornerType = CornerType.ALL;
+    }
+
     public RoundedCornerTransformation(int radius, int margin, CornerType cornerType) {
         mRadius = 500;
         mMargin = 0;
