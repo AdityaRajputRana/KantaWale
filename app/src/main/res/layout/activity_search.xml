@@ -1,15 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/color_fg"
     android:layout_height="match_parent"
     tools:context=".SearchActivity">
 
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="0dp"
+        android:outlineProvider="none"
+        android:id="@+id/appBarLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            android:background="@color/color_fg"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/topLayout">
+
+            <ImageView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:elevation="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:id="@+id/titleImg"
+                android:src="@drawable/logo_full" />
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_indicator_circle"
+                app:layout_constraintTop_toTopOf="@id/titleImg"
+                app:layout_constraintBottom_toBottomOf="@id/titleImg"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:elevation="10dp"
+                android:src="@drawable/ic_back" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                app:layout_constraintTop_toBottomOf="@id/titleImg"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/colorBorder"
+                     />
+
+
+                <EditText
+                    android:id="@+id/searchEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:hint="Search"
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="16sp"
+                    android:textColor="@color/primaryText"
+                    android:textColorHint="@color/tertiaryText"
+                    android:layout_marginTop="16dp"
+                    android:drawableLeft="@drawable/ic_search"
+                    android:drawableTint="@color/secondaryText"
+                    android:drawablePadding="8dp"
+                    android:background="@drawable/bg_et_main" />
+                
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+                    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1">
+                        
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Categories"
+                            android:fontFamily="@font/inter_medium"
+                            android:textSize="16sp"
+                            android:textColor="@color/primaryText" />
+
+                        <Spinner
+                            android:id="@+id/categorySpinner"
+                            android:layout_width="match_parent"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primaryText"
+                            android:spinnerMode="dropdown"
+                            android:textColorHint="@color/tertiaryText"
+                            android:background="@drawable/bg_et_main"
+                            android:layout_marginTop="8dp" />
+
+                        
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="State"
+                            android:fontFamily="@font/inter_medium"
+                            android:textSize="16sp"
+                            android:textColor="@color/primaryText" />
+
+                        <Spinner
+                            android:id="@+id/stateSpinner"
+                            android:layout_width="match_parent"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primaryText"
+                            android:spinnerMode="dropdown"
+                            android:textColorHint="@color/tertiaryText"
+                            android:background="@drawable/bg_et_main"
+                            android:layout_marginTop="8dp" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@color/colorBorder"
+                    />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Search Activity"
-        android:textColor="@color/color_cta" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:id="@+id/mainLinearLayout"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        app:cardCornerRadius="0dp"
+        app:cardBackgroundColor="@color/color_fg"
+        app:cardElevation="0dp"
+        android:clipChildren="false"
+        android:gravity="center_horizontal"
+        android:clipToPadding="false"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:clipToPadding="false" />
+    </LinearLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
