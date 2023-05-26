@@ -26,6 +26,7 @@ import com.guru.kantewala.databinding.FragmentProfileBinding;
 import com.guru.kantewala.rest.api.APIMethods;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.response.UserRP;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {

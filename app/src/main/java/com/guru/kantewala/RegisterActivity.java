@@ -39,6 +39,8 @@ import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.requests.RegisterProfileReq;
 import com.guru.kantewala.rest.response.MessageRP;
 import com.guru.kantewala.rest.response.UserRP;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelper.PhoneAuthListener {
@@ -240,8 +242,18 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
 
         UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder()
                 .setDisplayName(binding.nameEt.getText().toString());
-        if (toUploadImageUri != null){
-            builder.setPhotoUri(toUploadImageUri);
+        if (uploadedImageUrl != null && !uploadedImageUrl.isEmpty()){
+            builder.setPhotoUri(Uri.parse(uploadedImageUrl));
+        }
+
+        if (uploadedImageUrl != null && userRP != null
+        && !uploadedImageUrl.equals(userRP.getPhotoUrl())) {
+            Picasso.get()
+                    .invalidate(uploadedImageUrl);
+            Picasso.get()
+                    .load(uploadedImageUrl)
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                    .into(binding.profileImageView);
         }
         UserProfileChangeRequest request = builder.build();
         FirebaseAuth.getInstance().getCurrentUser()
