@@ -172,10 +172,17 @@ public class SearchActivity extends AppCompatActivity {
 
     private void updateUI(){
         if (processSemaphore <= 0){
+            binding.infoTxt.setVisibility(View.GONE);
             binding.progressBar.setVisibility(View.GONE);
             binding.recyclerView.setVisibility(View.VISIBLE);
+            if (searchRP.getRecommendedCompanies().size() <= 0){
+                binding.infoTxt.setVisibility(View.VISIBLE);
+                binding.infoTxt.setText("No results found for your search :(");
+            }
             initialiseRecyclerView();
         } else {
+            binding.infoTxt.setVisibility(View.VISIBLE);
+            binding.infoTxt.setText("Please wait");
             binding.progressBar.setVisibility(View.VISIBLE);
             binding.recyclerView.setVisibility(View.GONE);
         }
