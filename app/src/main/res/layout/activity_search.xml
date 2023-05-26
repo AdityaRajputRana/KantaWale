@@ -89,7 +89,7 @@
                     
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:layout_marginEnd="8dp"
                         android:layout_weight="1">
@@ -106,7 +106,8 @@
                             android:id="@+id/categorySpinner"
                             android:layout_width="match_parent"
                             android:textSize="16sp"
-                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_height="0dp"
                             android:textColor="@color/primaryText"
                             android:spinnerMode="dropdown"
                             android:textColorHint="@color/tertiaryText"
@@ -117,7 +118,7 @@
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:layout_marginStart="8dp"
                         android:layout_weight="1">
@@ -134,7 +135,8 @@
                             android:id="@+id/stateSpinner"
                             android:layout_width="match_parent"
                             android:textSize="16sp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
                             android:textColor="@color/primaryText"
                             android:spinnerMode="dropdown"
                             android:textColorHint="@color/tertiaryText"
@@ -152,7 +154,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
                     android:background="@color/colorBorder"
                     />
 
@@ -184,7 +185,7 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp"
+            android:padding="8dp"
             android:clipToPadding="false" />
     </LinearLayout>
 

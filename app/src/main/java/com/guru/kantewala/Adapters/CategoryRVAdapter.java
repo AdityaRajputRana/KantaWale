@@ -53,6 +53,7 @@ public class CategoryRVAdapter extends RecyclerView.Adapter<CategoryRVAdapter.Ca
         Gson gson = new Gson();
         Category category = categoryRP.getCategories().get(index);
         Intent i = new Intent(context, SearchActivity.class);
+        i.putExtra("isCatIDAttached", true);
         i.putExtra("categoryId", category.getId());
         i.putExtra("isCategoryAttached", true);
         i.putExtra("category", gson.toJson(category));

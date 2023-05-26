@@ -11,9 +11,11 @@ import com.guru.kantewala.rest.requests.CompanyReq;
 import com.guru.kantewala.rest.requests.FileReq;
 import com.guru.kantewala.rest.requests.HomeReq;
 import com.guru.kantewala.rest.requests.RegisterProfileReq;
+import com.guru.kantewala.rest.requests.SearchReq;
 import com.guru.kantewala.rest.response.CategoryRP;
 import com.guru.kantewala.rest.response.DashboardRP;
 import com.guru.kantewala.rest.response.MessageRP;
+import com.guru.kantewala.rest.response.SearchRP;
 import com.guru.kantewala.rest.response.UserRP;
 
 public class APIMethods {
@@ -49,6 +51,12 @@ public class APIMethods {
     public static void getUserProfile(APIResponseListener<UserRP> listener){
         HomeReq req = new HomeReq();
         API.postData(listener, req, EndPoints.userProfile, UserRP.class);
+    }
+
+    public static void search(int page, String keyword, int categoryId, int stateCode,
+                              APIResponseListener<SearchRP> listener){
+        SearchReq req = new SearchReq(page, keyword, stateCode, categoryId);
+        API.postData(listener, req, EndPoints.search, SearchRP.class);
     }
 
 }
