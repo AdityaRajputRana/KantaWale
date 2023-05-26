@@ -4,16 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.guru.kantewala.Adapters.SearchRVAdapter;
 import com.guru.kantewala.Models.Category;
 import com.guru.kantewala.Tools.Constants;
 import com.guru.kantewala.Tools.Methods;
+import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.databinding.ActivitySearchBinding;
 import com.guru.kantewala.rest.api.APIMethods;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
@@ -54,6 +60,37 @@ public class SearchActivity extends AppCompatActivity {
 
     private void setListeners() {
         binding.backBtn.setOnClickListener(view->onBackPressed());
+        binding.searchEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                    fetchCompanies();
+                    return true;
+            }
+        });
+        binding.searchEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                isSearchChange= true;
+                if (binding.searchEt.getText().toString().contains("\n")){
+                    String text = binding.searchEt.getText().toString().trim()
+                            .replace("\n", "");
+                    binding.searchEt.setText(text);
+                    Utils.hideSoftKeyboard(SearchActivity.this);
+                    fetchCompanies();
+                }
+            }
+        });
     }
 
 
@@ -68,6 +105,7 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         processSemaphore++;
+        Utils.hideSoftKeyboard(this);
         isSearchChange = false;
         updateUI();
 
@@ -99,6 +137,7 @@ public class SearchActivity extends AppCompatActivity {
             public void success(CategoryRP response) {
                 processSemaphore--;
                 categoryRP = response;
+                initialiseCategorySpinner();
                 updateUI();
             }
 
@@ -127,13 +166,11 @@ public class SearchActivity extends AppCompatActivity {
 
         stateList = Constants.getIndianStates();
         initialiseStateSpinner();
+        initialiseCategorySpinner();
     }
 
 
     private void updateUI(){
-        if (categoryRP != null){
-            initialiseCategorySpinner();
-        }
         if (processSemaphore <= 0){
             binding.progressBar.setVisibility(View.GONE);
             binding.recyclerView.setVisibility(View.VISIBLE);
@@ -173,6 +210,9 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void initialiseCategorySpinner() {
+        if (categoryRP == null){
+            return;
+        }
         ArrayList<String> cats = categoryRP.getCategoriesForDropDown();
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
                 R.layout.item_spinner, cats);

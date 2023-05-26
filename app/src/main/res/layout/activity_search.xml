@@ -69,6 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
+                    android:imeOptions="actionSearch"
                     android:hint="Search"
                     android:fontFamily="@font/inter_medium"
                     android:textSize="16sp"
