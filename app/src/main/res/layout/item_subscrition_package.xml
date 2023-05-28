@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/bg_subsciption_package"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/titleTxt"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/primaryText"
+            android:layout_height="wrap_content"
+            android:text="₹3900/year"
+            android:fontFamily="@font/inter_bold"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/radioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundTint="@color/colorBorder" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/bodyTxt"
+        android:layout_width="match_parent"
+        android:textColor="@color/secondaryText"
+        android:layout_height="wrap_content"
+        android:text="You will unlock any 1 State of your choosing and can order anything from those 1 State."
+        android:fontFamily="@font/inter_medium"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
+</LinearLayout>

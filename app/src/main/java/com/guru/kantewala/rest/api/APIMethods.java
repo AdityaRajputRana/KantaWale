@@ -16,6 +16,7 @@ import com.guru.kantewala.rest.response.CategoryRP;
 import com.guru.kantewala.rest.response.DashboardRP;
 import com.guru.kantewala.rest.response.MessageRP;
 import com.guru.kantewala.rest.response.SearchRP;
+import com.guru.kantewala.rest.response.SubscriptionPackagesRP;
 import com.guru.kantewala.rest.response.UserRP;
 
 public class APIMethods {
@@ -59,4 +60,8 @@ public class APIMethods {
         API.postData(listener, req, EndPoints.search, SearchRP.class);
     }
 
+    public static void getSubscriptionPackages(APIResponseListener<SubscriptionPackagesRP> listener){
+        HomeReq req = new HomeReq();
+        API.postData(listener, req, EndPoints.subscriptionPackages, SubscriptionPackagesRP.class);
+    }
 }
