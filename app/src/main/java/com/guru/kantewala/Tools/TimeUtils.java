@@ -16,13 +16,13 @@ public class TimeUtils {
 
         if (days<30){
             td.time = String.valueOf(days);
-            td.units = "days";
+            td.units = "day";
         } else if (months<12){
             td.time = String.valueOf(months);
-            td.units = "months";
+            td.units = "month";
         } else {
             td.time = String.valueOf(years);
-            td.units = "years";
+            td.units = "year";
         }
 
         return td;

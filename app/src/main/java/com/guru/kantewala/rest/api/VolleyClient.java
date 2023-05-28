@@ -12,7 +12,7 @@ public class VolleyClient {
     public static String HOST= "quasar-edtech.vercel.app/edtech";
 
     public static String getBaseUrl() {
-        if (false)
+        if (true)
             return testURL;
         return BASE_URL;
     }
