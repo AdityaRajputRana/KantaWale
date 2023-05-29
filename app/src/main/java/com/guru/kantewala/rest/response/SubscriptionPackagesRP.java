@@ -1,17 +1,17 @@
 package com.guru.kantewala.rest.response;
 
-import com.guru.kantewala.Models.SubscriptionPackage;
+import com.guru.kantewala.Models.SubscriptionPack;
 
 import java.util.ArrayList;
 
 public class SubscriptionPackagesRP {
     boolean isPremiumUser;
     //Todo: Subscription details for subscribed users in this
-    ArrayList<SubscriptionPackage> subscriptionPackages;
-    public SubscriptionPackage getMinimumPackage(){
+    ArrayList<SubscriptionPack> subscriptionPackages;
+    public SubscriptionPack getMinimumPackage(){
         int price = Integer.MAX_VALUE;
-        SubscriptionPackage pack = new SubscriptionPackage();
-        for (SubscriptionPackage p: getSubscriptionPackages()){
+        SubscriptionPack pack = new SubscriptionPack();
+        for (SubscriptionPack p: getSubscriptionPackages()){
             if (p.isMinimum)
                 return p;
             if (p.getPrice() < price){
@@ -25,7 +25,7 @@ public class SubscriptionPackagesRP {
         return isPremiumUser;
     }
 
-    public ArrayList<SubscriptionPackage> getSubscriptionPackages() {
+    public ArrayList<SubscriptionPack> getSubscriptionPackages() {
         if (subscriptionPackages == null)
             subscriptionPackages = new ArrayList<>();
         return subscriptionPackages;

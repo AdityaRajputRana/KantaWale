@@ -2,7 +2,7 @@ package com.guru.kantewala.Models;
 
 import com.guru.kantewala.Tools.TimeUtils;
 
-public class SubscriptionPackage {
+public class SubscriptionPack {
     String title;
     String body;
     int price;
@@ -11,11 +11,15 @@ public class SubscriptionPackage {
     public boolean isMinimum;
     int id;
 
+    public int getNoOfStates() {
+        return noOfStates;
+    }
+
     public int getPrice() {
         return price;
     }
 
-    public SubscriptionPackage() {
+    public SubscriptionPack() {
     }
 
     public String getTitle() {

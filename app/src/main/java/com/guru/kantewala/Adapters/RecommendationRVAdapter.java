@@ -1,18 +1,15 @@
 package com.guru.kantewala.Adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,7 +19,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.gson.Gson;
 import com.guru.kantewala.CompanyActivity;
-import com.guru.kantewala.Helpers.SubscriptionUIHelper;
+import com.guru.kantewala.Helpers.SubscriptionInterface;
 import com.guru.kantewala.Models.Company;
 import com.guru.kantewala.R;
 import com.guru.kantewala.Tools.BlurUtils;
@@ -108,8 +105,8 @@ public class RecommendationRVAdapter extends RecyclerView.Adapter<Recommendation
         //Todo: handle Starting from price
         //Todo: handle subscribed already click
         sheet.continueBtn.setOnClickListener(view->{
-            if (context instanceof SubscriptionUIHelper.AskToSubListener)
-                ((SubscriptionUIHelper.AskToSubListener) context).redirectToSubscribeFragment();
+            if (context instanceof SubscriptionInterface.AskToSubListener)
+                ((SubscriptionInterface.AskToSubListener) context).redirectToSubscribeFragment();
             dialog.dismiss();
         });
         dialog.setContentView(sheet.getRoot());

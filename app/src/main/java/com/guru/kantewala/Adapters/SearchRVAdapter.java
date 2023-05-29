@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,15 +18,12 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.gson.Gson;
 import com.guru.kantewala.CompanyActivity;
-import com.guru.kantewala.Helpers.SubscriptionUIHelper;
+import com.guru.kantewala.Helpers.SubscriptionInterface;
 import com.guru.kantewala.Models.Company;
 import com.guru.kantewala.R;
 import com.guru.kantewala.Tools.BlurUtils;
-import com.guru.kantewala.Tools.Transformations.CircleTransform;
 import com.guru.kantewala.databinding.SheetSubscribeBinding;
-import com.guru.kantewala.rest.response.DashboardRP;
 import com.guru.kantewala.rest.response.SearchRP;
-import com.squareup.picasso.Picasso;
 
 public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.CompanyViewHolder> {
 
@@ -102,8 +98,8 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.Compan
         //Todo: handle Starting from price
         //Todo: handle subscribed already click
         sheet.continueBtn.setOnClickListener(view->{
-            if (context instanceof SubscriptionUIHelper.AskToSubListener)
-                ((SubscriptionUIHelper.AskToSubListener) context).redirectToSubscribeFragment();
+            if (context instanceof SubscriptionInterface.AskToSubListener)
+                ((SubscriptionInterface.AskToSubListener) context).redirectToSubscribeFragment();
             dialog.dismiss();
         });
         dialog.setContentView(sheet.getRoot());

@@ -1,5 +1,6 @@
 package com.guru.kantewala.Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,18 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.guru.kantewala.Models.SubscriptionPackage;
+import com.guru.kantewala.Models.SubscriptionPack;
 import com.guru.kantewala.R;
 import com.guru.kantewala.rest.response.SubscriptionPackagesRP;
-
-import org.w3c.dom.Text;
 
 public class SubscriptionPackageAdapter extends RecyclerView.Adapter<SubscriptionPackageAdapter.SubPackageViewHolder> {
 
     SubscriptionPackagesRP subscriptionPackagesRP;
     int selectedPackageIndex;
 
-    public SubscriptionPackage getSelectedPack(){
+    public SubscriptionPack getSelectedPack(){
         return subscriptionPackagesRP.getSubscriptionPackages().get(selectedPackageIndex);
     }
 
@@ -39,7 +38,7 @@ public class SubscriptionPackageAdapter extends RecyclerView.Adapter<Subscriptio
 
     @Override
     public void onBindViewHolder(@NonNull SubPackageViewHolder holder, int position) {
-        SubscriptionPackage pack = subscriptionPackagesRP.getSubscriptionPackages().get(position);
+        SubscriptionPack pack = subscriptionPackagesRP.getSubscriptionPackages().get(position);
         holder.itemView.setSelected(selectedPackageIndex == position);
         holder.radioButton.setChecked(selectedPackageIndex == position);
         holder.titleTxt.setText(pack.getTitle());

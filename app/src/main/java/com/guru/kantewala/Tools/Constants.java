@@ -1,5 +1,6 @@
 package com.guru.kantewala.Tools;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,5 +53,14 @@ public class Constants {
         if (indianStates == null)
             indianStates = generateIndianStates();
         return indianStates;
+    }
+
+    public static ArrayList<String> getIndianStatesArrayList(){
+        ArrayList<String> states = new ArrayList<>();
+        for (String s: getIndianStates()){
+            states.add(s);
+        }
+        states.remove(0);
+        return states;
     }
 }

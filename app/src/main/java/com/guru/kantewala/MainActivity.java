@@ -5,16 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationBarView;
-import com.guru.kantewala.Helpers.SubscriptionUIHelper;
+import com.guru.kantewala.Helpers.SubscriptionInterface;
 import com.guru.kantewala.MainFragments.HomeFragment;
 import com.guru.kantewala.MainFragments.ProfileFragment;
 import com.guru.kantewala.MainFragments.SubscriptionFragment;
 import com.guru.kantewala.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements SubscriptionUIHelper.AskToSubListener {
+public class MainActivity extends AppCompatActivity implements SubscriptionInterface.AskToSubListener {
 
     ActivityMainBinding binding;
 
