@@ -12,5 +12,8 @@ public class EndPoints {
    public static String search = "searchCompanies";
    public static String subscriptionPackages = "getSubscriptionPackages";
 
+   public static String generateOrder = "generateOrder";
+   public static String verifyOrder = "verifyOrder";
+
 
 }

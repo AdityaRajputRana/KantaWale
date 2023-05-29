@@ -4,20 +4,27 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.guru.kantewala.Models.Company;
+import com.guru.kantewala.Models.State;
+import com.guru.kantewala.Models.SubscriptionPack;
 import com.guru.kantewala.RegisterActivity;
 import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.requests.CompanyReq;
 import com.guru.kantewala.rest.requests.FileReq;
+import com.guru.kantewala.rest.requests.GenerateOrderReq;
 import com.guru.kantewala.rest.requests.HomeReq;
 import com.guru.kantewala.rest.requests.RegisterProfileReq;
 import com.guru.kantewala.rest.requests.SearchReq;
+import com.guru.kantewala.rest.requests.VerifyLessonPaymentReq;
 import com.guru.kantewala.rest.response.CategoryRP;
 import com.guru.kantewala.rest.response.DashboardRP;
+import com.guru.kantewala.rest.response.LessonOrderIdRp;
 import com.guru.kantewala.rest.response.MessageRP;
 import com.guru.kantewala.rest.response.SearchRP;
 import com.guru.kantewala.rest.response.SubscriptionPackagesRP;
 import com.guru.kantewala.rest.response.UserRP;
+
+import java.util.ArrayList;
 
 public class APIMethods {
 
@@ -64,4 +71,15 @@ public class APIMethods {
         HomeReq req = new HomeReq();
         API.postData(listener, req, EndPoints.subscriptionPackages, SubscriptionPackagesRP.class);
     }
+
+    public static void getOrderId(ArrayList<State> states, SubscriptionPack pack, APIResponseListener<LessonOrderIdRp> listener){
+        GenerateOrderReq req = new GenerateOrderReq(pack, states);
+        API.postData(listener, req, EndPoints.generateOrder, LessonOrderIdRp.class);
+    }
+
+    public static void verifyPayment(String s, String order_id, APIResponseListener<MessageRP> listener){
+        VerifyLessonPaymentReq req = VerifyLessonPaymentReq.getInstance(s, order_id);
+        API.postData(listener, req, EndPoints.verifyOrder, MessageRP.class);
+    }
+
 }
