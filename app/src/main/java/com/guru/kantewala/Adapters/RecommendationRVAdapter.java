@@ -55,7 +55,7 @@ public class RecommendationRVAdapter extends RecyclerView.Adapter<Recommendation
                 .transform(new CircleTransform())
                 .into(holder.logoImg);
 
-
+        holder.tagsGroup.removeAllViews();
         for (String tag: company.getTags()){
             Chip chip = new Chip(context);
             chip.setText(tag);

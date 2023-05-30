@@ -49,6 +49,7 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.Compan
             holder.locationTxt.setText(company.getLocation());
 
 
+        holder.tagsGroup.removeAllViews();
         for (String tag: company.getTags()){
             Chip chip = new Chip(context);
             chip.setText(tag);

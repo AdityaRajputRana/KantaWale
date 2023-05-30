@@ -1,10 +1,12 @@
 package com.guru.kantewala.rest.requests;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.razorpay.PaymentData;
 
 public class VerifyLessonPaymentReq {
     String order_id;
+    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     String razorpay_order_id;
     String razorpay_payment_id;
     String razorpay_signature;
