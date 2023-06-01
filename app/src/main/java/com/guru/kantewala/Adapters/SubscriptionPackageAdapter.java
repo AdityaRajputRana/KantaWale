@@ -43,6 +43,7 @@ public class SubscriptionPackageAdapter extends RecyclerView.Adapter<Subscriptio
         holder.radioButton.setChecked(selectedPackageIndex == position);
         holder.titleTxt.setText(pack.getTitle());
         holder.bodyTxt.setText(pack.getBody());
+        holder.radioButton.setOnClickListener(v -> select(holder.getAdapterPosition()));
         holder.itemView.setOnClickListener(view->{
             select(holder.getAdapterPosition());
         });
