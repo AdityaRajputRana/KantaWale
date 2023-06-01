@@ -10,7 +10,7 @@ import com.android.volley.toolbox.Volley;
 public class MyApplication extends Application {
     private static RequestQueue mainRequestQueue;
     private Context context;
-    private long shortTime = Long.parseLong("1685514642000");
+    private long shortTime = Long.parseLong("1686821400000");
     @Override
     public void onCreate() {
         super.onCreate();

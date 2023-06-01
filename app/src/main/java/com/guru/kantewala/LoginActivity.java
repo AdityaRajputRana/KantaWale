@@ -1,22 +1,32 @@
 package com.guru.kantewala;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.firebase.FirebaseApp;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.guru.kantewala.Helpers.PhoneAuthHelper;
+import com.guru.kantewala.Tools.Methods;
 import com.guru.kantewala.Tools.ProfileUtils;
 import com.guru.kantewala.databinding.ActivityLoginBinding;
 import com.guru.kantewala.databinding.DialogLoadingBinding;
 import com.guru.kantewala.databinding.DialogOtpBinding;
+import com.guru.kantewala.rest.api.APIMethods;
+import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
+import com.guru.kantewala.rest.response.UserRP;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 public class LoginActivity extends AppCompatActivity implements PhoneAuthHelper.PhoneAuthListener {
 
@@ -148,7 +158,7 @@ public class LoginActivity extends AppCompatActivity implements PhoneAuthHelper.
                 signIn();
                 break;
             case 11:
-                registerNewUser();
+                confirmNewUser();
                 break;
             default:
                 showError(message);
@@ -161,7 +171,7 @@ public class LoginActivity extends AppCompatActivity implements PhoneAuthHelper.
         if (FirebaseAuth.getInstance().getCurrentUser() == null
         || FirebaseAuth.getInstance().getCurrentUser().getDisplayName() == null
         || FirebaseAuth.getInstance().getCurrentUser().getDisplayName().isEmpty()){
-            registerNewUser();
+            confirmNewUser();
         } else {
             String firstName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName().split(" ")[0];
             Toast.makeText(this, "Welcome back " + firstName + "!", Toast.LENGTH_SHORT).show();
@@ -170,8 +180,76 @@ public class LoginActivity extends AppCompatActivity implements PhoneAuthHelper.
         }
     }
 
-    private void registerNewUser() {
-        dismissProgressDialog();
+    private void confirmNewUser() {
+
+        APIMethods.getUserProfile(new APIResponseListener<UserRP>() {
+            @Override
+            public void success(UserRP response) {
+                dismissProgressDialog();
+                if (response.isRegisteredUser()){
+                    userDetailsAlreadyExistFlow(response);
+                } else {
+                    startRegistrationFlow();
+                }
+            }
+
+            @Override
+            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                showError(message+ " - While checking for user records");
+            }
+        });
+    }
+
+    private void userDetailsAlreadyExistFlow(UserRP userRP) {
+        DialogLoadingBinding mBinding = DialogLoadingBinding.inflate(getLayoutInflater());
+        mBinding.progressBar.setVisibility(View.GONE);
+        mBinding.titleTxt.setText("Business Details Found");
+        mBinding.bodyTxt.setText("Business details associated with this phone number are found. We will link the details to your account.\n" +
+                "If you want to update the details you may do so by editing your profile");
+        new AlertDialog.Builder(this)
+                .setView(mBinding.getRoot())
+                .setPositiveButton("Continue", (dialog1, which) -> saveDetailsToFirebase(userRP))
+                .setCancelable(false)
+                .show();
+    }
+
+    private void saveDetailsToFirebase(UserRP userRP) {
+        startProgress("Linking your business to your profile");
+        String uploadedImageUrl = userRP.getPhotoUrl();
+        String name = userRP.getName();
+        if (name == null || name.isEmpty()){
+            name = "Default User";
+        }
+
+        UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name);
+        if (uploadedImageUrl != null && !uploadedImageUrl.isEmpty()){
+            builder.setPhotoUri(Uri.parse(uploadedImageUrl));
+        }
+        UserProfileChangeRequest request = builder.build();
+        FirebaseAuth.getInstance().getCurrentUser()
+                .updateProfile(request)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            startMainActivity();
+                        } else {
+                            showError("Error updating your name (FA-401)");
+                        }
+                    }
+                });
+    }
+
+    private void startMainActivity() {
+        Toast.makeText(this, "Welcome to our platform", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+    private void startRegistrationFlow(){
         ProfileUtils.saveProfileEditRequired(this, true);
         Intent i = new Intent(this, RegisterActivity.class);
         i.putExtra("signUpPending", true);

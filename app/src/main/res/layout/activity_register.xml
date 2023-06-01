@@ -214,7 +214,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:textColor="@color/primaryText"
-            android:hint="Your business or company's name"
+            android:hint="Enter City/Town name"
             android:textColorHint="@color/tertiaryText"
             android:background="@drawable/bg_et_main"
             android:layout_marginTop="8dp"

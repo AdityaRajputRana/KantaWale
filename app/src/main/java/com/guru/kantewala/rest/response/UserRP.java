@@ -1,6 +1,7 @@
 package com.guru.kantewala.rest.response;
 
 public class UserRP {
+    boolean isRegisteredUser;
     String id;
     String name;
     String phone;
@@ -12,6 +13,10 @@ public class UserRP {
     String city;
     String state;
     int stateCode;
+
+    public boolean isRegisteredUser() {
+        return isRegisteredUser;
+    }
 
     public String getId() {
         return id;
