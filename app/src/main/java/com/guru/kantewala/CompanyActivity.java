@@ -166,7 +166,8 @@ public class CompanyActivity extends AppCompatActivity {
 
         //Images Section
 
-        if (company.getCompanyImages() == null){
+        if (company.getCompanyImages() == null || company.getCompanyImages().getBlocks() == null
+         || company.getCompanyImages().getBlocks().size() == 0){
             binding.imageRV.setVisibility(View.GONE);
             binding.imagesToggle.setVisibility(View.GONE);
         } else {
