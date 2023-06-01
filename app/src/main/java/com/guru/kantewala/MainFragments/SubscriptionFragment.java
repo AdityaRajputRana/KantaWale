@@ -103,6 +103,8 @@ public class SubscriptionFragment extends Fragment {
             return;
         }
 
+        binding.myPackDetailsLayout.setVisibility(View.GONE);
+
         if (adapter == null){
             adapter = new SubscriptionPackageAdapter(subscriptionPackagesRP);
         }

@@ -3,6 +3,7 @@ package com.guru.kantewala;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.guru.kantewala.Adapters.SearchRVAdapter;
+import com.guru.kantewala.Helpers.SubscriptionInterface;
 import com.guru.kantewala.Models.Category;
 import com.guru.kantewala.Tools.Constants;
 import com.guru.kantewala.Tools.Methods;
@@ -30,7 +32,7 @@ import com.guru.kantewala.rest.response.SearchRP;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements SubscriptionInterface.AskToSubListener {
 
 
     private ActivitySearchBinding binding;
@@ -250,6 +252,15 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void redirectToSubscribeFragment() {
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("showSubFrag", true);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+        finish();
     }
 }
 

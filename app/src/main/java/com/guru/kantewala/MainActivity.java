@@ -24,8 +24,14 @@ public class MainActivity extends AppCompatActivity implements SubscriptionInter
         setContentView(binding.getRoot());
 
         setUpFragmentsAndNavigation();
+        checkAttachments();
     }
 
+    private void checkAttachments() {
+        if (getIntent().getBooleanExtra("showSubFrag", false)){
+            redirectToSubscribeFragment();
+        }
+    }
 
 
     HomeFragment homeFragment;
