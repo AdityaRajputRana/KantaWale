@@ -51,8 +51,8 @@ public class APIMethods {
         API.postData(listener, req, EndPoints.categories, CategoryRP.class);
     }
 
-    public static void getCompany(int companyId, APIResponseListener<Company> listener) {
-        CompanyReq req = new CompanyReq(companyId);
+    public static void getCompany(int companyId, boolean isRecommendation, APIResponseListener<Company> listener) {
+        CompanyReq req = new CompanyReq(companyId, isRecommendation);
         API.postData(listener, req, EndPoints.companyDetails, Company.class);
     }
 

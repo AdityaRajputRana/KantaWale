@@ -28,6 +28,7 @@ public class CompanyActivity extends AppCompatActivity {
     ActivityCompanyBinding binding;
     int cid;
     Company company;
+    boolean isRecommended = false;
 
     public enum ToggleState{DETAILS, IMAGES};
 
@@ -44,6 +45,7 @@ public class CompanyActivity extends AppCompatActivity {
     }
 
     private void loadAttachedData() {
+        isRecommended = getIntent().getBooleanExtra("isRecommendation", false);
         cid = getIntent().getIntExtra("companyId", Integer.MIN_VALUE);
         if (cid == Integer.MIN_VALUE) {
             if (!getIntent().getBooleanExtra("hasCompanyAttached", false)){
@@ -63,7 +65,7 @@ public class CompanyActivity extends AppCompatActivity {
 
     private void fetchCompanyDetails() {
         binding.progressBar.setVisibility(View.VISIBLE);
-        APIMethods.getCompany(cid, new APIResponseListener<Company>() {
+        APIMethods.getCompany(cid, isRecommended, new APIResponseListener<Company>() {
             @Override
             public void success(Company response) {
                 company = response;

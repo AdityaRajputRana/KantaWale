@@ -93,6 +93,7 @@ public class RecommendationRVAdapter extends RecyclerView.Adapter<Recommendation
             intent.putExtra("companyId", company.getId());
             intent.putExtra("hasCompanyAttached", true);
             intent.putExtra("company", new Gson().toJson(company));
+            intent.putExtra("isRecommendation", true);
 
             context.startActivity(intent);
         }
