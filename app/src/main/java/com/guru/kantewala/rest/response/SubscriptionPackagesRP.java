@@ -1,11 +1,23 @@
 package com.guru.kantewala.rest.response;
 
+import com.guru.kantewala.Models.PlanDetails;
 import com.guru.kantewala.Models.SubscriptionPack;
 
 import java.util.ArrayList;
 
 public class SubscriptionPackagesRP {
     boolean isPremiumUser;
+    SubscriptionPack mPack;
+    PlanDetails mDetails;
+
+    public SubscriptionPack getMyPack() {
+        return mPack;
+    }
+
+    public PlanDetails getMyDetails() {
+        return mDetails;
+    }
+
     //Todo: Subscription details for subscribed users in this
     ArrayList<SubscriptionPack> subscriptionPackages;
     public SubscriptionPack getMinimumPackage(){

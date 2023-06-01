@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.guru.kantewala.Adapters.SubscriptionPackageAdapter;
 import com.guru.kantewala.Helpers.SubscriptionInterface;
+import com.guru.kantewala.Models.PlanDetails;
 import com.guru.kantewala.Models.SubscriptionPack;
 import com.guru.kantewala.SubscriptionsOptionsActivity;
 import com.guru.kantewala.Tools.Methods;
@@ -51,7 +52,7 @@ public class SubscriptionFragment extends Fragment {
         }
         binding.progressBar.setVisibility(View.VISIBLE);
         binding.recyclerView.setVisibility(View.GONE);
-        binding.infoTxt.setVisibility(View.GONE);
+        binding.myPackDetailsLayout.setVisibility(View.GONE);
         binding.continueBtn.setVisibility(View.GONE);
 
         APIMethods.getSubscriptionPackages(new APIResponseListener<SubscriptionPackagesRP>() {
@@ -74,8 +75,31 @@ public class SubscriptionFragment extends Fragment {
     private void loadData() {
         binding.progressBar.setVisibility(View.GONE);
         if (subscriptionPackagesRP.isPremiumUser()){
-            binding.infoTxt.setVisibility(View.VISIBLE);
-            binding.infoTxt.setText("You are already a premium User");
+            binding.titleTxt.setVisibility(View.GONE);
+            SubscriptionPack myPack = subscriptionPackagesRP.getMyPack();
+            PlanDetails myDetails = subscriptionPackagesRP.getMyDetails();
+            binding.planTitle.setText(myPack.getTitle());
+            binding.planBody.setText(myPack.getBody());
+            binding.statesTxt.setText(myDetails.getStatesAsString());
+            binding.subscriptionId.setText(
+                    binding.subscriptionId.getText().toString() + myDetails.getId()
+            );
+
+            binding.orderIdTxt.setText(
+                    binding.orderIdTxt.getText().toString() + myDetails.getOrder_id()
+            );
+
+            binding.validTillTxt.setText(
+                    binding.validTillTxt.getText().toString() + myDetails.getValidOn()
+            );
+
+            binding.purchasedOnTxt.setText(
+                    binding.purchasedOnTxt.getText().toString() + myDetails.getPurchasedOn()
+            );
+
+            binding.myPackDetailsLayout.setVisibility(View.VISIBLE);
+
+
             return;
         }
 

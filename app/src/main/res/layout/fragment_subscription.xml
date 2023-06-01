@@ -70,10 +70,105 @@
             android:orientation="vertical">
 
 <!--            Todo: make ui for already subbed users here-->
-            <TextView
-                android:id="@+id/infoTxt"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:id="@+id/myPackDetailsLayout"
+                android:padding="16dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="My Plan Details"
+                    android:textColor="@color/color_cta"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryText"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text=""
+                    android:id="@+id/planTitle" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text=""
+                    android:id="@+id/planBody" />
+
+                <TextView
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="Id                         : "
+                    android:id="@+id/subscriptionId" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="Purchased On : "
+                    android:id="@+id/purchasedOnTxt" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="Valid Till            : "
+                    android:id="@+id/validTillTxt" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="Order Id             : "
+                    android:id="@+id/orderIdTxt" />
+
+                <TextView
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Your subscription is only valid for the following states:"
+                     />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryText"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="Himachal (Aditya Rana), Gujrat (Guru Software solutions)"
+                    android:id="@+id/statesTxt" />
+
+                <TextView
+                    android:id="@+id/infoTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
             <ProgressBar
                 android:id="@+id/progressBar"
