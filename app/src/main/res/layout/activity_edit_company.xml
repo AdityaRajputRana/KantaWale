@@ -18,7 +18,7 @@
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -173,5 +173,180 @@
             app:elevation="0dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/companyImageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:background="@color/color_fg"
+            android:outlineProvider="none"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:paddingTop="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="16dp"
+                    android:background="@color/color_fg"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/topLayout">
+
+                    <ImageView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:elevation="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:id="@+id/titleImg"
+                        android:src="@drawable/logo_full" />
+
+                    <ImageButton
+                        android:id="@+id/backBtn"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_indicator_circle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:elevation="10dp"
+                        android:src="@drawable/ic_back" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        >
+
+                        <ImageView
+                            android:id="@+id/companyLogoImg"
+                            android:layout_width="52dp"
+                            android:layout_height="52dp"
+                            android:padding="8dp"
+                            android:background="@drawable/bg_indicator_round"
+                            android:src="@drawable/ic_baseline_mode_edit_24"/>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:layout_marginStart="8dp">
+
+                            <TextView
+                                android:id="@+id/companyNameTxt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:text="Kantewala"
+                                android:textSize="18sp"
+                                android:textColor="@color/primaryText"
+                                android:fontFamily="@font/inter_bold" />
+
+                            <TextView
+                                android:id="@+id/locationTxt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/ic_location"
+                                android:drawablePadding="4dp"
+                                android:drawableTint="@color/secondaryText"
+                                app:layout_constraintTop_toBottomOf="@id/companyNameTxt"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:text="Loading..."
+                                android:textSize="16sp"
+                                android:textColor="@color/secondaryText"
+                                android:fontFamily="@font/inter_medium" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/addressTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="4dp"
+                    android:layout_marginTop="8dp"
+                    android:drawableTint="@color/secondaryText"
+                    app:layout_constraintTop_toBottomOf="@id/companyNameTxt"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="Full Address"
+                    android:textSize="16sp"
+                    android:textColor="@color/secondaryText"
+                    android:fontFamily="@font/inter_medium" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/editDetailsBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit Details"
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="14sp"
+                    android:backgroundTint="@android:color/transparent"
+                    app:chipStrokeColor="@color/color_cta"
+                    app:chipStrokeWidth="1dp"
+                    android:textColor="@color/color_cta" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="Image Blocks"
+                        android:textSize="18sp"
+                        android:textColor="@color/primaryText"
+                        android:fontFamily="@font/inter_bold" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/addImageBlockBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Block"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/inter_medium"
+                        android:textSize="14sp"
+                        android:backgroundTint="@android:color/transparent"
+                        app:chipStrokeColor="@color/color_cta"
+                        app:chipStrokeWidth="1dp"
+                        android:textColor="@color/color_cta" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:clipToPadding="false"
+            android:layout_width="match_parent"
+            android:padding="16dp"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            android:layout_height="match_parent"
+            android:id="@+id/imageRV" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

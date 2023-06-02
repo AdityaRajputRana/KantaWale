@@ -23,6 +23,14 @@ public class Company {
     String uid;
     int userId;
 
+    public int getStateCode() {
+        return stateCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
     CompanyImages companyImages;
 
     public CompanyImages getCompanyImages() {

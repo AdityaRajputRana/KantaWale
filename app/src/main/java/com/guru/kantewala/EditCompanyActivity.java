@@ -1,6 +1,7 @@
 package com.guru.kantewala;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.AlertDialog;
 import android.graphics.Color;
@@ -10,9 +11,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import com.guru.kantewala.Adapters.CompanyImagesRVAdapter;
 import com.guru.kantewala.Models.Company;
 import com.guru.kantewala.Tools.Constants;
 import com.guru.kantewala.Tools.Methods;
+import com.guru.kantewala.Tools.Transformations.RoundedCornerTransformation;
 import com.guru.kantewala.databinding.ActivityEditCompanyBinding;
 import com.guru.kantewala.databinding.DialogLoadingBinding;
 import com.guru.kantewala.rest.api.APIMethods;
@@ -21,11 +24,12 @@ import com.guru.kantewala.rest.requests.EditCompanyDetailsReq;
 import com.guru.kantewala.rest.response.MessageRP;
 import com.guru.kantewala.rest.response.MyCompanyRP;
 import com.guru.kantewala.rest.response.UserRP;
+import com.squareup.picasso.Picasso;
 
 public class EditCompanyActivity extends AppCompatActivity {
 
     ActivityEditCompanyBinding binding;
-    MyCompanyRP company;
+    MyCompanyRP myCompanyRP;
     int selectedStateIndex = 0;
 
     AlertDialog dialog;
@@ -127,6 +131,35 @@ public class EditCompanyActivity extends AppCompatActivity {
                 saveCompanyDetails();
             }
         });
+
+        binding.editDetailsBtn.setOnClickListener(view->{
+            showDetailsLayout();
+        });
+    }
+
+    int screenState = 0;
+
+    private void showDetailsLayout() {
+        binding.companyImageLayout.setVisibility(View.GONE);
+        binding.companyDetailsLayout.setVisibility(View.VISIBLE);
+        screenState = 1;
+    }
+
+    private void showImageLayout(){
+        binding.companyImageLayout.setVisibility(View.VISIBLE);
+        binding.companyDetailsLayout.setVisibility(View.GONE);
+        screenState = 0;
+    }
+
+    @Override
+    public void onBackPressed() {
+        switch (screenState) {
+            case 1:
+                showImageLayout();
+                break;
+            default:
+            super.onBackPressed();
+        }
     }
 
     private boolean areCompanyDetailsValid(){
@@ -204,6 +237,7 @@ public class EditCompanyActivity extends AppCompatActivity {
 
     private void loadUI() {
         binding.companyDetailsLayout.setVisibility(View.GONE);
+        binding.companyImageLayout.setVisibility(View.GONE);
         binding.progressBar.setVisibility(View.VISIBLE);
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
@@ -230,7 +264,7 @@ public class EditCompanyActivity extends AppCompatActivity {
             @Override
             public void success(MyCompanyRP response) {
                 binding.progressBar.setVisibility(View.GONE);
-                company = response;
+                myCompanyRP = response;
                 if (!response.isCompanyLinked()){
                     showCreateCompanyLayout();
                 } else {
@@ -248,10 +282,59 @@ public class EditCompanyActivity extends AppCompatActivity {
 
     private void showEditCompanyLayout() {
         binding.progressBar.setVisibility(View.GONE);
+        binding.companyImageLayout.setVisibility(View.VISIBLE);
+
+
+        Company company = myCompanyRP.getCompany();
+
+        binding.companyEt.setText(company.getName());
+        binding.cityEt.setText(company.getCity());
+        binding.addressEt.setText(company.getAddress());
+        selectedStateIndex = company.getStateCode();
+        binding.stateSpinner.setSelection(company.getStateCode());
+        binding.gstET.setText(myCompanyRP.getUser().getCompanyGST());
+
+
+
+        if (company.getName() == null || company.getName().isEmpty()){
+            binding.companyNameTxt.setText("");
+        } else {
+            binding.companyNameTxt.setText(company.getName());
+            binding.companyEt.setText(company.getName());
+        }
+
+        if (company.getLocation() == null || company.getLocation().isEmpty()){
+            binding.locationTxt.setText("");
+        } else {
+            binding.locationTxt.setText(company.getLocation());
+        }
+
+        if (company.getAddress() == null || company.getAddress().isEmpty()){
+            binding.addressTxt.setText("");
+        } else {
+            binding.addressTxt.setText(company.getAddress());
+        }
+
+        if (company.getLogoUrl() == null || company.getLogoUrl().isEmpty()){
+            Picasso.get()
+                    .load(R.drawable.ic_baseline_mode_edit_24)
+                    .placeholder(R.drawable.ic_baseline_mode_edit_24)
+                    .into(binding.companyLogoImg);
+        } else {
+            Picasso.get()
+                    .load(company.getLogoUrl())
+                    .transform(new RoundedCornerTransformation(10))
+                    .into(binding.companyLogoImg);
+        }
+
+        binding.imageRV.setVisibility(View.VISIBLE);
+        CompanyImagesRVAdapter adapter = new CompanyImagesRVAdapter(company.getCompanyImages(), this);
+        binding.imageRV.setAdapter(adapter);
+        binding.imageRV.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void showCreateCompanyLayout() {
-        UserRP userRP = company.getUser();
+        UserRP userRP = myCompanyRP.getUser();
         binding.progressBar.setVisibility(View.GONE);
         binding.companyDetailsLayout.setVisibility(View.VISIBLE);
         binding.continueBtn.setText("Create Company");
