@@ -1,11 +1,16 @@
 package com.guru.kantewala;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -257,6 +262,7 @@ public class EditCompanyActivity extends AppCompatActivity {
         }
     }
 
+
     private boolean areCompanyDetailsValid(){
         boolean isValid = true;
 
@@ -443,8 +449,47 @@ public class EditCompanyActivity extends AppCompatActivity {
         binding.imageRV.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void pickImage(CompanyImages.ImageBlock block) {
+    CompanyImages.ImageBlock imageBlock;
 
+    @SuppressLint("Con")
+    private void pickImage(CompanyImages.ImageBlock block) {
+        imageBlock = block;
+        ActivityResultContracts.PickVisualMedia.VisualMediaType mediaType =
+                (ActivityResultContracts.PickVisualMedia.VisualMediaType) ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE;
+        pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(mediaType)
+                .build());
+    }
+
+    ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
+            registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                if (uri != null) {
+                    if (imageBlock != null) {
+                        startImageBlockUpload(uri, imageBlock);
+                        imageBlock = null;
+                    }
+                }
+            });
+
+    private void startImageBlockUpload(Uri uri, CompanyImages.ImageBlock imageBlock) {
+        startProgress("Uploading picture");
+        APIMethods.uploadImageForBlock(uri, this, imageBlock, new APIResponseListener<MessageRP>() {
+            @Override
+            public void success(MessageRP response) {
+                showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
+                    @Override
+                    public void onCancel() {
+                        loadUI();
+                        fetchData();
+                    }
+                });
+            }
+
+            @Override
+            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                showError(message);
+            }
+        });
     }
 
     private void confirmDeleteBlock(CompanyImages.ImageBlock block) {

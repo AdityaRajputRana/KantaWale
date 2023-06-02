@@ -32,7 +32,11 @@ import java.util.ArrayList;
 
 public class APIMethods {
 
-
+    public static void uploadImageForBlock(Uri fileUri, Context context, CompanyImages.ImageBlock block, APIResponseListener<MessageRP> listener){
+        String file = Utils.getEncodedCompressedProfilePic(fileUri, context);
+        ImageBlockReq req = new ImageBlockReq(file, block.getId());
+        API.postData(listener, req, EndPoints.uploadCompanyImage, MessageRP.class);
+    }
 
     public static void uploadProfilePicture(Uri fileUri, Context context, APIResponseListener<MessageRP> listener){
         String file = Utils.getEncodedCompressedProfilePic(fileUri, context);

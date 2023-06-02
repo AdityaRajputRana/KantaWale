@@ -21,6 +21,7 @@ public class EndPoints {
    public static String createImageBlock = "createImageBlock";
    public static String editBlockName = "editBlockName";
    public static String deleteImageBlock = "deleteImageBlock";
+   public static String uploadCompanyImage = "uploadCompanyImage";
 
 
 }

@@ -7,6 +7,7 @@ public class ImageBlockReq {
     int blockId;
     int companyId;
     String name;
+    String file;
 
     public ImageBlockReq(int companyId, String name) {
         this.companyId = companyId;
@@ -24,5 +25,11 @@ public class ImageBlockReq {
     public ImageBlockReq(int id) {
         this.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         blockId = id;
+    }
+
+    public ImageBlockReq(String file, int id) {
+        this.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        blockId = id;
+        this.file = file;
     }
 }
