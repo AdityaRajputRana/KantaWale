@@ -17,6 +17,13 @@
         android:theme="@style/Theme.KanteWala"
         tools:targetApi="31">
         <activity
+            android:name=".InformationActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".SubscriptionsOptionsActivity"
             android:exported="false">
             <meta-data

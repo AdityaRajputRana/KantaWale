@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.guru.kantewala.EditCompanyActivity;
+import com.guru.kantewala.InformationActivity;
 import com.guru.kantewala.LoginActivity;
 import com.guru.kantewala.R;
 import com.guru.kantewala.RegisterActivity;
@@ -57,6 +58,9 @@ public class ProfileFragment extends Fragment {
     }
 
     private void setListeners() {
+        binding.recommendedList.setOnClickListener(view->{
+            getActivity().startActivity(new Intent(getActivity(), InformationActivity.class));
+        });
         binding.logoutBtn.setOnClickListener(view->{
             confirmLogout();
         });

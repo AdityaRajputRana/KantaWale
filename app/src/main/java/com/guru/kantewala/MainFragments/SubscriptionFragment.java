@@ -106,7 +106,7 @@ public class SubscriptionFragment extends Fragment {
         binding.myPackDetailsLayout.setVisibility(View.GONE);
 
         if (adapter == null){
-            adapter = new SubscriptionPackageAdapter(subscriptionPackagesRP);
+            adapter = new SubscriptionPackageAdapter(subscriptionPackagesRP, getActivity());
         }
 
         binding.recyclerView.setAdapter(adapter);
