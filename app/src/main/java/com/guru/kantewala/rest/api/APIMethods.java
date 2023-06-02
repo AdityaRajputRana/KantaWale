@@ -14,6 +14,7 @@ import com.guru.kantewala.rest.requests.EditCompanyDetailsReq;
 import com.guru.kantewala.rest.requests.FileReq;
 import com.guru.kantewala.rest.requests.GenerateOrderReq;
 import com.guru.kantewala.rest.requests.HomeReq;
+import com.guru.kantewala.rest.requests.ImageBlockReq;
 import com.guru.kantewala.rest.requests.RegisterProfileReq;
 import com.guru.kantewala.rest.requests.SearchReq;
 import com.guru.kantewala.rest.requests.VerifyLessonPaymentReq;
@@ -29,6 +30,8 @@ import com.guru.kantewala.rest.response.UserRP;
 import java.util.ArrayList;
 
 public class APIMethods {
+
+
 
     public static void uploadProfilePicture(Uri fileUri, Context context, APIResponseListener<MessageRP> listener){
         String file = Utils.getEncodedCompressedProfilePic(fileUri, context);
@@ -50,6 +53,11 @@ public class APIMethods {
     public static void getDashboard(APIResponseListener<DashboardRP> listener) {
         HomeReq req = new HomeReq();
         API.postData(listener, req, EndPoints.dashboard, DashboardRP.class);
+    }
+
+    public static void createImageBlock(int companyId, String blockName, APIResponseListener<MessageRP> listener) {
+        ImageBlockReq req = new ImageBlockReq(companyId, blockName);
+        API.postData(listener, req, EndPoints.createImageBlock, MessageRP.class);
     }
 
     public static void getCategories(APIResponseListener<CategoryRP> listener) {

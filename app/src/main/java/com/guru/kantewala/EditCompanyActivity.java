@@ -16,7 +16,9 @@ import com.guru.kantewala.Models.Company;
 import com.guru.kantewala.Tools.Constants;
 import com.guru.kantewala.Tools.Methods;
 import com.guru.kantewala.Tools.Transformations.RoundedCornerTransformation;
+import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.databinding.ActivityEditCompanyBinding;
+import com.guru.kantewala.databinding.DialogInputBinding;
 import com.guru.kantewala.databinding.DialogLoadingBinding;
 import com.guru.kantewala.rest.api.APIMethods;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
@@ -134,6 +136,53 @@ public class EditCompanyActivity extends AppCompatActivity {
 
         binding.editDetailsBtn.setOnClickListener(view->{
             showDetailsLayout();
+        });
+
+        binding.addImageBlockBtn.setOnClickListener(view->{
+            inputImageBlockName();
+        });
+
+        binding.backBtn.setOnClickListener(view->onBackPressed());
+    }
+
+    private void inputImageBlockName() {
+        DialogInputBinding inputBinding = DialogInputBinding.inflate(getLayoutInflater());
+        AlertDialog inputDialog = new AlertDialog.Builder(this)
+                .setView(inputBinding.getRoot())
+                .setCancelable(true)
+                .create();
+        inputBinding.continueBtn.setOnClickListener(view->{
+            if (inputBinding.editText.getText().toString().isEmpty()){
+                inputBinding.editText.setError("Required");
+            } else {
+                Utils.hideSoftKeyboard(EditCompanyActivity.this);
+                inputBinding.editText.setError(null);
+                saveImageBlock(inputBinding.editText.getText().toString());
+                inputDialog.dismiss();
+            }
+        });
+        inputDialog.show();
+        inputDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    }
+
+    private void saveImageBlock(String blockName) {
+        startProgress("Creating new Image Block");
+        APIMethods.createImageBlock(myCompanyRP.getCompany().getId(), blockName, new APIResponseListener<MessageRP>() {
+            @Override
+            public void success(MessageRP response) {
+                showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
+                    @Override
+                    public void onCancel() {
+                        loadUI();
+                        fetchData();
+                    }
+                });
+            }
+
+            @Override
+            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                showError(message);
+            }
         });
     }
 

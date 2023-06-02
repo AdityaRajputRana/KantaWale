@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:layout_margin="28dp"
+    android:background="@drawable/bg_et_main">
+
+
+    <TextView
+        android:id="@+id/titleTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_bold"
+        android:text="Add Image Block"
+        android:textColor="@color/primaryText"
+        android:textSize="24sp"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/bodyTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_medium"
+        android:text="Enter the name of Image Block"
+        android:textAlignment="center"
+        android:textColor="@color/secondaryText"
+        android:textSize="18sp"
+        android:layout_marginTop="0dp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:fontFamily="@font/inter_medium"
+        android:textSize="16sp"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textColor="@color/primaryText"
+        android:hint="Image Block Title"
+        android:textColorHint="@color/tertiaryText"
+        android:background="@drawable/bg_et_sec"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="8dp"
+        android:padding="16dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/continueBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="16dp"
+        android:textColor="@color/colorOnPrimary"
+        android:text="Done"
+        android:backgroundTint="@color/color_cta"
+        android:fontFamily="@font/inter_semibold"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        app:cornerRadius="8dp"
+        android:elevation="0dp"
+        app:elevation="0dp" />
+
+
+
+
+</LinearLayout>
