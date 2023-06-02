@@ -1,5 +1,7 @@
 package com.guru.kantewala.Models;
 
+import com.guru.kantewala.Tools.Constants;
+
 import java.util.ArrayList;
 
 public class Company {
@@ -15,7 +17,6 @@ public class Company {
 
     boolean showDetails;
     String fullName;
-    String address;
     String phoneNumber;
     String emailId;
     String gst;
@@ -37,7 +38,7 @@ public class Company {
     }
 
     public String getAddress() {
-        return address;
+        return location;
     }
 
     public String getPhoneNumber() {
@@ -68,7 +69,7 @@ public class Company {
     }
 
     public String getLocation() {
-        return location;
+        return String.valueOf(city) + ", " + Constants.getIndianStates().get(stateCode);
     }
 
     public ArrayList<String> getTags() {

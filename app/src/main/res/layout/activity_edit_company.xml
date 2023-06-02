@@ -6,10 +6,172 @@
     android:layout_height="match_parent"
     tools:context=".EditCompanyActivity">
 
-    <TextView
+    <ProgressBar
+        android:elevation="10dp"
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
+        android:padding="16dp"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Edit Company Profile Activity" />
+        android:id="@+id/companyDetailsLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/continueBtn"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/detailsHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:fontFamily="@font/inter_bold"
+                android:text="Create new Company"
+                android:textSize="18sp"
+                android:layout_margin="16dp"
+                android:textColor="@color/color_cta" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="Company Name"
+                android:textSize="16sp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/primaryText" />
+            <EditText
+                android:id="@+id/companyEt"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/primaryText"
+                android:hint="Your business or company's name"
+                android:textColorHint="@color/tertiaryText"
+                android:background="@drawable/bg_et_main"
+                android:layout_marginTop="8dp"
+                android:padding="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="Company's GST Number"
+                android:textSize="16sp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/primaryText" />
+            <EditText
+                android:id="@+id/gstET"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                android:inputType="textCapCharacters"
+                android:textColor="@color/primaryText"
+                android:hint="Enter company's GST number"
+                android:textColorHint="@color/tertiaryText"
+                android:background="@drawable/bg_et_main"
+                android:layout_marginTop="8dp"
+                android:padding="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="City"
+                android:textSize="16sp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/primaryText" />
+            <EditText
+                android:id="@+id/cityEt"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/primaryText"
+                android:hint="Enter City/Town name"
+                android:textColorHint="@color/tertiaryText"
+                android:background="@drawable/bg_et_main"
+                android:layout_marginTop="8dp"
+                android:padding="16dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="Full Address"
+                android:textSize="16sp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/primaryText" />
+            <EditText
+                android:id="@+id/addressEt"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                android:inputType="textPostalAddress"
+                android:textColor="@color/primaryText"
+                android:hint="Full address of your company/office/business"
+                android:textColorHint="@color/tertiaryText"
+                android:background="@drawable/bg_et_main"
+                android:layout_marginTop="8dp"
+                android:padding="16dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="State"
+                android:textSize="16sp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/primaryText" />
+            <Spinner
+                android:id="@+id/stateSpinner"
+                android:layout_width="match_parent"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primaryText"
+                android:spinnerMode="dropdown"
+                android:textColorHint="@color/tertiaryText"
+                android:background="@drawable/bg_et_main"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/continueBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="16dp"
+            android:textColor="@color/colorOnPrimary"
+            android:text="Create Company"
+            android:backgroundTint="@color/color_cta"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fontFamily="@font/inter_semibold"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            app:cornerRadius="8dp"
+            android:elevation="0dp"
+            app:elevation="0dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,10 @@ public class CompanyReq {
     String uid;
     boolean isRecommendation;
 
+    public CompanyReq() {
+        this.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
     public CompanyReq(int companyId) {
         this.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         this.companyId = companyId;
