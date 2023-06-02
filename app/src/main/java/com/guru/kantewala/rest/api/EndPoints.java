@@ -19,6 +19,8 @@ public class EndPoints {
    public static String getMyCompany = "getMyCompany";
    public static String saveCompanyDetails = "saveCompanyDetails";
    public static String createImageBlock = "createImageBlock";
+   public static String editBlockName = "editBlockName";
+   public static String deleteImageBlock = "deleteImageBlock";
 
 
 }

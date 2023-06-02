@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,10 +17,25 @@ import com.guru.kantewala.R;
 public class CompanyImagesRVAdapter extends RecyclerView.Adapter<CompanyImagesRVAdapter.ImageBlockViewHolder> {
     CompanyImages companyImages;
     Activity context;
+    boolean inEditMode = false;
+    EditListener listener;
+
+    public interface EditListener{
+        void addImage(CompanyImages.ImageBlock block);
+        void deleteBlock(CompanyImages.ImageBlock block);
+        void editBlock(CompanyImages.ImageBlock block);
+    }
 
     public CompanyImagesRVAdapter(CompanyImages companyImages, Activity context) {
         this.companyImages = companyImages;
         this.context = context;
+    }
+
+    public CompanyImagesRVAdapter(CompanyImages companyImages, Activity context, boolean inEditMode, EditListener listener) {
+        this.companyImages = companyImages;
+        this.context = context;
+        this.inEditMode = inEditMode;
+        this.listener = listener;
     }
 
     @NonNull
@@ -37,6 +53,15 @@ public class CompanyImagesRVAdapter extends RecyclerView.Adapter<CompanyImagesRV
 
         holder.photoRV.setAdapter(new PhotosRVAdapter(block, context));
         holder.photoRV.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
+        if (inEditMode){
+            holder.deleteBtn.setVisibility(View.VISIBLE);
+            holder.editBtn.setVisibility(View.VISIBLE);
+            holder.addBtn.setVisibility(View.VISIBLE);
+
+            holder.deleteBtn.setOnClickListener(view -> listener.deleteBlock(block));
+            holder.editBtn.setOnClickListener(view -> listener.editBlock(block));
+            holder.addBtn.setOnClickListener(view -> listener.addImage(block));
+        }
     }
 
     @Override
@@ -49,10 +74,18 @@ public class CompanyImagesRVAdapter extends RecyclerView.Adapter<CompanyImagesRV
         TextView titleTxt;
         RecyclerView photoRV;
 
+        ImageButton editBtn;
+        ImageButton deleteBtn;
+        ImageButton addBtn;
+
         public ImageBlockViewHolder(@NonNull View itemView) {
             super(itemView);
             titleTxt = itemView.findViewById(R.id.titleTxt);
             photoRV = itemView.findViewById(R.id.photoRV);
+
+            editBtn = itemView.findViewById(R.id.editBtn);
+            deleteBtn = itemView.findViewById(R.id.deleteBtn);
+            addBtn = itemView.findViewById(R.id.addPhotoBtn);
         }
     }
 }

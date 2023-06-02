@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 
 import com.guru.kantewala.Adapters.CompanyImagesRVAdapter;
 import com.guru.kantewala.Models.Company;
+import com.guru.kantewala.Models.CompanyImages;
 import com.guru.kantewala.Tools.Constants;
 import com.guru.kantewala.Tools.Methods;
 import com.guru.kantewala.Tools.Transformations.RoundedCornerTransformation;
@@ -184,6 +185,51 @@ public class EditCompanyActivity extends AppCompatActivity {
                 showError(message);
             }
         });
+    }
+    private void saveImageBlock(String blockName, CompanyImages.ImageBlock block) {
+        startProgress("Creating new Image Block");
+        APIMethods.editImageBlock(block, myCompanyRP.getCompany().getId(), blockName, new APIResponseListener<MessageRP>() {
+            @Override
+            public void success(MessageRP response) {
+                showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
+                    @Override
+                    public void onCancel() {
+                        loadUI();
+                        fetchData();
+                    }
+                });
+            }
+
+            @Override
+            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                showError(message);
+            }
+        });
+    }
+
+    private void inputImageBlockNameForEdit(CompanyImages.ImageBlock block) {
+        DialogInputBinding inputBinding = DialogInputBinding.inflate(getLayoutInflater());
+        AlertDialog inputDialog = new AlertDialog.Builder(this)
+                .setView(inputBinding.getRoot())
+                .setCancelable(true)
+                .create();
+        inputBinding.editText.setText(block.getTitle());
+        inputBinding.titleTxt.setText("Change Block name");
+        inputBinding.continueBtn.setText("Save Changes");
+        inputBinding.continueBtn.setOnClickListener(view->{
+            if (inputBinding.editText.getText().toString().isEmpty()) {
+                inputBinding.editText.setError("Required");
+            } else if (inputBinding.editText.getText().toString().equals(block.getTitle())){
+                inputBinding.editText.setError("Block name is same as previous");
+            } else {
+                Utils.hideSoftKeyboard(EditCompanyActivity.this);
+                inputBinding.editText.setError(null);
+                saveImageBlock(inputBinding.editText.getText().toString(), block);
+                inputDialog.dismiss();
+            }
+        });
+        inputDialog.show();
+        inputDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
     int screenState = 0;
@@ -377,9 +423,59 @@ public class EditCompanyActivity extends AppCompatActivity {
         }
 
         binding.imageRV.setVisibility(View.VISIBLE);
-        CompanyImagesRVAdapter adapter = new CompanyImagesRVAdapter(company.getCompanyImages(), this);
+        CompanyImagesRVAdapter adapter = new CompanyImagesRVAdapter(company.getCompanyImages(), this, true, new CompanyImagesRVAdapter.EditListener() {
+            @Override
+            public void addImage(CompanyImages.ImageBlock block) {
+                pickImage(block);
+            }
+
+            @Override
+            public void deleteBlock(CompanyImages.ImageBlock block) {
+                confirmDeleteBlock(block);
+            }
+
+            @Override
+            public void editBlock(CompanyImages.ImageBlock block) {
+                inputImageBlockNameForEdit(block);
+            }
+        });
         binding.imageRV.setAdapter(adapter);
         binding.imageRV.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void pickImage(CompanyImages.ImageBlock block) {
+
+    }
+
+    private void confirmDeleteBlock(CompanyImages.ImageBlock block) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete \""+ block.getTitle() + "\"")
+                .setMessage("Are you sure you want to delete the selected block. This action is irreversible")
+                .setCancelable(true)
+                .setPositiveButton("Delete", (dialog1, which) -> deleteImageBlock(block))
+                .setNegativeButton("Cancel", (dialog1, which) -> dialog1.dismiss())
+                .show();
+    }
+
+    private void deleteImageBlock(CompanyImages.ImageBlock block) {
+        startProgress("Deleting");
+        APIMethods.deleteImageBlock(block, new APIResponseListener<MessageRP>() {
+            @Override
+            public void success(MessageRP response) {
+                showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
+                    @Override
+                    public void onCancel() {
+                        loadUI();
+                        fetchData();
+                    }
+                });
+            }
+
+            @Override
+            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                showError(message);
+            }
+        });
     }
 
     private void showCreateCompanyLayout() {

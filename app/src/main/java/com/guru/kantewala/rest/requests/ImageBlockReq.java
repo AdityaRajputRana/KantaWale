@@ -13,4 +13,16 @@ public class ImageBlockReq {
         this.name = name;
         this.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
+
+    public ImageBlockReq(int companyId, String blockName, int id) {
+        this.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        this.companyId = companyId;
+        name = blockName;
+        blockId = id;
+    }
+
+    public ImageBlockReq(int id) {
+        this.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        blockId = id;
+    }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.guru.kantewala.Models.Company;
+import com.guru.kantewala.Models.CompanyImages;
 import com.guru.kantewala.Models.State;
 import com.guru.kantewala.Models.SubscriptionPack;
 import com.guru.kantewala.RegisterActivity;
@@ -102,4 +103,13 @@ public class APIMethods {
         API.postData(listener, req, EndPoints.verifyOrder, MessageRP.class);
     }
 
+    public static void editImageBlock(CompanyImages.ImageBlock block, int companyId, String blockName, APIResponseListener<MessageRP> listener) {
+        ImageBlockReq req = new ImageBlockReq(companyId, blockName, block.getId());
+        API.postData(listener, req, EndPoints.editBlockName, MessageRP.class);
+    }
+
+    public static void deleteImageBlock(CompanyImages.ImageBlock block,APIResponseListener<MessageRP> listener) {
+        ImageBlockReq req = new ImageBlockReq(block.getId());
+        API.postData(listener, req, EndPoints.deleteImageBlock, MessageRP.class);
+    }
 }

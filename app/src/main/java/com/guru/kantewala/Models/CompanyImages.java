@@ -20,6 +20,12 @@ public class CompanyImages {
     }
 
     public class ImageBlock{
+        int id;
+
+        public int getId() {
+            return id;
+        }
+
         String title;
         ArrayList<String> photos;
 
