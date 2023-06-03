@@ -12,8 +12,13 @@ public class Company {
     int stateCode;
     String city;
     ArrayList<String> tags;
+    ArrayList<TextModels> tagList;
     boolean isLocked;
 
+
+    public ArrayList<TextModels> getTagList() {
+        return tagList;
+    }
 
     boolean showDetails;
     String fullName;

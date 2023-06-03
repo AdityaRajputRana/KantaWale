@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -16,9 +17,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import com.google.android.material.chip.Chip;
 import com.guru.kantewala.Adapters.CompanyImagesRVAdapter;
+import com.guru.kantewala.Models.Category;
 import com.guru.kantewala.Models.Company;
 import com.guru.kantewala.Models.CompanyImages;
+import com.guru.kantewala.Models.TextModels;
 import com.guru.kantewala.Tools.Constants;
 import com.guru.kantewala.Tools.Methods;
 import com.guru.kantewala.Tools.Transformations.RoundedCornerTransformation;
@@ -29,10 +33,13 @@ import com.guru.kantewala.databinding.DialogLoadingBinding;
 import com.guru.kantewala.rest.api.APIMethods;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.requests.EditCompanyDetailsReq;
+import com.guru.kantewala.rest.response.CategoryRP;
 import com.guru.kantewala.rest.response.MessageRP;
 import com.guru.kantewala.rest.response.MyCompanyRP;
 import com.guru.kantewala.rest.response.UserRP;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class EditCompanyActivity extends AppCompatActivity {
 
@@ -424,8 +431,45 @@ public class EditCompanyActivity extends AppCompatActivity {
             binding.continueBtn.setEnabled(true);
         }
     }
+    
+    ArrayList<Integer> selectedTagIds = new ArrayList<>();
 
     private void showEditCompanyLayout() {
+
+        //tags
+        binding.tagsGroup.removeAllViews();
+        selectedTagIds = new ArrayList<>();
+        for (TextModels tag: myCompanyRP.getCompany().getTagList()){
+            selectedTagIds.add(tag.getId());
+            Chip chip = new Chip(this);
+            chip.setText(tag.getName());
+            chip.setClickable(true);
+            chip.setOnClickListener(view->confirmDeleteTag(tag));
+            chip.setCheckable(false);
+            chip.setChipStrokeColor(ColorStateList.valueOf(this.getResources().getColor(R.color.primaryText)));
+            chip.setChipStrokeWidth(5);
+            chip.setChipBackgroundColor(ColorStateList.valueOf(Color.TRANSPARENT));
+            chip.setRippleColor(ColorStateList.valueOf(this
+                    .getResources().getColor(R.color.color_bg)));
+            chip.setTextColor(this.getResources().getColor(R.color.primaryText));
+            binding.tagsGroup.addView(chip);
+        }
+
+        Chip chip = new Chip(this);
+        chip.setText("Add/Remove Categories");
+        chip.setClickable(true);
+        chip.setOnClickListener(view->addCategory());
+        chip.setCheckable(false);
+        chip.setChipStrokeColor(ColorStateList.valueOf(this.getResources().getColor(R.color.color_cta)));
+        chip.setChipStrokeWidth(5);
+        chip.setChipBackgroundColor(ColorStateList.valueOf(Color.TRANSPARENT));
+        chip.setRippleColor(ColorStateList.valueOf(this
+                .getResources().getColor(R.color.color_bg)));
+        chip.setTextColor(this.getResources().getColor(R.color.color_cta));
+        binding.tagsGroup.addView(chip);
+
+        // end tags
+
         binding.progressBar.setVisibility(View.GONE);
         binding.companyImageLayout.setVisibility(View.VISIBLE);
 
@@ -491,6 +535,84 @@ public class EditCompanyActivity extends AppCompatActivity {
         });
         binding.imageRV.setAdapter(adapter);
         binding.imageRV.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    CategoryRP categoryRP;
+
+    private void addCategory() {
+        binding.progressBar.setVisibility(View.GONE);
+        if (categoryRP == null) {
+            binding.progressBar.setVisibility(View.VISIBLE);
+            APIMethods.getCategories(new APIResponseListener<CategoryRP>() {
+                @Override
+                public void success(CategoryRP response) {
+                    categoryRP = response;
+                    addCategory();
+                }
+
+                @Override
+                public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                    showError(message);
+                }
+            });
+            return;
+        }
+
+        binding.tagsGroup.removeAllViews();
+
+        for (Category tag: categoryRP.getCategories()){
+            Chip chip = new Chip(this);
+            chip.setText(tag.getName());
+            chip.setCheckable(true);
+            chip.setId(tag.getId());
+            chip.setChecked(selectedTagIds.contains(tag.getId()));
+            chip.setChipStrokeColor(ColorStateList.valueOf(this.getResources().getColor(R.color.primaryText)));
+            chip.setChipStrokeWidth(5);
+            chip.setChipBackgroundColor(ColorStateList.valueOf(Color.TRANSPARENT));
+            chip.setRippleColor(ColorStateList.valueOf(this
+                    .getResources().getColor(R.color.color_bg)));
+            chip.setTextColor(this.getResources().getColor(R.color.primaryText));
+            binding.tagsGroup.addView(chip);
+        }
+
+        Chip chip = new Chip(this);
+        chip.setText("Save Changes");
+        chip.setClickable(true);
+        chip.setOnClickListener(view->saveSelectedCategories());
+        chip.setCheckable(false);
+        chip.setChipStrokeColor(ColorStateList.valueOf(this.getResources().getColor(R.color.color_cta)));
+        chip.setChipStrokeWidth(5);
+        chip.setChipBackgroundColor(ColorStateList.valueOf(Color.TRANSPARENT));
+        chip.setRippleColor(ColorStateList.valueOf(this
+                .getResources().getColor(R.color.color_bg)));
+        chip.setTextColor(this.getResources().getColor(R.color.color_cta));
+        binding.tagsGroup.addView(chip);
+        
+        
+    }
+
+    private void saveSelectedCategories() {
+        startProgress("Saving Changes");
+        APIMethods.updateCategories(myCompanyRP.getCompany().getId(), binding.tagsGroup.getCheckedChipIds(), new APIResponseListener<MessageRP>() {
+            @Override
+            public void success(MessageRP response) {
+                showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
+                    @Override
+                    public void onCancel() {
+                        loadUI();
+                        fetchData();
+                    }
+                });
+            }
+
+            @Override
+            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                showError(message);
+            }
+        });
+    }
+
+    private void confirmDeleteTag(TextModels tag) {
     }
 
     CompanyImages.ImageBlock imageBlock;

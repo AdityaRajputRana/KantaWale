@@ -23,6 +23,7 @@ public class EndPoints {
    public static String deleteImageBlock = "deleteImageBlock";
    public static String uploadCompanyImage = "uploadCompanyImage";
    public static String uploadCompanyLogo = "uploadCompanyLogo";
+   public static String updateCompanyCategories = "updateCompanyCategories";
 
 
 }

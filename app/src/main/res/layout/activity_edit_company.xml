@@ -330,6 +330,14 @@
                     app:chipStrokeWidth="1dp"
                     android:textColor="@color/color_cta" />
 
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:selectionRequired="false"
+                    android:clickable="false"
+                    android:id="@+id/tagsGroup"
+                    android:layout_marginTop="16dp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

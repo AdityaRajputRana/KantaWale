@@ -10,6 +10,7 @@ import com.guru.kantewala.Models.SubscriptionPack;
 import com.guru.kantewala.RegisterActivity;
 import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
+import com.guru.kantewala.rest.requests.ChangeCategoriesReq;
 import com.guru.kantewala.rest.requests.CompanyReq;
 import com.guru.kantewala.rest.requests.EditCompanyDetailsReq;
 import com.guru.kantewala.rest.requests.EditCompanyReq;
@@ -30,6 +31,7 @@ import com.guru.kantewala.rest.response.SubscriptionPackagesRP;
 import com.guru.kantewala.rest.response.UserRP;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class APIMethods {
 
@@ -123,5 +125,10 @@ public class APIMethods {
     public static void deleteImageBlock(CompanyImages.ImageBlock block,APIResponseListener<MessageRP> listener) {
         ImageBlockReq req = new ImageBlockReq(block.getId());
         API.postData(listener, req, EndPoints.deleteImageBlock, MessageRP.class);
+    }
+
+    public static void updateCategories(int companyId, List<Integer> selectedCategories, APIResponseListener<MessageRP> listener) {
+        ChangeCategoriesReq req = new ChangeCategoriesReq(selectedCategories, companyId);
+        API.postData(listener, req, EndPoints.updateCompanyCategories, MessageRP.class);
     }
 }
