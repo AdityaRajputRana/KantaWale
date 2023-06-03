@@ -3,6 +3,7 @@ package com.guru.kantewala.Adapters;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.guru.kantewala.ImageViewActivity;
 import com.guru.kantewala.Models.CompanyImages;
 import com.guru.kantewala.R;
 import com.guru.kantewala.Tools.Transformations.RoundedCornerTransformation;
@@ -45,9 +47,15 @@ public class PhotosRVAdapter extends RecyclerView.Adapter<PhotosRVAdapter.PhotoV
 
     @Override
     public void onBindViewHolder(@NonNull PhotoViewHolder holder, int position) {
-        Picasso.get()
-                .load(block.getPhotos().get(position))
-                .into(holder.imageView);
+        if (block.getImages() == null) {
+            Picasso.get()
+                    .load(block.getPhotos().get(position))
+                    .into(holder.imageView);
+        } else {
+            Picasso.get()
+                    .load(block.getImages().get(position).getThumbUrl())
+                    .into(holder.imageView);
+        }
 
         holder.actionImageView.setVisibility(View.GONE);
         if (inEditMode){
@@ -68,6 +76,20 @@ public class PhotosRVAdapter extends RecyclerView.Adapter<PhotosRVAdapter.PhotoV
     }
 
     private void enlarge(int adapterPosition) {
+        String thumbUrl;
+        String url;
+
+        if (block.getImages() == null){
+            thumbUrl = url = block.getPhotos().get(adapterPosition);
+        } else {
+            thumbUrl = block.getImages().get(adapterPosition).getThumbUrl();
+            url = block.getImages().get(adapterPosition).getUrl();
+        }
+
+        Intent i = new Intent(context, ImageViewActivity.class);
+        i.putExtra("thumbUrl", thumbUrl);
+        i.putExtra("url", url);
+        context.startActivity(i);
     }
 
     private void confirmDelete(int adapterPosition) {
