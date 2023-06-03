@@ -1,7 +1,9 @@
 package com.guru.kantewala.Adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +22,19 @@ public class PhotosRVAdapter extends RecyclerView.Adapter<PhotosRVAdapter.PhotoV
     CompanyImages.ImageBlock block;
     Context context;
 
+    CompanyImagesRVAdapter.EditListener listener;
+    boolean inEditMode = false;
+
     public PhotosRVAdapter(CompanyImages.ImageBlock block, Context context) {
         this.block = block;
         this.context = context;
+    }
+
+    public PhotosRVAdapter(CompanyImages.ImageBlock block, Context context, CompanyImagesRVAdapter.EditListener listener, boolean inEditMode) {
+        this.block = block;
+        this.context = context;
+        this.listener = listener;
+        this.inEditMode = inEditMode;
     }
 
     @NonNull
@@ -35,10 +47,37 @@ public class PhotosRVAdapter extends RecyclerView.Adapter<PhotosRVAdapter.PhotoV
     public void onBindViewHolder(@NonNull PhotoViewHolder holder, int position) {
         Picasso.get()
                 .load(block.getPhotos().get(position))
-                .transform(new RoundedCornerTransformation(16))
                 .into(holder.imageView);
 
-        //Todo: can be full screened image on click
+        holder.actionImageView.setVisibility(View.GONE);
+        if (inEditMode){
+            holder.actionImageView.setVisibility(View.VISIBLE);
+        }
+
+        holder.itemView.setOnClickListener(view->{
+            handleClick(holder.getAdapterPosition());
+        });
+
+    }
+
+    private void handleClick(int adapterPosition) {
+        if (inEditMode)
+            confirmDelete(adapterPosition);
+        else
+            enlarge(adapterPosition);
+    }
+
+    private void enlarge(int adapterPosition) {
+    }
+
+    private void confirmDelete(int adapterPosition) {
+        new AlertDialog.Builder(context)
+                .setTitle("Delete Image")
+                .setMessage("Are you sure you want to remove this image from the the block")
+                .setPositiveButton("Delete", (dialog, which) -> listener.deleteImage(block.getImages().get(adapterPosition)))
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .setCancelable(true)
+                .show();
     }
 
     @Override
@@ -49,10 +88,12 @@ public class PhotosRVAdapter extends RecyclerView.Adapter<PhotosRVAdapter.PhotoV
     class PhotoViewHolder extends RecyclerView.ViewHolder{
 
         ImageView imageView;
+        ImageView actionImageView;
 
         public PhotoViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
+            actionImageView = itemView.findViewById(R.id.actionImageView);
         }
     }
 }

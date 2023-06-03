@@ -18,6 +18,7 @@ import com.guru.kantewala.rest.requests.FileReq;
 import com.guru.kantewala.rest.requests.GenerateOrderReq;
 import com.guru.kantewala.rest.requests.HomeReq;
 import com.guru.kantewala.rest.requests.ImageBlockReq;
+import com.guru.kantewala.rest.requests.ImageReq;
 import com.guru.kantewala.rest.requests.RegisterProfileReq;
 import com.guru.kantewala.rest.requests.SearchReq;
 import com.guru.kantewala.rest.requests.VerifyLessonPaymentReq;
@@ -125,6 +126,11 @@ public class APIMethods {
     public static void deleteImageBlock(CompanyImages.ImageBlock block,APIResponseListener<MessageRP> listener) {
         ImageBlockReq req = new ImageBlockReq(block.getId());
         API.postData(listener, req, EndPoints.deleteImageBlock, MessageRP.class);
+    }
+
+    public static void deleteImage(CompanyImages.ImageBlock.Image image, APIResponseListener<MessageRP> listener) {
+        ImageReq req = new ImageReq(image.getId());
+        API.postData(listener, req, EndPoints.deleteImage, MessageRP.class);
     }
 
     public static void updateCategories(int companyId, List<Integer> selectedCategories, APIResponseListener<MessageRP> listener) {

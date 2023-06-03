@@ -28,6 +28,11 @@ public class CompanyImages {
 
         String title;
         ArrayList<String> photos;
+        ArrayList<Image> images;
+
+        public ArrayList<Image> getImages() {
+            return images;
+        }
 
         public ImageBlock() {
         }
@@ -42,6 +47,27 @@ public class CompanyImages {
             if (photos == null)
                 photos = new ArrayList<>();
             return photos;
+        }
+
+        public class Image {
+            int id;
+            String thumbUrl;
+            String url;
+
+            public Image() {
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public String getThumbUrl() {
+                return thumbUrl;
+            }
+
+            public String getUrl() {
+                return url;
+            }
         }
     }
 }

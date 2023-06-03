@@ -24,6 +24,7 @@ public class CompanyImagesRVAdapter extends RecyclerView.Adapter<CompanyImagesRV
         void addImage(CompanyImages.ImageBlock block);
         void deleteBlock(CompanyImages.ImageBlock block);
         void editBlock(CompanyImages.ImageBlock block);
+        void deleteImage(CompanyImages.ImageBlock.Image image);
     }
 
     public CompanyImagesRVAdapter(CompanyImages companyImages, Activity context) {
@@ -51,7 +52,7 @@ public class CompanyImagesRVAdapter extends RecyclerView.Adapter<CompanyImagesRV
         CompanyImages.ImageBlock block = companyImages.getBlocks().get(position);
         holder.titleTxt.setText(block.getTitle());
 
-        holder.photoRV.setAdapter(new PhotosRVAdapter(block, context));
+        PhotosRVAdapter adapter = new PhotosRVAdapter(block, context);
         holder.photoRV.setLayoutManager(new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false));
         if (inEditMode){
             holder.deleteBtn.setVisibility(View.VISIBLE);
@@ -61,7 +62,12 @@ public class CompanyImagesRVAdapter extends RecyclerView.Adapter<CompanyImagesRV
             holder.deleteBtn.setOnClickListener(view -> listener.deleteBlock(block));
             holder.editBtn.setOnClickListener(view -> listener.editBlock(block));
             holder.addBtn.setOnClickListener(view -> listener.addImage(block));
+
+            adapter = new PhotosRVAdapter(block, context, listener, true);
         }
+
+        holder.photoRV.setAdapter(adapter);
+
     }
 
     @Override

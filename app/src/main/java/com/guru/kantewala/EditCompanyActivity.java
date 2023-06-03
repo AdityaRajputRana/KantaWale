@@ -532,9 +532,35 @@ public class EditCompanyActivity extends AppCompatActivity {
             public void editBlock(CompanyImages.ImageBlock block) {
                 inputImageBlockNameForEdit(block);
             }
+
+            @Override
+            public void deleteImage(CompanyImages.ImageBlock.Image image) {
+                deleteImageFromServer(image);
+            }
         });
         binding.imageRV.setAdapter(adapter);
         binding.imageRV.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void deleteImageFromServer(CompanyImages.ImageBlock.Image image) {
+        startProgress("Deleting Image");
+        APIMethods.deleteImage(image, new APIResponseListener<MessageRP>() {
+            @Override
+            public void success(MessageRP response) {
+                showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
+                    @Override
+                    public void onCancel() {
+                        loadUI();
+                        fetchData();
+                    }
+                });
+            }
+
+            @Override
+            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                showError(message);
+            }
+        });
     }
 
     CategoryRP categoryRP;
