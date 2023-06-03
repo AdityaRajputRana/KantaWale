@@ -22,4 +22,6 @@
     <color name="secondaryText">#CC1C1C1C</color> //hints
     <color name="tertiaryText">#661C1C1C</color> //hints
     <color name="markerColor">#331C1C1C</color> //borders
+    <color name="red_bg">#66F44336</color>
+
 </resources>

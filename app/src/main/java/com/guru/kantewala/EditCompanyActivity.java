@@ -39,7 +39,6 @@ public class EditCompanyActivity extends AppCompatActivity {
     ActivityEditCompanyBinding binding;
     MyCompanyRP myCompanyRP;
     int selectedStateIndex = 0;
-
     AlertDialog dialog;
     DialogLoadingBinding dialogBinding;
     private void startProgress(String message) {
@@ -371,6 +370,7 @@ public class EditCompanyActivity extends AppCompatActivity {
                 } else {
                     showEditCompanyLayout();
                 }
+                isPendingChanges(response);
             }
 
             @Override
@@ -379,6 +379,29 @@ public class EditCompanyActivity extends AppCompatActivity {
                 Methods.showFailedAlert(EditCompanyActivity.this, code, message, redirectLink, retry, cancellable);
             }
         });
+    }
+
+    private void isPendingChanges(MyCompanyRP response) {
+        if (response.isPendingReq()){
+            binding.pendingReqText.setVisibility(View.VISIBLE);
+
+            MyCompanyRP.PendingReq pendingReq = response.getPendingReq();
+            if (pendingReq.getStatus() == 0){
+                binding.continueBtn.setEnabled(false);
+                binding.continueBtn.setVisibility(View.GONE);
+                binding.pendingReqText.setText("You already have a edit company request pending approval. It usually take less than 48 hours to approve.");
+                binding.pendingReqText.setBackgroundColor(getResources().getColor(R.color.color_bg));
+            } else if (pendingReq.getStatus() == 1){
+                binding.continueBtn.setEnabled(true);
+                binding.continueBtn.setVisibility(View.VISIBLE);
+                binding.pendingReqText.setText("Edit Request Rejected: " + pendingReq.getRemarks());
+                binding.pendingReqText.setBackgroundColor(getResources().getColor(R.color.red_bg));
+            }
+        } else {
+            binding.continueBtn.setVisibility(View.VISIBLE);
+            binding.pendingReqText.setVisibility(View.GONE);
+            binding.continueBtn.setEnabled(true);
+        }
     }
 
     private void showEditCompanyLayout() {
