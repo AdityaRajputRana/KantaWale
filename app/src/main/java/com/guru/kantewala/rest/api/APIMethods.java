@@ -12,6 +12,7 @@ import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.requests.CompanyReq;
 import com.guru.kantewala.rest.requests.EditCompanyDetailsReq;
+import com.guru.kantewala.rest.requests.EditCompanyReq;
 import com.guru.kantewala.rest.requests.FileReq;
 import com.guru.kantewala.rest.requests.GenerateOrderReq;
 import com.guru.kantewala.rest.requests.HomeReq;
@@ -37,6 +38,13 @@ public class APIMethods {
         ImageBlockReq req = new ImageBlockReq(file, block.getId());
         API.postData(listener, req, EndPoints.uploadCompanyImage, MessageRP.class);
     }
+
+    public static void uploadCompanyLogo(Uri fileUri, Context context, int companyId, APIResponseListener<MessageRP> listener){
+        String file = Utils.getEncodedCompressedProfilePic(fileUri, context);
+        EditCompanyReq req = new EditCompanyReq(file, companyId);
+        API.postData(listener, req, EndPoints.uploadCompanyLogo, MessageRP.class);
+    }
+
 
     public static void uploadProfilePicture(Uri fileUri, Context context, APIResponseListener<MessageRP> listener){
         String file = Utils.getEncodedCompressedProfilePic(fileUri, context);

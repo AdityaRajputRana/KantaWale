@@ -137,6 +137,11 @@ public class EditCompanyActivity extends AppCompatActivity {
             if (areCompanyDetailsValid()){
                 saveCompanyDetails();
             }
+
+        });
+
+        binding.companyLogoImg.setOnClickListener(view->{
+            pickImageForLogo();
         });
 
         binding.editDetailsBtn.setOnClickListener(view->{
@@ -148,6 +153,14 @@ public class EditCompanyActivity extends AppCompatActivity {
         });
 
         binding.backBtn.setOnClickListener(view->onBackPressed());
+    }
+
+    private void pickImageForLogo() {
+        ActivityResultContracts.PickVisualMedia.VisualMediaType mediaType =
+                (ActivityResultContracts.PickVisualMedia.VisualMediaType) ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE;
+        pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(mediaType)
+                .build());
     }
 
     private void inputImageBlockName() {
@@ -386,6 +399,14 @@ public class EditCompanyActivity extends AppCompatActivity {
             binding.pendingReqText.setVisibility(View.VISIBLE);
 
             MyCompanyRP.PendingReq pendingReq = response.getPendingReq();
+
+            binding.companyEt.setText(pendingReq.getName());
+            binding.gstET.setText(pendingReq.getGst());
+            binding.cityEt.setText(pendingReq.getCity());
+            binding.addressEt.setText(pendingReq.getLocation());
+            selectedStateIndex = pendingReq.getStateCode();
+            binding.stateSpinner.setSelection(selectedStateIndex);
+
             if (pendingReq.getStatus() == 0){
                 binding.continueBtn.setEnabled(false);
                 binding.continueBtn.setVisibility(View.GONE);
@@ -490,9 +511,32 @@ public class EditCompanyActivity extends AppCompatActivity {
                     if (imageBlock != null) {
                         startImageBlockUpload(uri, imageBlock);
                         imageBlock = null;
+                    } else {
+                        uploadCompanyLog(uri);
                     }
                 }
             });
+
+    private void uploadCompanyLog(Uri uri) {
+        startProgress("Uploading Logo");
+        APIMethods.uploadCompanyLogo(uri, this, myCompanyRP.getCompany().getId(),  new APIResponseListener<MessageRP>() {
+            @Override
+            public void success(MessageRP response) {
+                showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
+                    @Override
+                    public void onCancel() {
+                        loadUI();
+                        fetchData();
+                    }
+                });
+            }
+
+            @Override
+            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                showError(message);
+            }
+        });
+    }
 
     private void startImageBlockUpload(Uri uri, CompanyImages.ImageBlock imageBlock) {
         startProgress("Uploading picture");
