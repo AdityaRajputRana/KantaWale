@@ -38,6 +38,6 @@
         android:layout_height="wrap_content"
         android:text="You will unlock any 1 State of your choosing and can order anything from those 1 State."
         android:fontFamily="@font/inter_medium"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="0dp"
         android:textSize="16sp" />
 </LinearLayout>

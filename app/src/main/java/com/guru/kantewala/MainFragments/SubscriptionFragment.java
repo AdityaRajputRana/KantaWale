@@ -74,34 +74,7 @@ public class SubscriptionFragment extends Fragment {
 
     private void loadData() {
         binding.progressBar.setVisibility(View.GONE);
-        if (subscriptionPackagesRP.isPremiumUser()){
-            binding.titleTxt.setVisibility(View.GONE);
-            SubscriptionPack myPack = subscriptionPackagesRP.getMyPack();
-            PlanDetails myDetails = subscriptionPackagesRP.getMyDetails();
-            binding.planTitle.setText(myPack.getTitle());
-            binding.planBody.setText(myPack.getBody());
-            binding.statesTxt.setText(myDetails.getStatesAsString());
-            binding.subscriptionId.setText(
-                    binding.subscriptionId.getText().toString() + myDetails.getId()
-            );
 
-            binding.orderIdTxt.setText(
-                    binding.orderIdTxt.getText().toString() + myDetails.getOrder_id()
-            );
-
-            binding.validTillTxt.setText(
-                    binding.validTillTxt.getText().toString() + myDetails.getValidOn()
-            );
-
-            binding.purchasedOnTxt.setText(
-                    binding.purchasedOnTxt.getText().toString() + myDetails.getPurchasedOn()
-            );
-
-            binding.myPackDetailsLayout.setVisibility(View.VISIBLE);
-
-
-            return;
-        }
 
         binding.myPackDetailsLayout.setVisibility(View.GONE);
 
