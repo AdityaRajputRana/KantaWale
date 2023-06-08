@@ -40,19 +40,19 @@ public class PlanDetailsAdapter extends RecyclerView.Adapter<PlanDetailsAdapter.
         holder.binding.planBody.setText(myDetails.getBody());
         holder.binding.statesTxt.setText(myDetails.getStatesAsString());
         holder.binding.subscriptionId.setText(
-                holder.binding.subscriptionId.getText().toString() + myDetails.getId()
+                "Id                         : " + myDetails.getId()
         );
 
         holder.binding.orderIdTxt.setText(
-                holder.binding.orderIdTxt.getText().toString() + myDetails.getOrder_id()
+                "Order Id             : " + myDetails.getOrder_id()
         );
 
         holder.binding.validTillTxt.setText(
-                holder.binding.validTillTxt.getText().toString() + myDetails.getValidOn()
+               "Valid Till            : " + myDetails.getValidOn()
         );
 
         holder.binding.purchasedOnTxt.setText(
-                holder. binding.purchasedOnTxt.getText().toString() + myDetails.getPurchasedOn()
+                "Purchased On : " + myDetails.getPurchasedOn()
         );
 
         holder.binding.myPackDetailsLayout.setVisibility(View.VISIBLE);
@@ -61,6 +61,9 @@ public class PlanDetailsAdapter extends RecyclerView.Adapter<PlanDetailsAdapter.
             holder.binding.statusTxt.setTextColor(activity.getResources().getColor(R.color.inactiveColorFg));
             holder.binding.statusTxt.setBackgroundColor(activity.getResources().getColor(R.color.inactiveColorBG));
             holder.binding.statusTxt.setText("INACTIVE");
+            if (myDetails.getPurchasedOn() == null){
+                holder.binding.statusTxt.setText("FAILED");
+            }
         } else if (myDetails.isExpired()){
             holder.binding.statusTxt.setTextColor(activity.getResources().getColor(R.color.expiredColorFg));
             holder.binding.statusTxt.setBackgroundColor(activity.getResources().getColor(R.color.expiredColorBG));
@@ -70,6 +73,7 @@ public class PlanDetailsAdapter extends RecyclerView.Adapter<PlanDetailsAdapter.
             holder.binding.statusTxt.setBackgroundColor(activity.getResources().getColor(R.color.activeColorBG));
             holder.binding.statusTxt.setText("ACTIVE");
         }
+
     }
 
     @Override

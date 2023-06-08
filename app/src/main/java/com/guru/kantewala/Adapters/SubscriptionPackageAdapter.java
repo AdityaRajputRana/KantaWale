@@ -70,7 +70,8 @@ public class SubscriptionPackageAdapter extends RecyclerView.Adapter<Subscriptio
             });
         } else {
             holder.titleTxt.setVisibility(View.VISIBLE);
-            holder.itemView.setBackground(activity.getResources().getDrawable(R.drawable.bg_subsciption_package));
+            if (activity != null)
+                holder.itemView.setBackground(activity.getResources().getDrawable(R.drawable.bg_subsciption_package));
             SubscriptionPack pack = subscriptionPackagesRP.getSubscriptionPackages().get(position);
             holder.itemView.setSelected(selectedPackageIndex == position);
             holder.radioButton.setChecked(selectedPackageIndex == position);

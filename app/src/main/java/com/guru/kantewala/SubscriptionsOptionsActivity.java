@@ -37,10 +37,10 @@ public class SubscriptionsOptionsActivity extends AppCompatActivity  implements 
         binding = ActivitySubscriptionsOptionsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        helper = SubscriptionPaymentHelper.newInstance(getApplicationContext(), this, this);
         loadLocalData();
         setListeners();
         loadData();
-        helper = SubscriptionPaymentHelper.newInstance(getApplicationContext(), this, this);
     }
 
     private void loadLocalData() {
@@ -53,6 +53,10 @@ public class SubscriptionsOptionsActivity extends AppCompatActivity  implements 
     }
 
     private void loadData() {
+        if (pack.getNoOfStates() >= Constants.getIndianStatesArrayList().size()){
+            forceCheckout();
+            return;
+        }
         adapter = new ChecklistRVAdapter(Constants.getIndianStatesArrayList(), binding.searchEt, checklistListener, pack.getNoOfStates(),
                 binding.recyclerView, this);
         binding.recyclerView.setAdapter(adapter);
@@ -67,6 +71,23 @@ public class SubscriptionsOptionsActivity extends AppCompatActivity  implements 
             binding.continueBtn.setVisibility(View.VISIBLE);
         else
             binding.continueBtn.setVisibility(View.GONE);
+    }
+
+
+    private void forceCheckout(){
+        ArrayList<State> selectedStateOptions = new ArrayList<State>();
+        ArrayList<String> mStates = Constants.getIndianStatesArrayList();
+        for (int i = 0; i < mStates.size(); i++){
+            selectedStateOptions.add(new State(mStates.get(i), i+1));
+        }
+        binding.recyclerView.setVisibility(View.GONE);
+        binding.searchEt.setVisibility(View.GONE);
+        binding.titleTxt.setText("Initiating Payment");
+        binding.continueBtn.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.VISIBLE);
+        helper.generateOrder(selectedStateOptions, pack);
+        //Todo: Launch Payment Helper from here (FETCH ORDER ID, EXECUTE PAYMENT, SEND CONFIRMATION TO SERVER)
+        //Todo: Server: Save SubOptions, generate order id, verify payment and activate subscription)
     }
 
     private void checkOut(){
