@@ -26,5 +26,7 @@ public class EndPoints {
    public static String updateCompanyCategories = "updateCompanyCategories";
    public static String deleteImage = "deleteImage";
 
+   public static String purchaseHistory = "purchaseHistory";
+
 
 }

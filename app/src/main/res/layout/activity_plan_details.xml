@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".PlanDetailsActivity">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:background="@color/color_fg"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            android:outlineProvider="none"
+            android:id="@+id/appBarLayout">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                android:background="@color/color_fg"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/topLayout">
+
+                <ImageView
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:elevation="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:id="@+id/titleImg"
+                    android:src="@drawable/logo_full" />
+
+                <ImageButton
+                    android:id="@+id/backBtn"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_indicator_circle"
+                    android:elevation="10dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_back"
+                    app:layout_constraintBottom_toTopOf="@+id/titleTxt"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/titleTxt"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    app:layout_constraintTop_toBottomOf="@id/titleImg"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textColor="@color/primaryText"
+                    android:layout_height="wrap_content"
+                    android:text="Your Subscriptions"
+                    android:fontFamily="@font/inter_bold"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:textSize="20sp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mainLinearLayout"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:cardCornerRadius="0dp"
+            app:cardBackgroundColor="@color/color_fg"
+            app:cardElevation="0dp"
+            android:clipChildren="false"
+            android:gravity="center_horizontal"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/infoTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="Please wait"
+                android:textColor="@color/color_cta"
+                android:textSize="18sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:visibility="gone"
+                android:id="@+id/recyclerView"
+                android:paddingBottom="88dp"
+                android:paddingTop="8dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:clipToPadding="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:id="@+id/continueBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="16dp"
+        android:textColor="@color/colorOnPrimary"
+        android:text="@string/loginCta"
+        android:backgroundTint="@color/color_cta"
+        android:fontFamily="@font/inter_semibold"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        app:cornerRadius="8dp"
+        android:visibility="gone"
+        android:elevation="0dp"
+        app:elevation="0dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

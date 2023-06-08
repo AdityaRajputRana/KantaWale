@@ -70,12 +70,15 @@ public class SubscriptionsOptionsActivity extends AppCompatActivity  implements 
     }
 
     private void checkOut(){
+        ArrayList<State> selectedStateOptions = adapter.getSelectedStates();
+        if (selectedStateOptions.size() != pack.getNoOfStates()){
+            return;
+        }
         binding.recyclerView.setVisibility(View.GONE);
         binding.searchEt.setVisibility(View.GONE);
         binding.titleTxt.setText("Initiating Payment");
         binding.continueBtn.setVisibility(View.GONE);
         binding.progressBar.setVisibility(View.VISIBLE);
-        ArrayList<State> selectedStateOptions = adapter.getSelectedStates();
         helper.generateOrder(selectedStateOptions, pack);
         //Todo: Launch Payment Helper from here (FETCH ORDER ID, EXECUTE PAYMENT, SEND CONFIRMATION TO SERVER)
         //Todo: Server: Save SubOptions, generate order id, verify payment and activate subscription)

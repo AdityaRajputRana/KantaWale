@@ -27,6 +27,7 @@ import com.guru.kantewala.rest.response.DashboardRP;
 import com.guru.kantewala.rest.response.LessonOrderIdRp;
 import com.guru.kantewala.rest.response.MessageRP;
 import com.guru.kantewala.rest.response.MyCompanyRP;
+import com.guru.kantewala.rest.response.PackHistoryRP;
 import com.guru.kantewala.rest.response.SearchRP;
 import com.guru.kantewala.rest.response.SubscriptionPackagesRP;
 import com.guru.kantewala.rest.response.UserRP;
@@ -95,6 +96,11 @@ public class APIMethods {
     public static void getUserProfile(APIResponseListener<UserRP> listener){
         HomeReq req = new HomeReq();
         API.postData(listener, req, EndPoints.userProfile, UserRP.class);
+    }
+
+    public static void getUserPurchaseHistory(APIResponseListener<PackHistoryRP> listener){
+        HomeReq req = new HomeReq();
+        API.postData(listener, req, EndPoints.purchaseHistory, PackHistoryRP.class);
     }
 
     public static void search(int page, String keyword, int categoryId, int stateCode,

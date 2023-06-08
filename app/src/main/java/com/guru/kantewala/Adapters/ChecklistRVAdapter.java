@@ -70,7 +70,7 @@ public class ChecklistRVAdapter extends RecyclerView.Adapter<ChecklistRVAdapter.
         allStates = new ArrayList<State>();
         filteredStates = new ArrayList<State>();
         for (int i = 0; i < states.size(); i++){
-            State state = new State(states.get(i), i);
+            State state = new State(states.get(i), i+1);
             allStates.add(state);
             filteredStates.add(state);
         }

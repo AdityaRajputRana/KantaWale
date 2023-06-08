@@ -23,5 +23,13 @@
     <color name="tertiaryText">#661C1C1C</color> //hints
     <color name="markerColor">#331C1C1C</color> //borders
     <color name="red_bg">#66F44336</color>
+    <color name="activeColorFg">#4CC600</color>
+    <color name="activeColorBG">#1A4CC600</color>
+
+    <color name="inactiveColorFg">#FF5722</color>
+    <color name="inactiveColorBG">#33FF5722</color>
+
+    <color name="expiredColorFg">#002435</color>
+    <color name="expiredColorBG">#33002435</color>
 
 </resources>

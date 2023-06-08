@@ -166,6 +166,23 @@
                 android:background="@color/color_bg" />
 
             <TextView
+                android:id="@+id/myPlansBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="View My Plans"
+                android:fontFamily="@font/inter_bold"
+                android:textSize="18sp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:textColor="@color/primaryText" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/color_bg" />
+
+            <TextView
                 android:id="@+id/logoutBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

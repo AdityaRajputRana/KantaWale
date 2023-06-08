@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 public class HashUtils {
-    private final static String APP_SECRET = "mrigank_sir_op";
+    private final static String APP_SECRET = "QuasarLabsAndGuruSolutions";
     private static final boolean isHashingEnabled = true;
     private static  final boolean isEncryptionEnabled = true;
     private static String getRandomSalt() {
@@ -32,11 +32,8 @@ public class HashUtils {
             InputRequest inputRequest = new InputRequest(salt, obj, timestamp, hash);
             String inputReqStr = gson.toJson(inputRequest);
             String encodedInput = toBase64(inputReqStr);
-            Log.i("eta encoded", encodedInput);
             AppRequest appRequest = new AppRequest(encodedInput);
-            Log.i("eta app Request data", appRequest.getData());
             String requestData = gson.toJson(new AppRequest(encodedInput));
-            Log.i("eta request data", requestData);
             return requestData;
         } else {
             return gson.toJson(obj);

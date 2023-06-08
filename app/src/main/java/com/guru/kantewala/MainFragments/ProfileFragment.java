@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.guru.kantewala.EditCompanyActivity;
 import com.guru.kantewala.InformationActivity;
 import com.guru.kantewala.LoginActivity;
+import com.guru.kantewala.PlanDetailsActivity;
 import com.guru.kantewala.R;
 import com.guru.kantewala.RegisterActivity;
 import com.guru.kantewala.Tools.Methods;
@@ -61,6 +62,10 @@ public class ProfileFragment extends Fragment {
         binding.recommendedList.setOnClickListener(view->{
             getActivity().startActivity(new Intent(getActivity(), InformationActivity.class));
         });
+
+        binding.myPlansBtn.setOnClickListener(view->{
+            getActivity().startActivity(new Intent(getActivity(), PlanDetailsActivity.class));
+        });
         binding.logoutBtn.setOnClickListener(view->{
             confirmLogout();
         });
@@ -72,6 +77,8 @@ public class ProfileFragment extends Fragment {
             Intent intent = new Intent(getActivity(), EditCompanyActivity.class);
             startActivity(intent);
         });
+
+
     }
 
     private void launchEditProfileActivity() {
