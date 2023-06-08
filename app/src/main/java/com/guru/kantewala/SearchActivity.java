@@ -65,7 +65,6 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
         binding.searchEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
                     fetchCompanies();
                     return true;
             }
@@ -83,12 +82,16 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
 
             @Override
             public void afterTextChanged(Editable s) {
-                isSearchChange= true;
                 if (binding.searchEt.getText().toString().contains("\n")){
+                    isSearchChange = false;
                     String text = binding.searchEt.getText().toString().trim()
                             .replace("\n", "");
+                    binding.searchEt.removeTextChangedListener(this);
                     binding.searchEt.setText(text);
+                    binding.searchEt.addTextChangedListener(this);
                     Utils.hideSoftKeyboard(SearchActivity.this);
+                } else {
+                    isSearchChange= true;
                     fetchCompanies();
                 }
             }
@@ -101,17 +104,18 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
        fetchCompanies();
     }
 
+
     private void fetchCompanies() {
         if (!isSearchChange){
             return;
         }
 
         processSemaphore++;
-        Utils.hideSoftKeyboard(this);
+//        Utils.hideSoftKeyboard(this);
         isSearchChange = false;
         updateUI();
 
-        APIMethods.search(1, binding.searchEt.getText().toString(), selectedCategoryId, selectedState, new APIResponseListener<SearchRP>() {
+        APIMethods.search(1, binding.searchEt.getText().toString().trim(), selectedCategoryId, selectedState, new APIResponseListener<SearchRP>() {
             @Override
             public void success(SearchRP response) {
                 searchRP = response;
