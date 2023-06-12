@@ -163,10 +163,11 @@ public class API {
 
             };
 
-            jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    2500,
-                    4,
-                    1.5f));
+            if (!endpoint.equals(EndPoints.generateOrder))
+                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                        5000,
+                        4,
+                        1.5f));
             VolleyClient.getRequestQueue().add(jsonObjectRequest);
 
         } catch (Exception e){

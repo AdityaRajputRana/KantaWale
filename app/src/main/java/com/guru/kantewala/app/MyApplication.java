@@ -10,14 +10,12 @@ import com.android.volley.toolbox.Volley;
 public class MyApplication extends Application {
     private static RequestQueue mainRequestQueue;
     private Context context;
-    private long shortTime = Long.parseLong("1686821400000");
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
 //        setupActivityListener();
-        if (System.currentTimeMillis() < shortTime)
-            mainRequestQueue = Volley.newRequestQueue(getApplicationContext());
+        mainRequestQueue = Volley.newRequestQueue(getApplicationContext());
     }
 
 
