@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -139,14 +141,13 @@ public class CompanyActivity extends AppCompatActivity {
         } else {
             binding.phoneNumberTxt.setText(company.getPhoneNumber());
         }
-        binding.phoneNumberTxt.setOnClickListener(view->copy(company.getPhoneNumber()));
+        binding.phoneNumberTxt.setOnClickListener(view->{
+            if (company.getPhoneNumber() != null && !company.getPhoneNumber().isEmpty()) {
+                Utils.openDialer(company.getPhoneNumber(), CompanyActivity.this);
+            }
+        });
+        binding.phoneCopyBtn.setOnClickListener(view->copy(company.getPhoneNumber()));
 
-        if (company.getPhoneNumber() == null || company.getPhoneNumber().isEmpty()){
-            binding.phoneNumberTxt.setText("-");
-        } else {
-            binding.phoneNumberTxt.setText(company.getPhoneNumber());
-        }
-        binding.phoneNumberTxt.setOnClickListener(view->copy(company.getPhoneNumber()));
 
 
         if (company.getEmailId() == null || company.getEmailId().isEmpty()){
