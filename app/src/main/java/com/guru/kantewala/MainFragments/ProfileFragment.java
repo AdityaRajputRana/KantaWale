@@ -21,6 +21,7 @@ import com.guru.kantewala.LoginActivity;
 import com.guru.kantewala.PlanDetailsActivity;
 import com.guru.kantewala.R;
 import com.guru.kantewala.RegisterActivity;
+import com.guru.kantewala.Tools.Constants;
 import com.guru.kantewala.Tools.Methods;
 import com.guru.kantewala.Tools.ProfileUtils;
 import com.guru.kantewala.Tools.Transformations.RoundedCornerTransformation;
@@ -76,6 +77,15 @@ public class ProfileFragment extends Fragment {
         binding.editCompanyProfileBtn.setOnClickListener(view->{
             Intent intent = new Intent(getActivity(), EditCompanyActivity.class);
             startActivity(intent);
+        });
+
+        binding.helpBtn.setOnClickListener(view->{
+            Intent i = new Intent(getActivity(), InformationActivity.class);
+            i.putExtra("isBody", true);
+            i.putExtra("isHead", true);
+            i.putExtra("head", "Help");
+            i.putExtra("body", Constants.helpMessage);
+            getActivity().startActivity(i);
         });
 
 

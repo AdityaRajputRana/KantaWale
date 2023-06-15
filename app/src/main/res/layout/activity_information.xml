@@ -46,18 +46,20 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recommended Company Listing"
-        android:fontFamily="@font/inter_bold"
-        android:textColor="@color/color_cta"
-        android:textSize="18sp" />
+            android:id="@+id/headTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recommended Company Listing"
+            android:fontFamily="@font/inter_bold"
+            android:textColor="@color/color_cta"
+            android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/bodyTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:linksClickable="true"
-            android:autoLink="phone"
+            android:autoLink="all"
             android:text="You can get your company featured on the recommended companies section of our app's first page.\n\nThe price for the listing is 99,900 rupees for 6 months.\n\nTo purchase this plan or know more details contact on +91 73591 96573"
             android:fontFamily="@font/inter_medium"
             android:textColor="@color/primaryText"

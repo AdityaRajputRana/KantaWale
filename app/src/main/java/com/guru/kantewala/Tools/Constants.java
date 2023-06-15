@@ -63,4 +63,6 @@ public class Constants {
         states.remove(0);
         return states;
     }
+
+    public static final String helpMessage = "For any query or support visit our website weighmall.com";
 }
