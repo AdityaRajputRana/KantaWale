@@ -44,10 +44,14 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.Compan
     @Override
     public void onBindViewHolder(@NonNull CompanyViewHolder holder, int position) {
         Company company = searchRP.getRecommendedCompanies().get(position);
-        holder.nameTxt.setText(company.getName());
         if (!company.isLocked() && company.getLocation() != null && !company.getLocation().isEmpty())
             holder.locationTxt.setText(company.getLocation());
 
+        if (!company.isLocked()){
+            holder.nameTxt.setText(company.getName());
+        } else {
+            holder.nameTxt.setText("Buy Premium");
+        }
 
         holder.tagsGroup.removeAllViews();
         for (String tag: company.getTags()){
@@ -70,8 +74,10 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.Compan
 
         if (company.isLocked()){
             BlurUtils.blur(holder.locationTxt, 20f);
+            BlurUtils.blur(holder.nameTxt, 20f);
         } else {
             BlurUtils.blur(holder.locationTxt, 0f);
+            BlurUtils.blur(holder.nameTxt, 0f);
         }
     }
 
