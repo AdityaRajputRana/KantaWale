@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,9 @@ import com.guru.kantewala.Tools.BlurUtils;
 import com.guru.kantewala.databinding.SheetSubscribeBinding;
 import com.guru.kantewala.rest.response.SearchRP;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+
 public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.CompanyViewHolder> {
 
     SearchRP searchRP;
@@ -32,6 +36,17 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.Compan
 
     public SearchRVAdapter(SearchRP searchRP, Activity context) {
         this.searchRP = searchRP;
+        //sorting list bringing unlocked states first
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            searchRP.getRecommendedCompanies().sort(new Comparator<Company>() {
+                @Override
+                public int compare(Company o1, Company o2) {
+                    if (o1.isLocked() ^ o2.isLocked()) return 0;
+                    if (o1.isLocked() && !o2.isLocked()) return 1;
+                    return  -1;
+                }
+            });
+        }
         this.context = context;
     }
 
