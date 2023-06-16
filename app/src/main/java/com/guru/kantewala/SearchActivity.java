@@ -28,9 +28,12 @@ import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.requests.SearchReq;
 import com.guru.kantewala.rest.response.CategoryRP;
 import com.guru.kantewala.rest.response.SearchRP;
+import com.guru.kantewala.rest.response.UnlockedStatesRP;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity implements SubscriptionInterface.AskToSubListener {
 
@@ -42,6 +45,7 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
     private CategoryRP categoryRP;
 
     private List<String> stateList;
+    private Map<Integer, Integer> positionStateCodeMap;
     private int selectedState = 0;
 
     boolean isSearchChange = true;
@@ -100,8 +104,20 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
 
 
     private void fetchData() {
-       fetchCategories();
-       fetchCompanies();
+        fetchUnlockedStates();
+        fetchCategories();
+        fetchCompanies();
+    }
+
+    private void fetchUnlockedStates() {
+        Log.i("Eta-Kw", "Fetching Unlocked States");
+        UnlockedStatesRP.getUnlockedStates(new UnlockedStatesRP.OnStatesListener() {
+            @Override
+            public void onGotUnlockedStates(ArrayList<Integer> states) {
+                Log.i("Eta-Kw", "Got Unlocked States");
+                initialiseStateSpinner(states);
+            }
+        }, this);
     }
 
 
@@ -170,8 +186,7 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
             selectedCategoryId = getIntent().getIntExtra("categoryId", -1);
         }
 
-        stateList = Constants.getIndianStates();
-        initialiseStateSpinner();
+        initialiseStateSpinner(null);
         initialiseCategorySpinner();
     }
 
@@ -200,7 +215,8 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void initialiseStateSpinner() {
+    private void initialiseStateSpinner(ArrayList<Integer> unlockedStates) {
+        buildStateList(unlockedStates);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
                 R.layout.item_spinner,stateList);
         spinnerAdapter.setDropDownViewResource(R.layout.item_dropdown);
@@ -209,6 +225,7 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.i("eta-search", "stateSelected");
+                position = positionStateCodeMap.get(position);
                 if (selectedState != position)
                         isSearchChange = true;
                 selectedState = position;
@@ -220,6 +237,41 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
 
             }
         });
+    }
+
+    private void buildStateList(ArrayList<Integer> unlockedStates) {
+        Log.i("Eta-Kw", "Building Unlocked States");
+        int counter = 0;
+        List<String> allStatesList = Constants.getIndianStates();
+        stateList = new ArrayList<String>();
+        positionStateCodeMap = new HashMap<>();
+
+
+        //All State Option
+        String g= "All States";
+        stateList.add(g);
+        positionStateCodeMap.put(counter, 0);
+        counter++;
+
+        //Unlocked States
+        if (unlockedStates != null && unlockedStates.size() > 0){
+            for (Integer sc: unlockedStates) {
+                stateList.add(allStatesList.get(sc));
+                positionStateCodeMap.put(counter, sc);
+                counter++;
+            }
+        }
+
+        for (int i = 1; i < allStatesList.size(); i++){
+            if (unlockedStates != null && unlockedStates.size() > 0
+            && unlockedStates.contains(i)){
+                continue;
+            }
+
+            stateList.add(allStatesList.get(i));
+            positionStateCodeMap.put(counter, i);
+            counter++;
+        }
     }
 
     private void initialiseCategorySpinner() {
