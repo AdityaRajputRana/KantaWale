@@ -11,6 +11,7 @@ import android.os.Handler;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.guru.kantewala.Tools.ProfileUtils;
+import com.guru.kantewala.rest.response.UnlockedStatesRP;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -32,6 +33,8 @@ public class SplashActivity extends AppCompatActivity {
         } else if (ProfileUtils.isProfileEditRequired(this)) {
             i = new Intent(this, RegisterActivity.class);
             i.putExtra("signUpPending", true);
+        } else {
+            i = new Intent(this, MainActivity.class);
         }
         start(i);
     }

@@ -30,6 +30,7 @@ import com.guru.kantewala.rest.response.MyCompanyRP;
 import com.guru.kantewala.rest.response.PackHistoryRP;
 import com.guru.kantewala.rest.response.SearchRP;
 import com.guru.kantewala.rest.response.SubscriptionPackagesRP;
+import com.guru.kantewala.rest.response.UnlockedStatesRP;
 import com.guru.kantewala.rest.response.UserRP;
 
 import java.util.ArrayList;
@@ -112,6 +113,11 @@ public class APIMethods {
     public static void getSubscriptionPackages(APIResponseListener<SubscriptionPackagesRP> listener){
         HomeReq req = new HomeReq();
         API.postData(listener, req, EndPoints.subscriptionPackages, SubscriptionPackagesRP.class);
+    }
+
+    public static void getUnlockedStates(APIResponseListener<UnlockedStatesRP> listener){
+        HomeReq req = new HomeReq();
+        API.postData(listener, req, EndPoints.unlockedStates, UnlockedStatesRP.class);
     }
 
     public static void getOrderId(ArrayList<State> states, SubscriptionPack pack, APIResponseListener<LessonOrderIdRp> listener){

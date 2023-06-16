@@ -12,6 +12,7 @@ import com.guru.kantewala.MainFragments.HomeFragment;
 import com.guru.kantewala.MainFragments.ProfileFragment;
 import com.guru.kantewala.MainFragments.SubscriptionFragment;
 import com.guru.kantewala.databinding.ActivityMainBinding;
+import com.guru.kantewala.rest.response.UnlockedStatesRP;
 
 public class MainActivity extends AppCompatActivity implements SubscriptionInterface.AskToSubListener {
 
@@ -25,6 +26,11 @@ public class MainActivity extends AppCompatActivity implements SubscriptionInter
 
         setUpFragmentsAndNavigation();
         checkAttachments();
+        loadLeastPriorityData();
+    }
+
+    private void loadLeastPriorityData() {
+        UnlockedStatesRP.loadUnlockStates();
     }
 
     private void checkAttachments() {

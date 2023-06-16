@@ -27,6 +27,7 @@ public class EndPoints {
    public static String deleteImage = "deleteImage";
 
    public static String purchaseHistory = "purchaseHistory";
+   public static String unlockedStates = "getUserStates";
 
 
 }

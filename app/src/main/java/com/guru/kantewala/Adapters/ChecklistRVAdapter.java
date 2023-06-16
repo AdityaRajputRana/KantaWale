@@ -35,6 +35,7 @@ public class ChecklistRVAdapter extends RecyclerView.Adapter<ChecklistRVAdapter.
     ChecklistListener listener;
     String filter;
     Activity activity;
+    ArrayList<Integer> restrictedStateCodes = new ArrayList<>();
 
     public ArrayList<State> getSelectedStates() {
         return selectedStates;
@@ -43,7 +44,8 @@ public class ChecklistRVAdapter extends RecyclerView.Adapter<ChecklistRVAdapter.
     boolean areItemsUpdatedFlag = false;
 
     public ChecklistRVAdapter(ArrayList<String> states, EditText searchEditText, ChecklistListener listener, int maxAllowedCheck,
-                              RecyclerView recyclerView, Activity activity) {
+                              RecyclerView recyclerView, Activity activity, ArrayList<Integer> unlockedStates) {
+        this.restrictedStateCodes = unlockedStates;
         buildStateLists(states);
         this.maxAllowedCheck = maxAllowedCheck;
         selectedStates = new ArrayList<>();
@@ -70,6 +72,8 @@ public class ChecklistRVAdapter extends RecyclerView.Adapter<ChecklistRVAdapter.
         allStates = new ArrayList<State>();
         filteredStates = new ArrayList<State>();
         for (int i = 0; i < states.size(); i++){
+            if (restrictedStateCodes.contains(i+1))
+                continue;
             State state = new State(states.get(i), i+1);
             allStates.add(state);
             filteredStates.add(state);

@@ -17,6 +17,7 @@ import com.guru.kantewala.Tools.Constants;
 import com.guru.kantewala.Tools.Methods;
 import com.guru.kantewala.databinding.ActivitySubscriptionsOptionsBinding;
 import com.guru.kantewala.rest.requests.VerifyLessonPaymentReq;
+import com.guru.kantewala.rest.response.UnlockedStatesRP;
 import com.razorpay.PaymentData;
 import com.razorpay.PaymentResultWithDataListener;
 
@@ -56,9 +57,24 @@ public class SubscriptionsOptionsActivity extends AppCompatActivity  implements 
         if (pack.getNoOfStates() >= Constants.getIndianStatesArrayList().size()){
             forceCheckout();
             return;
+        } else {
+            binding.progressBar.setVisibility(View.VISIBLE);
+            UnlockedStatesRP.getUnlockedStates(new UnlockedStatesRP.OnStatesListener() {
+                @Override
+                public void onGotUnlockedStates(ArrayList<Integer> states) {
+                    if (states == null){
+                       binding.progressBar.setVisibility(View.GONE);
+                    } else {
+                        loadStatesList(states);
+                    }
+                }
+            }, this);
         }
+    }
+
+    private void loadStatesList(ArrayList<Integer> unlockedStates) {
         adapter = new ChecklistRVAdapter(Constants.getIndianStatesArrayList(), binding.searchEt, checklistListener, pack.getNoOfStates(),
-                binding.recyclerView, this);
+                binding.recyclerView, this, unlockedStates);
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.progressBar.setVisibility(View.GONE);
