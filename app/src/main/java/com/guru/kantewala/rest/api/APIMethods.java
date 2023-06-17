@@ -10,6 +10,7 @@ import com.guru.kantewala.Models.SubscriptionPack;
 import com.guru.kantewala.RegisterActivity;
 import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
+import com.guru.kantewala.rest.api.interfaces.FileTransferResponseListener;
 import com.guru.kantewala.rest.requests.ChangeCategoriesReq;
 import com.guru.kantewala.rest.requests.CompanyReq;
 import com.guru.kantewala.rest.requests.EditCompanyDetailsReq;
@@ -38,16 +39,16 @@ import java.util.List;
 
 public class APIMethods {
 
-    public static void uploadImageForBlock(Uri fileUri, Context context, CompanyImages.ImageBlock block, APIResponseListener<MessageRP> listener){
-        String file = Utils.getEncodedCompressedProfilePic(fileUri, context);
-        ImageBlockReq req = new ImageBlockReq(file, block.getId());
-        API.postData(listener, req, EndPoints.uploadCompanyImage, MessageRP.class);
+    public static void uploadImageForBlock(Uri fileUri, Context context, CompanyImages.ImageBlock block, FileTransferResponseListener<MessageRP> listener){
+        byte[] file = Utils.getImageBytes(fileUri, context);
+        ImageBlockReq req = new ImageBlockReq(block.getId());
+        API.postFile(listener, req, EndPoints.uploadCompanyImage, MessageRP.class, "testImage", "image/png", file);
     }
 
-    public static void uploadCompanyLogo(Uri fileUri, Context context, int companyId, APIResponseListener<MessageRP> listener){
-        String file = Utils.getEncodedCompressedProfilePic(fileUri, context);
-        EditCompanyReq req = new EditCompanyReq(file, companyId);
-        API.postData(listener, req, EndPoints.uploadCompanyLogo, MessageRP.class);
+    public static void uploadCompanyLogo(Uri fileUri, Context context, int companyId, FileTransferResponseListener<MessageRP> listener){
+        byte[] file = Utils.getImageBytes(fileUri, context);
+        EditCompanyReq req = new EditCompanyReq(companyId);
+        API.postFile(listener, req, EndPoints.uploadCompanyLogo, MessageRP.class, "logo", "image/png", file);
     }
 
 

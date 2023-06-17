@@ -1,6 +1,7 @@
 package com.guru.kantewala.rest.api;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -11,7 +12,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
+import com.guru.kantewala.rest.api.interfaces.FileTransferResponseListener;
+import com.guru.kantewala.rest.requests.App.AppRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -19,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class API {
-
     public static void getData(APIResponseListener listener, Object rawData, String endpoint, Class klass){
         try {
             String data = HashUtils.getHashedData(rawData);
@@ -79,8 +82,6 @@ public class API {
 
 
     }
-
-
     public static void postData(APIResponseListener listener, Object rawData, String endpoint, Class klass){
         try {
             String data = HashUtils.getHashedData(rawData);
@@ -172,4 +173,118 @@ public class API {
 
 
     }
+
+    public static void postFile(FileTransferResponseListener listener, Object rawData, String endpoint, Class klass,
+                                String name, String fileType, byte[] file){
+        try {
+            String encodedData = "";
+            AppRequest request = HashUtils.getHashedDataObject(rawData);
+            Log.i("encodedData", request.getData());
+            if (request != null){
+                encodedData = request.getData();
+            }
+            String finalEncodedData = encodedData;
+
+            String url = VolleyClient.getBaseUrl() + endpoint + VolleyClient.suffix;
+            Log.i("eta url", url);
+
+            VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, url,
+                    new Response.Listener<NetworkResponse>() {
+                        @Override
+                        public void onResponse(NetworkResponse rsp) {
+                           onNetWorkResponse(listener, rsp, klass);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.i("eta eror", new Gson().toJson(error));
+                            if (error.networkResponse != null && error.networkResponse.data != null){
+                                Log.i("Eta network data", String.valueOf(error.networkResponse.data));
+                                onNetWorkResponse(listener, error.networkResponse, klass);
+                            } else {
+                                listener.fail("VE-1", String.valueOf(error) + " : " + error.getMessage(), "", false, true );
+                            }
+                        }
+                    }, listener) {
+
+                long totalSize = file.length;
+
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("data", finalEncodedData);
+                    return params;
+                }
+                @Override
+                protected Map<String, DataPart> getByteData() {
+                    Map<String, DataPart> params = new HashMap<>();
+                    long imagename = System.currentTimeMillis();
+                    totalSize = file.length;
+                    params.put("image", new DataPart(imagename + ".png", file));
+                    return params;
+                }
+
+                long transferred = 0;
+
+                @Override
+                protected Response<NetworkResponse> parseNetworkResponse(NetworkResponse response) {
+                    transferred += (256*1024);
+                    Log.i("Eta Transferred Bytes", String.valueOf(transferred));
+                    int progress = (int) ((transferred * 100f)/file.length);
+                    listener.onProgress(progress);
+                    return super.parseNetworkResponse(response);
+                }
+            };
+            //End
+
+            multipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    180000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    2f));
+            VolleyClient.getRequestQueue().add(multipartRequest);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+    private static void onNetWorkResponse(FileTransferResponseListener listener, NetworkResponse rsp, Class klass) {
+        try {
+            String strRp = new String(rsp.data);
+            JSONObject response = new JSONObject(strRp);
+            Log.i("Lesson Response", response.toString());
+            Boolean successful = response.getBoolean("success");
+            if (successful) {
+                if (response.getString("data") != null
+                        && !response.getString("data").isEmpty() && !response.getString("data").trim().isEmpty()) {
+                    String data = "";
+                    if (klass == ArrayList.class){
+                        data = response.getJSONArray("data").toString();
+                    } else if (klass ==  String.class){
+                        data = response.getString("data");
+                    } else {
+                        data = response.getJSONObject("data").toString();
+                    }
+//                                    String decodedData = HashUtils.fromBase64(data);
+                    if (klass == String.class)
+                        listener.success(data);
+                    else
+                        listener.convertData(new Gson().fromJson(data, klass));
+                } else {
+                    listener.convertData(null);
+                }
+            } else {
+                listener.fail("2", response.getString("message"), "", true, true);
+            }
+        } catch (Exception e) {
+            Log.i("Lesson Response", new String(rsp.data));
+            listener.fail("1", "Response Conversion Error: " + e.getMessage().toString(), "", true, true);
+            e.printStackTrace();
+        }
+    }
+
 }

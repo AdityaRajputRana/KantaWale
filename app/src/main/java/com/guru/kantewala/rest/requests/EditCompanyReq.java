@@ -12,4 +12,9 @@ public class EditCompanyReq {
         this.companyId = companyId;
         this.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
+
+    public EditCompanyReq(int companyId) {
+        this.companyId = companyId;
+        this.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
 }

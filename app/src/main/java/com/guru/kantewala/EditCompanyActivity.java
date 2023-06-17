@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,6 +33,7 @@ import com.guru.kantewala.databinding.DialogInputBinding;
 import com.guru.kantewala.databinding.DialogLoadingBinding;
 import com.guru.kantewala.rest.api.APIMethods;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
+import com.guru.kantewala.rest.api.interfaces.FileTransferResponseListener;
 import com.guru.kantewala.rest.requests.EditCompanyDetailsReq;
 import com.guru.kantewala.rest.response.CategoryRP;
 import com.guru.kantewala.rest.response.MessageRP;
@@ -39,6 +41,7 @@ import com.guru.kantewala.rest.response.MyCompanyRP;
 import com.guru.kantewala.rest.response.UserRP;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class EditCompanyActivity extends AppCompatActivity {
@@ -667,7 +670,7 @@ public class EditCompanyActivity extends AppCompatActivity {
 
     private void uploadCompanyLog(Uri uri) {
         startProgress("Uploading Logo");
-        APIMethods.uploadCompanyLogo(uri, this, myCompanyRP.getCompany().getId(),  new APIResponseListener<MessageRP>() {
+        APIMethods.uploadCompanyLogo(uri, this, myCompanyRP.getCompany().getId(),  new FileTransferResponseListener<MessageRP>() {
             @Override
             public void success(MessageRP response) {
                 showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
@@ -675,6 +678,23 @@ public class EditCompanyActivity extends AppCompatActivity {
                     public void onCancel() {
                         loadUI();
                         fetchData();
+                    }
+                });
+            }
+
+
+            @Override
+            public void onProgress(int percent) {
+                EditCompanyActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i("Eta Progress", String.valueOf(percent));
+                        if (percent <= 0)
+                            startProgress("Preparing Image Before Upload");
+                        else if  (percent >= 100)
+                            startProgress("Saving Image");
+                        else
+                            startProgress("Uploading Image: " + percent + "%");
                     }
                 });
             }
@@ -688,7 +708,7 @@ public class EditCompanyActivity extends AppCompatActivity {
 
     private void startImageBlockUpload(Uri uri, CompanyImages.ImageBlock imageBlock) {
         startProgress("Uploading picture");
-        APIMethods.uploadImageForBlock(uri, this, imageBlock, new APIResponseListener<MessageRP>() {
+        APIMethods.uploadImageForBlock(uri, this, imageBlock, new FileTransferResponseListener<MessageRP>() {
             @Override
             public void success(MessageRP response) {
                 showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
@@ -696,6 +716,22 @@ public class EditCompanyActivity extends AppCompatActivity {
                     public void onCancel() {
                         loadUI();
                         fetchData();
+                    }
+                });
+            }
+
+            @Override
+            public void onProgress(int percent) {
+                EditCompanyActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i("Eta Progress", String.valueOf(percent));
+                        if (percent <= 0)
+                            startProgress("Preparing Image Before Upload");
+                        else if  (percent >= 100)
+                            startProgress("Saving Image");
+                        else
+                            startProgress("Uploading Image: " + percent + "%");
                     }
                 });
             }

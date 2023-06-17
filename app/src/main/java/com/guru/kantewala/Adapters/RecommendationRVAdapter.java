@@ -50,11 +50,18 @@ public class RecommendationRVAdapter extends RecyclerView.Adapter<Recommendation
         holder.nameTxt.setText(company.getName());
         if (!company.isLocked() && company.getLocation() != null && !company.getLocation().isEmpty())
             holder.locationTxt.setText(company.getLocation());
-        Picasso.get()
-                .load(company.getLogoUrl())
-                .transform(new CircleTransform())
-                .into(holder.logoImg);
-
+        if (company.getLogoUrl() != null && !company.getLogoUrl().isEmpty())
+            Picasso.get()
+                    .load(company.getLogoUrl())
+                    .transform(new CircleTransform())
+                    .into(holder.logoImg);
+        else {
+            Picasso.get()
+                    .load(R.drawable.ic_profile_inactive)
+                    .placeholder(R.drawable.ic_profile_inactive)
+                    .transform(new CircleTransform())
+                    .into(holder.logoImg);
+        }
         holder.tagsGroup.removeAllViews();
         for (String tag: company.getTags()){
             Chip chip = new Chip(context);

@@ -84,12 +84,23 @@ public class Utils {
     }
     public static String getEncodedImage(Uri uri, Context context){
         try {
+            String encodedImage = Base64.encodeToString(getImageBytes(uri, context), Base64.NO_WRAP);
+            return encodedImage;
+        } catch (Exception e){
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public static byte[] getImageBytes(Uri uri, Context context){
+        try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
             byte[] byteArray = byteArrayOutputStream.toByteArray();
-            String encodedImage = Base64.encodeToString(byteArray, Base64.NO_WRAP);
-            return encodedImage;
+            return byteArray;
         } catch (Exception e){
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();

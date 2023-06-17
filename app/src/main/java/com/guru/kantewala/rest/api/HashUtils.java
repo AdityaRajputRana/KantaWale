@@ -21,6 +21,7 @@ public class HashUtils {
         Random random = new Random();
         return String.valueOf(random.nextInt(900));
     }
+
     public static String getHashedData(Object obj){
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         if (isHashingEnabled) {
@@ -37,6 +38,24 @@ public class HashUtils {
             return requestData;
         } else {
             return gson.toJson(obj);
+        }
+    }
+
+    public static AppRequest getHashedDataObject(Object obj){
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        if (isHashingEnabled) {
+            String salt = getRandomSalt();
+            long timestamp = System.currentTimeMillis();
+            String input = salt + gson.toJson(obj) + String.valueOf(timestamp) + APP_SECRET;
+            String hash = md5(input);
+
+            InputRequest inputRequest = new InputRequest(salt, obj, timestamp, hash);
+            String inputReqStr = gson.toJson(inputRequest);
+            String encodedInput = toBase64(inputReqStr);
+            AppRequest appRequest = new AppRequest(encodedInput);
+            return appRequest;
+        } else {
+            return new AppRequest(gson.toJson(obj));
         }
     }
 
