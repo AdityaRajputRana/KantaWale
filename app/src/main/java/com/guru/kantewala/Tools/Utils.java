@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.guru.kantewala.CompanyActivity;
+import com.guru.kantewala.InformationActivity;
 
 import java.io.ByteArrayOutputStream;
 
@@ -53,6 +54,15 @@ public class Utils {
         } catch (Exception e){
             Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static void startHelpActivity(Activity context) {
+        Intent i = new Intent(context, InformationActivity.class);
+        i.putExtra("isBody", true);
+        i.putExtra("isHead", true);
+        i.putExtra("head", Constants.helpTitle);
+        i.putExtra("body", Constants.helpMessage);
+        context.startActivity(i);
     }
 
     private static class URLSpanNoUnderline extends URLSpan {

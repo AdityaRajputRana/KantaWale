@@ -170,7 +170,11 @@ public class ProfileFragment extends Fragment {
                     .into(binding.profileImageView);
         }
 
-        String location = userRP.getCity().trim() + ", " + userRP.getState().trim();
-        binding.locationTxt.setText(location);
+        try {
+            String location = userRP.getCity().trim() + ", " + userRP.getState().trim();
+            binding.locationTxt.setText(location);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

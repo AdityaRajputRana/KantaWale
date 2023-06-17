@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Constants {
+    public static String helpTitle = "Help";
     private static List<String> indianStates;
     private static List<String> generateIndianStates(){
         indianStates =  Arrays.asList(

@@ -23,6 +23,7 @@ import com.guru.kantewala.Helpers.SubscriptionInterface;
 import com.guru.kantewala.Models.Company;
 import com.guru.kantewala.R;
 import com.guru.kantewala.Tools.BlurUtils;
+import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.databinding.SheetSubscribeBinding;
 import com.guru.kantewala.rest.response.SearchRP;
 
@@ -123,6 +124,9 @@ public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.Compan
             if (context instanceof SubscriptionInterface.AskToSubListener)
                 ((SubscriptionInterface.AskToSubListener) context).redirectToSubscribeFragment();
             dialog.dismiss();
+        });
+        sheet.subscribedAlreadyTxt.setOnClickListener(view->{
+            Utils.startHelpActivity(context);
         });
         dialog.setContentView(sheet.getRoot());
         dialog.show();
