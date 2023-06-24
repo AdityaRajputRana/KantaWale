@@ -82,7 +82,7 @@ public class CompanyImagesRVAdapter extends RecyclerView.Adapter<CompanyImagesRV
 
         ImageButton editBtn;
         ImageButton deleteBtn;
-        ImageButton addBtn;
+        TextView addBtn;
 
         public ImageBlockViewHolder(@NonNull View itemView) {
             super(itemView);

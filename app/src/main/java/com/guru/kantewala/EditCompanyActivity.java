@@ -194,11 +194,11 @@ public class EditCompanyActivity extends AppCompatActivity {
     }
 
     private void saveImageBlock(String blockName) {
-        startProgress("Creating new Image Block");
+        startProgress("Creating new Product");
         APIMethods.createImageBlock(myCompanyRP.getCompany().getId(), blockName, new APIResponseListener<MessageRP>() {
             @Override
             public void success(MessageRP response) {
-                showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
+                showSuccess(response.getMessage().replace("Block", "Product"), new RegisterActivity.OnDismissListener() {
                     @Override
                     public void onCancel() {
                         loadUI();
