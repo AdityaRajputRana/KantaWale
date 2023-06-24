@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,7 +62,17 @@ public class SubscriptionPackageAdapter extends RecyclerView.Adapter<Subscriptio
             holder.radioButton.setVisibility(View.GONE);
         } else if (position == subscriptionPackagesRP.getSubscriptionPackages().size()){
             holder.titleTxt.setVisibility(View.VISIBLE);
-            holder.itemView.setBackground(activity.getResources().getDrawable(R.drawable.bg_subsciption_package));
+            Exception exception = null;
+            do {
+                try {
+                    holder.itemView.setBackground(activity.getResources().getDrawable(R.drawable.bg_subsciption_package));
+                } catch (Exception e){
+                    exception = e;
+                    e.printStackTrace();
+                    Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
+                }
+            } while (exception != null && exception instanceof NullPointerException);
+
             holder.titleTxt.setText("Recommended Listing");
             holder.bodyTxt.setText("List your company as recommended company on the first page for Rs. 99,900 per 6 months");
             holder.radioButton.setVisibility(View.GONE);

@@ -3,6 +3,8 @@ package com.guru.kantewala;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +16,6 @@ import com.guru.kantewala.Helpers.SubscriptionPaymentHelper;
 import com.guru.kantewala.Models.State;
 import com.guru.kantewala.Models.SubscriptionPack;
 import com.guru.kantewala.Tools.Constants;
-import com.guru.kantewala.Tools.Methods;
 import com.guru.kantewala.databinding.ActivitySubscriptionsOptionsBinding;
 import com.guru.kantewala.rest.requests.VerifyLessonPaymentReq;
 import com.guru.kantewala.rest.response.UnlockedStatesRP;
@@ -50,7 +51,7 @@ public class SubscriptionsOptionsActivity extends AppCompatActivity  implements 
 
     private void setListeners() {
         checklistListener = this::showCheckout;
-        binding.continueBtn.setOnClickListener(view->checkOut());
+        binding.continueBtn.setOnClickListener(view-> verifyCheckoutRequirements());
     }
 
     private void loadData() {
@@ -106,20 +107,43 @@ public class SubscriptionsOptionsActivity extends AppCompatActivity  implements 
         //Todo: Server: Save SubOptions, generate order id, verify payment and activate subscription)
     }
 
-    private void checkOut(){
+    private void confirmCheckout(){
         ArrayList<State> selectedStateOptions = adapter.getSelectedStates();
-        if (selectedStateOptions.size() != pack.getNoOfStates()){
-            return;
+        String message = "";
+        for (State state: selectedStateOptions){
+            message += ", " + state.getName();
         }
+        if (!message.isEmpty()){
+            message = message.substring(2);
+        }
+        message = "You have selected following states for premium access. Click CONFIRM to proceed.\n\n" + message;
+        new AlertDialog.Builder(this)
+                .setTitle("Confirm States")
+                .setMessage(message)
+                .setPositiveButton("CONFIRM", (dialog, which) -> {
+                    dialog.dismiss();
+                    checkout();
+                })
+                .setNegativeButton("Cancel", ((dialog, which) -> dialog.dismiss()))
+                .show();
+    }
+
+    private void checkout(){
+        ArrayList<State> selectedStateOptions = adapter.getSelectedStates();
         binding.recyclerView.setVisibility(View.GONE);
         binding.searchEt.setVisibility(View.GONE);
         binding.titleTxt.setText("Initiating Payment");
         binding.continueBtn.setVisibility(View.GONE);
         binding.progressBar.setVisibility(View.VISIBLE);
         helper.generateOrder(selectedStateOptions, pack);
-        //Todo: Launch Payment Helper from here (FETCH ORDER ID, EXECUTE PAYMENT, SEND CONFIRMATION TO SERVER)
-        //Todo: Server: Save SubOptions, generate order id, verify payment and activate subscription)
     }
+    private void verifyCheckoutRequirements(){
+        ArrayList<State> selectedStateOptions = adapter.getSelectedStates();
+        if (selectedStateOptions.size() != pack.getNoOfStates()){
+            return;
+        }
+        confirmCheckout();
+        }
 
     @Override
     public void success(String message) {
