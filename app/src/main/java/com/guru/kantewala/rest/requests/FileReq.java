@@ -12,4 +12,8 @@ public class FileReq {
         this.file = file;
         this.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
+
+    public FileReq() {
+        this.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
 }

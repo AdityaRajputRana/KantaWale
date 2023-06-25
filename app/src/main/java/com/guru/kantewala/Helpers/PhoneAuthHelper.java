@@ -61,7 +61,7 @@ public class PhoneAuthHelper {
         if (listener != null && listener instanceof PhoneAuthListener){
             listener.authMessage(success, message, code);
         }
-        Log.i("PhoneAuthLogs" + code, message);
+        Log.i("PhoneAuthLogs-" + code, message);
     }
 
     FirebaseAuth mAuth;

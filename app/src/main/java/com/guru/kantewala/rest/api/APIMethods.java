@@ -52,10 +52,10 @@ public class APIMethods {
     }
 
 
-    public static void uploadProfilePicture(Uri fileUri, Context context, APIResponseListener<MessageRP> listener){
-        String file = Utils.getEncodedCompressedProfilePic(fileUri, context);
-        FileReq req = new FileReq(file);
-        API.postData(listener, req, EndPoints.updateProfilePhoto, MessageRP.class);
+    public static void uploadProfilePicture(Uri fileUri, Context context, FileTransferResponseListener<MessageRP> listener){
+        byte[] file = Utils.getImageBytes(fileUri, context);
+        FileReq req = new FileReq();
+        API.postFile(listener, req, EndPoints.updateProfilePhoto, MessageRP.class, "profilePhoto", "image/png", file);
     }
 
     public static void registerProfile(RegisterActivity.Mode mode, RegisterProfileReq req, APIResponseListener<MessageRP> listener) {

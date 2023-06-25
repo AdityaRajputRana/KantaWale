@@ -10,7 +10,6 @@ public class RegisterProfileReq {
     String city;
     String state;
     int stateCode;
-    String photoUrl;
 
     public RegisterProfileReq(
             String name, String phoneNumber, String uid,
@@ -25,6 +24,5 @@ public class RegisterProfileReq {
         this.city = city;
         this.state = state;
         this.stateCode = stateCode;
-        this.photoUrl = photoUrl;
     }
 }

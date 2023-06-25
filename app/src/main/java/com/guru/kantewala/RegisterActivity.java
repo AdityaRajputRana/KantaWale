@@ -36,6 +36,7 @@ import com.guru.kantewala.databinding.DialogLoadingBinding;
 import com.guru.kantewala.databinding.DialogOtpBinding;
 import com.guru.kantewala.rest.api.APIMethods;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
+import com.guru.kantewala.rest.api.interfaces.FileTransferResponseListener;
 import com.guru.kantewala.rest.requests.RegisterProfileReq;
 import com.guru.kantewala.rest.response.MessageRP;
 import com.guru.kantewala.rest.response.UserRP;
@@ -115,12 +116,17 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
         }
 
         startProgress("Uploading Image");
-        APIMethods.uploadProfilePicture(toUploadImageUri, this, new APIResponseListener<MessageRP>() {
+        APIMethods.uploadProfilePicture(toUploadImageUri, this, new FileTransferResponseListener<MessageRP>() {
             @Override
             public void success(MessageRP response) {
                 uploadedImageUrl = response.getMessage();
                 toUploadImageUri = null;
                 saveProfileInformation();
+            }
+
+            @Override
+            public void onProgress(int percent) {
+
             }
 
             @Override
