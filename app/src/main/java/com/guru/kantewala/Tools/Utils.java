@@ -17,7 +17,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.guru.kantewala.CompanyActivity;
 import com.guru.kantewala.InformationActivity;
 
 import java.io.ByteArrayOutputStream;

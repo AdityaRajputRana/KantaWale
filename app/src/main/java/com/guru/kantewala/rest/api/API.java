@@ -1,7 +1,6 @@
 package com.guru.kantewala.rest.api;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -15,7 +14,6 @@ import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.api.interfaces.FileTransferResponseListener;
 import com.guru.kantewala.rest.requests.App.AppRequest;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

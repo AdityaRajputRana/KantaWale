@@ -8,14 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.guru.kantewala.Adapters.PlanDetailsAdapter;
-import com.guru.kantewala.Helpers.SubscriptionInterface;
 import com.guru.kantewala.Tools.Methods;
 import com.guru.kantewala.databinding.ActivityPlanDetailsBinding;
 import com.guru.kantewala.rest.api.APIMethods;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
-import com.guru.kantewala.rest.response.MyCompanyRP;
 import com.guru.kantewala.rest.response.PackHistoryRP;
-import com.guru.kantewala.rest.response.SubscriptionPackagesRP;
 
 public class PlanDetailsActivity extends AppCompatActivity {
 

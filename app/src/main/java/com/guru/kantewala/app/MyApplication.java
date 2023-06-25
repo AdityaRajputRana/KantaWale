@@ -2,7 +2,6 @@ package com.guru.kantewala.app;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;

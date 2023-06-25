@@ -41,7 +41,6 @@ import com.guru.kantewala.rest.response.MyCompanyRP;
 import com.guru.kantewala.rest.response.UserRP;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class EditCompanyActivity extends AppCompatActivity {

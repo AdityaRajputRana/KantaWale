@@ -1,10 +1,8 @@
 package com.guru.kantewala.Adapters;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.guru.kantewala.ImageViewActivity;
 import com.guru.kantewala.Models.CompanyImages;
 import com.guru.kantewala.R;
-import com.guru.kantewala.Tools.Transformations.RoundedCornerTransformation;
 import com.squareup.picasso.Picasso;
 
 public class PhotosRVAdapter extends RecyclerView.Adapter<PhotosRVAdapter.PhotoViewHolder> {

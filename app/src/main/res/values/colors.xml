@@ -31,5 +31,7 @@
 
     <color name="expiredColorFg">#002435</color>
     <color name="expiredColorBG">#33002435</color>
+    <color name="ic_launcher_background">#F8F8F8</color>
+
 
 </resources>

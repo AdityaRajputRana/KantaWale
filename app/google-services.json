@@ -14,6 +14,59 @@
       },
       "oauth_client": [
         {
+          "client_id": "1082828039178-jmgotuf02vqb3agsj9g93d6acof6c21o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guru.kantewala",
+            "certificate_hash": "4cf8c9904fa7fedb88cdb456da27725f432b6f39"
+          }
+        },
+        {
+          "client_id": "1082828039178-o9ubi1ejejt6i7pe4l69pbgoant8qeo2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guru.kantewala",
+            "certificate_hash": "024ae90a7a50aa81262019ef1f421c7d3b210411"
+          }
+        },
+        {
+          "client_id": "1082828039178-qllli42vjjrq9dt95mbjb8q2dvouielm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmPw4M0LWCe61TwXa6qyMpMBuz9Kx-Pws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082828039178-qllli42vjjrq9dt95mbjb8q2dvouielm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082828039178:android:5d5fe6cc549e03c06b2bf3",
+        "android_client_info": {
+          "package_name": "com.weighmall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082828039178-6oejhs3la0t00u02cafjc09q0s7473po.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.weighmall",
+            "certificate_hash": "024ae90a7a50aa81262019ef1f421c7d3b210411"
+          }
+        },
+        {
           "client_id": "1082828039178-qllli42vjjrq9dt95mbjb8q2dvouielm.apps.googleusercontent.com",
           "client_type": 3
         }

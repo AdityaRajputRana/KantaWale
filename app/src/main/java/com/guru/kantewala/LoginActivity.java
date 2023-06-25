@@ -17,7 +17,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.guru.kantewala.Helpers.PhoneAuthHelper;
-import com.guru.kantewala.Tools.Methods;
 import com.guru.kantewala.Tools.ProfileUtils;
 import com.guru.kantewala.databinding.ActivityLoginBinding;
 import com.guru.kantewala.databinding.DialogLoadingBinding;
@@ -25,8 +24,6 @@ import com.guru.kantewala.databinding.DialogOtpBinding;
 import com.guru.kantewala.rest.api.APIMethods;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.response.UserRP;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 public class LoginActivity extends AppCompatActivity implements PhoneAuthHelper.PhoneAuthListener {
 

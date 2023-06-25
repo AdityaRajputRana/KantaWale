@@ -2,9 +2,7 @@ package com.guru.kantewala;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageButton;
 
 import com.guru.kantewala.databinding.ActivityImageViewBinding;
 import com.squareup.picasso.Callback;

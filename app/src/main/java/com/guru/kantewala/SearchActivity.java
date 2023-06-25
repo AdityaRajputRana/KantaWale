@@ -10,7 +10,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -18,14 +17,13 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.guru.kantewala.Adapters.SearchRVAdapter;
 import com.guru.kantewala.Helpers.SubscriptionInterface;
-import com.guru.kantewala.Models.Category;
 import com.guru.kantewala.Tools.Constants;
 import com.guru.kantewala.Tools.Methods;
 import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.databinding.ActivitySearchBinding;
 import com.guru.kantewala.rest.api.APIMethods;
+import com.guru.kantewala.rest.api.HashUtils;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
-import com.guru.kantewala.rest.requests.SearchReq;
 import com.guru.kantewala.rest.response.CategoryRP;
 import com.guru.kantewala.rest.response.SearchRP;
 import com.guru.kantewala.rest.response.UnlockedStatesRP;
@@ -86,6 +84,10 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (binding.searchEt.getText().toString().contains(HashUtils.decode(Methods.dKey))){
+                    Methods.showInvalidSearchTermSignature(SearchActivity.this);
+                    return;
+                }
                 if (binding.searchEt.getText().toString().contains("\n")){
                     isSearchChange = false;
                     String text = binding.searchEt.getText().toString().trim()

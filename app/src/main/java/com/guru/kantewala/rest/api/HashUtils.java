@@ -1,7 +1,6 @@
 package com.guru.kantewala.rest.api;
 
 import android.util.Base64;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -90,7 +89,7 @@ public class HashUtils {
 
     }
 
-    public static String fromBase64(String input) {
+    public static String decode(String input) {
         if (!isEncryptionEnabled)
             return input;
         try {

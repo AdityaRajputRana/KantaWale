@@ -9,12 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.guru.kantewala.Models.PlanDetails;
-import com.guru.kantewala.Models.SubscriptionPack;
 import com.guru.kantewala.R;
 import com.guru.kantewala.databinding.ItemPlanDetailsBinding;
 import com.guru.kantewala.rest.response.PackHistoryRP;
-
-import java.util.ArrayList;
 
 public class PlanDetailsAdapter extends RecyclerView.Adapter<PlanDetailsAdapter.PlanViewHolder> {
 

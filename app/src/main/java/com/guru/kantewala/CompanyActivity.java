@@ -3,12 +3,7 @@ package com.guru.kantewala;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -22,8 +17,6 @@ import com.guru.kantewala.databinding.ActivityCompanyBinding;
 import com.guru.kantewala.rest.api.APIMethods;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.squareup.picasso.Picasso;
-
-import okhttp3.internal.Util;
 
 public class CompanyActivity extends AppCompatActivity {
 

@@ -1,14 +1,11 @@
 package com.guru.kantewala.Models;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.guru.kantewala.Tools.Constants;
 import com.guru.kantewala.Tools.TimeUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PlanDetails {

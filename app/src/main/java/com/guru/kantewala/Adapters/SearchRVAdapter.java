@@ -27,7 +27,6 @@ import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.databinding.SheetSubscribeBinding;
 import com.guru.kantewala.rest.response.SearchRP;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 
 public class SearchRVAdapter extends RecyclerView.Adapter<SearchRVAdapter.CompanyViewHolder> {

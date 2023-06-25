@@ -1,7 +1,6 @@
 package com.guru.kantewala.rest.response;
 
 import com.guru.kantewala.Models.PlanDetails;
-import com.guru.kantewala.Models.PlanHistoryModel;
 
 import java.util.ArrayList;
 

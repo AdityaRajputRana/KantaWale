@@ -1,7 +1,6 @@
 package com.guru.kantewala.Adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,7 +18,6 @@ import com.guru.kantewala.Models.State;
 import com.guru.kantewala.R;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class ChecklistRVAdapter extends RecyclerView.Adapter<ChecklistRVAdapter.ChecklistViewHolder> {
 

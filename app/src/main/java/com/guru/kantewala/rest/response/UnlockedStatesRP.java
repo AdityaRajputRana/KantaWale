@@ -1,7 +1,6 @@
 package com.guru.kantewala.rest.response;
 
 import android.app.Activity;
-import android.content.Context;
 
 import com.guru.kantewala.Tools.Methods;
 import com.guru.kantewala.rest.api.APIMethods;

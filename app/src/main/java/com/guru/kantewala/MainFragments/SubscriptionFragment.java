@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.guru.kantewala.Adapters.SubscriptionPackageAdapter;
 import com.guru.kantewala.Helpers.SubscriptionInterface;
-import com.guru.kantewala.Models.PlanDetails;
 import com.guru.kantewala.Models.SubscriptionPack;
 import com.guru.kantewala.SubscriptionsOptionsActivity;
 import com.guru.kantewala.Tools.Methods;
