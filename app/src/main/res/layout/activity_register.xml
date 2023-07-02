@@ -159,6 +159,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_medium"
             android:text="Company Name"
+            android:visibility="gone"
             android:textSize="16sp"
             android:layout_marginTop="12dp"
             android:textColor="@color/primaryText" />
@@ -174,6 +175,7 @@
             android:textColorHint="@color/tertiaryText"
             android:background="@drawable/bg_et_main"
             android:layout_marginTop="8dp"
+            android:visibility="gone"
             android:padding="16dp" />
 
         <TextView
@@ -183,6 +185,7 @@
             android:text="Company's GST Number"
             android:textSize="16sp"
             android:layout_marginTop="12dp"
+            android:visibility="gone"
             android:textColor="@color/primaryText" />
         <EditText
             android:id="@+id/gstET"
@@ -193,6 +196,7 @@
             android:inputType="textCapCharacters"
             android:textColor="@color/primaryText"
             android:hint="Enter company's GST number"
+            android:visibility="gone"
             android:textColorHint="@color/tertiaryText"
             android:background="@drawable/bg_et_main"
             android:layout_marginTop="8dp"

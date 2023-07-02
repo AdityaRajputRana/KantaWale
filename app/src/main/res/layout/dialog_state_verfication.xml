@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_medium"
-        android:text="Click 'Proceed to Pay' to make payment of ₹"
+        android:text="Note: States cannot be changed later and payment is non refundable.\n\nClick 'Proceed to Pay' to make payment of ₹"
         android:textColor="@color/secondaryText"
         android:textSize="16sp"
         android:layout_marginTop="8dp" />
