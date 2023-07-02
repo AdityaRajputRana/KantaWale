@@ -10,6 +10,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,7 +19,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.guru.kantewala.Helpers.PhoneAuthHelper;
+import com.guru.kantewala.Tools.Constants;
 import com.guru.kantewala.Tools.ProfileUtils;
+import com.guru.kantewala.Tools.Utils;
 import com.guru.kantewala.databinding.ActivityLoginBinding;
 import com.guru.kantewala.databinding.DialogLoadingBinding;
 import com.guru.kantewala.databinding.DialogOtpBinding;
@@ -54,6 +58,8 @@ public class LoginActivity extends AppCompatActivity implements PhoneAuthHelper.
 
 
     private void setListeners() {
+        binding.termsBtn.setOnClickListener(view-> Utils.openBrowser(Constants.termsUrl, this));
+
         binding.continueBtn.setOnClickListener(view->{
             if (validPhoneInput()){
                 String phoneNumber = countryCode + binding.phoneNumberEt.getText().toString();
@@ -99,6 +105,37 @@ public class LoginActivity extends AppCompatActivity implements PhoneAuthHelper.
         
         if (binding.phoneNumberEt.getText().toString().length() != requiredPhoneNumberDigits){
             error = "Please enter a valid " + requiredPhoneNumberDigits + " digit mobile number";
+            isValidInput = false;
+        }
+
+        if (!binding.termsCheck.isChecked()){
+            binding.termsLayout.animate()
+                    .translationX(100)
+                    .setDuration(100)
+                    .setInterpolator(new AccelerateDecelerateInterpolator())
+                    .withEndAction(new Runnable() {
+                        @Override
+                        public void run() {
+                            binding.termsLayout.animate()
+                                    .translationX(-150)
+                                    .setDuration(100)
+                                    .setInterpolator(new AccelerateDecelerateInterpolator())
+                                    .withEndAction(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            binding.termsLayout.animate()
+                                                    .translationX(0)
+                                                    .setDuration(75)
+                                                    .setInterpolator(new AccelerateDecelerateInterpolator())
+                                                    .start();
+                                        }
+                                    })
+                                    .start();
+                        }
+                    })
+                    .start();
+
+
             isValidInput = false;
         }
         

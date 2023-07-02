@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Constants {
     public static String helpTitle = "Help";
+    public static String termsUrl = "https://weighmall.com/terms-and-condition.php";
     private static List<String> indianStates;
     private static List<String> generateIndianStates(){
         indianStates =  Arrays.asList(

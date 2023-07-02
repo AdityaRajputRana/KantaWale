@@ -20,8 +20,20 @@ import android.widget.Toast;
 import com.guru.kantewala.InformationActivity;
 
 import java.io.ByteArrayOutputStream;
+import java.net.URI;
 
 public class Utils {
+
+    public static void openBrowser(String url, Activity activity){
+        try {
+            if (!url.startsWith("http://") && !url.startsWith("https://"))
+                url = "http://" + url;
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            activity.startActivity(intent);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     
     public static void openDialer(String phone, Context context){
         Intent intent = new Intent(Intent.ACTION_DIAL);

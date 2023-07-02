@@ -91,11 +91,34 @@
                 android:padding="4dp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/termsLayout"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:alpha="0.75"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/termsCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="@string/termsCheckTxt" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/termsBtn"
+                android:fontFamily="@font/inter_medium"
+                android:textColor="@color/color_cta"
+                android:text=" Terms and Conditions" />
+        </LinearLayout>
+
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/continueBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:padding="16dp"
             android:textColor="@color/colorOnPrimary"
             android:text="@string/loginCta"

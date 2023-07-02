@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -97,6 +98,7 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
         });
 
         binding.profileImageView.setOnClickListener(view->pickImage());
+        binding.termsBtn.setOnClickListener(view->Utils.openBrowser(Constants.termsUrl, this));
     }
 
     private void pickImage() {
@@ -171,6 +173,37 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
             isValid = false;
         } else {
             binding.phoneNumberEt.setError(null);
+        }
+
+        if (!binding.termsCheck.isChecked()){
+            binding.termsLayout.animate()
+                    .translationX(100)
+                    .setDuration(100)
+                    .setInterpolator(new AccelerateDecelerateInterpolator())
+                    .withEndAction(new Runnable() {
+                        @Override
+                        public void run() {
+                            binding.termsLayout.animate()
+                                    .translationX(-150)
+                                    .setDuration(100)
+                                    .setInterpolator(new AccelerateDecelerateInterpolator())
+                                    .withEndAction(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            binding.termsLayout.animate()
+                                                    .translationX(0)
+                                                    .setDuration(75)
+                                                    .setInterpolator(new AccelerateDecelerateInterpolator())
+                                                    .start();
+                                        }
+                                    })
+                                    .start();
+                        }
+                    })
+                    .start();
+
+
+            isValid = false;
         }
 
 
@@ -252,7 +285,7 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
         }
 
         if (uploadedImageUrl != null && userRP != null
-        && !uploadedImageUrl.equals(userRP.getPhotoUrl())) {
+                && !uploadedImageUrl.equals(userRP.getPhotoUrl())) {
             Picasso.get()
                     .invalidate(uploadedImageUrl);
             Picasso.get()
