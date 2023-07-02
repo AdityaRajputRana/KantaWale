@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ import com.guru.kantewala.Models.State;
 import com.guru.kantewala.Models.SubscriptionPack;
 import com.guru.kantewala.Tools.Constants;
 import com.guru.kantewala.databinding.ActivitySubscriptionsOptionsBinding;
+import com.guru.kantewala.databinding.DialogStateVerficationBinding;
 import com.guru.kantewala.rest.requests.VerifyLessonPaymentReq;
 import com.guru.kantewala.rest.response.UnlockedStatesRP;
 import com.razorpay.PaymentData;
@@ -115,16 +118,21 @@ public class SubscriptionsOptionsActivity extends AppCompatActivity  implements 
         if (!message.isEmpty()){
             message = message.substring(2);
         }
-        message = "You have selected following states for premium access. Click CONFIRM to proceed.\n\n" + message;
-        new AlertDialog.Builder(this)
-                .setTitle("Confirm States")
-                .setMessage(message)
-                .setPositiveButton("CONFIRM", (dialog, which) -> {
-                    dialog.dismiss();
-                    checkout();
-                })
-                .setNegativeButton("Cancel", ((dialog, which) -> dialog.dismiss()))
+//        message = "You have selected following states for premium access. Click CONFIRM to proceed.\n\n" + message;
+        DialogStateVerficationBinding stateBinding = DialogStateVerficationBinding.inflate(getLayoutInflater());
+        stateBinding.statesTxt.setText(message);
+        stateBinding.priceTxt.setText(stateBinding.priceTxt.getText().toString() + pack.getPrice());
+        AlertDialog sDialog = new AlertDialog.Builder(this)
+                .setView(stateBinding.getRoot())
+                .setCancelable(true)
                 .show();
+
+        stateBinding.continueBtn.setOnClickListener(view->{
+            sDialog.dismiss();
+            checkout();
+        });
+        stateBinding.cancelButton.setOnClickListener(view->sDialog.dismiss());
+        sDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
     private void checkout(){
