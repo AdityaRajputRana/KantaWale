@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -83,6 +84,12 @@ public class HomeFragment extends Fragment {
             return;
         }
 
+        setScrollListener();
+        fetchDashboardData();
+    }
+
+    private void fetchDashboardData() {
+        binding.swiperefresh.setRefreshing(true);
         APIMethods.getDashboard(new APIResponseListener<DashboardRP>() {
             @Override
             public void success(DashboardRP response) {
@@ -98,6 +105,15 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    private void setScrollListener() {
+        binding.swiperefresh.setOnRefreshListener(this::fetchDashboardData);
+        binding.swiperefresh.setColorSchemeResources(R.color.color_cta,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark);
+    }
+
+
     private void updateDashboardUI() {
         binding.dashboardProgressBar.setVisibility(View.GONE);
         binding.dashBoardRecyclerView.setAdapter(
@@ -105,6 +121,7 @@ public class HomeFragment extends Fragment {
         );
         binding.dashBoardRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.dashBoardRecyclerView.setVisibility(View.VISIBLE);
+        binding.swiperefresh.setRefreshing(false);
     }
 
     private void loadCategories() {

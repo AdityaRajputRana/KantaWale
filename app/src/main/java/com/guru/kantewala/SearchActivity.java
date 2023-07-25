@@ -106,9 +106,37 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
 
 
     private void fetchData() {
+        setScrollListener();
         fetchUnlockedStates();
         fetchCategories();
         fetchCompanies();
+    }
+
+    private void fetchCompaniesFromServer(){
+        binding.swiperefresh.setRefreshing(true);
+        APIMethods.search(1, binding.searchEt.getText().toString().trim(), selectedCategoryId, selectedState, new APIResponseListener<SearchRP>() {
+            @Override
+            public void success(SearchRP response) {
+                searchRP = response;
+                processSemaphore--;
+                updateUI();
+            }
+
+            @Override
+            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                processSemaphore--;
+                updateUI();
+                Methods.showFailedAlert(SearchActivity.this, code, message, redirectLink, retry, cancellable);
+            }
+        });
+    }
+
+    private void setScrollListener() {
+        binding.swiperefresh.setOnRefreshListener(this::fetchCompaniesFromServer);
+        binding.swiperefresh.setColorSchemeResources(R.color.color_cta,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark);
     }
 
     private void fetchUnlockedStates() {
@@ -133,21 +161,7 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
         isSearchChange = false;
         updateUI();
 
-        APIMethods.search(1, binding.searchEt.getText().toString().trim(), selectedCategoryId, selectedState, new APIResponseListener<SearchRP>() {
-            @Override
-            public void success(SearchRP response) {
-                searchRP = response;
-                processSemaphore--;
-                updateUI();
-            }
-
-            @Override
-            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
-                processSemaphore--;
-                updateUI();
-                Methods.showFailedAlert(SearchActivity.this, code, message, redirectLink, retry, cancellable);
-            }
-        });
+        fetchCompaniesFromServer();
     }
 
     private void fetchCategories() {
@@ -215,6 +229,7 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
         SearchRVAdapter adapter = new SearchRVAdapter(searchRP, this);
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        binding.swiperefresh.setRefreshing(false);
     }
 
     private void initialiseStateSpinner(ArrayList<Integer> unlockedStates) {
