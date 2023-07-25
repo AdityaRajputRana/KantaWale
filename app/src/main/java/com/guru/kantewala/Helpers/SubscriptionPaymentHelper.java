@@ -15,6 +15,7 @@ import com.guru.kantewala.rest.api.APIMethods;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.response.LessonOrderIdRp;
 import com.guru.kantewala.rest.response.MessageRP;
+import com.guru.kantewala.rest.response.UserRP;
 import com.razorpay.Checkout;
 import com.razorpay.PayloadHelper;
 import com.razorpay.PaymentResultListener;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 
 public class SubscriptionPaymentHelper {
     FirebaseUser user;
+    UserRP mUser;
 
     public interface Listener{
         void success(String s);
@@ -52,11 +54,24 @@ public class SubscriptionPaymentHelper {
         this.activity = activity;
         this.listener = listener;
         this.user = FirebaseAuth.getInstance().getCurrentUser();
+        APIMethods.getUserProfile(new APIResponseListener<UserRP>() {
+            @Override
+            public void success(UserRP response) {
+                mUser = response;
+
+            }
+
+            @Override
+            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                mUser = null;
+            }
+        });
         Checkout.preload(context);
     }
 
     public static SubscriptionPaymentHelper newInstance(Context context, Activity activity, Listener listener){
         SubscriptionPaymentHelperInstance = new SubscriptionPaymentHelper(context, activity, listener);
+
         return SubscriptionPaymentHelperInstance;
     }
 
@@ -132,6 +147,9 @@ public class SubscriptionPaymentHelper {
         payloadHelper.setSendSmsHash(true);
         payloadHelper.setPrefillName(user.getDisplayName());
         payloadHelper.setPrefillContact(user.getPhoneNumber());
+        if (mUser != null && mUser.getEmail() != null && !mUser.getEmail().isEmpty()){
+            payloadHelper.setPrefillEmail(mUser.getEmail());
+        }
 
         JSONObject options = payloadHelper.getJson();
         checkout.open(activity, options);

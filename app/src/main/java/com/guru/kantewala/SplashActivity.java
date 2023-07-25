@@ -22,6 +22,7 @@ public class SplashActivity extends AppCompatActivity {
         signUpChecks();
     }
 
+
     private void signUpChecks(){
         FirebaseAuth auth = FirebaseAuth.getInstance();
         Intent i = new Intent(this, MainActivity.class);
