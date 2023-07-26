@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.style.SubscriptSpan;
 import android.view.View;
 import android.widget.Toast;
 
@@ -104,9 +105,18 @@ public class SubscriptionsOptionsActivity extends AppCompatActivity  implements 
         binding.titleTxt.setText("Initiating Payment");
         binding.continueBtn.setVisibility(View.GONE);
         binding.progressBar.setVisibility(View.VISIBLE);
-        helper.generateOrder(selectedStateOptions, pack);
+        showCustomPaymentOptions(selectedStateOptions);
         //Todo: Launch Payment Helper from here (FETCH ORDER ID, EXECUTE PAYMENT, SEND CONFIRMATION TO SERVER)
         //Todo: Server: Save SubOptions, generate order id, verify payment and activate subscription)
+    }
+
+    private void showCustomPaymentOptions(ArrayList<State> selectedStateOptions){
+        boolean phonePay = false;
+        if (phonePay){
+            //PhonePay helper here
+        } else {
+            helper.generateOrder(selectedStateOptions, pack);
+        }
     }
 
     private void confirmCheckout(){
@@ -142,7 +152,7 @@ public class SubscriptionsOptionsActivity extends AppCompatActivity  implements 
         binding.titleTxt.setText("Initiating Payment");
         binding.continueBtn.setVisibility(View.GONE);
         binding.progressBar.setVisibility(View.VISIBLE);
-        helper.generateOrder(selectedStateOptions, pack);
+        showCustomPaymentOptions(selectedStateOptions);
     }
     private void verifyCheckoutRequirements(){
         ArrayList<State> selectedStateOptions = adapter.getSelectedStates();
