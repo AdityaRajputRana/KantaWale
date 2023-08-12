@@ -38,7 +38,7 @@ public class PlanDetailsActivity extends AppCompatActivity {
         binding.progressBar.setVisibility(View.VISIBLE);
         binding.recyclerView.setVisibility(View.GONE);
 
-        APIMethods.getUserPurchaseHistory(new APIResponseListener<PackHistoryRP>() {
+        APIMethods.getUserPurchaseHistory(this, new APIResponseListener<PackHistoryRP>() {
             @Override
             public void success(PackHistoryRP response) {
                 historyRP = response;

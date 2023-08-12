@@ -56,7 +56,7 @@ public class SubscriptionFragment extends Fragment {
         binding.myPackDetailsLayout.setVisibility(View.GONE);
         binding.continueBtn.setVisibility(View.GONE);
 
-        APIMethods.getSubscriptionPackages(new APIResponseListener<SubscriptionPackagesRP>() {
+        APIMethods.getSubscriptionPackages(getActivity(), new APIResponseListener<SubscriptionPackagesRP>() {
             @Override
             public void success(SubscriptionPackagesRP response) {
                 SubscriptionInterface.subscriptionPackagesRP = response;

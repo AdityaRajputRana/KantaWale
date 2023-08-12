@@ -256,7 +256,7 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
                 Constants.getIndianStates().get(selectedStateIndex),
                 selectedStateIndex, uploadedImageUrl
         );
-        APIMethods.registerProfile(mode, req, new APIResponseListener<MessageRP>() {
+        APIMethods.registerProfile(this, mode, req, new APIResponseListener<MessageRP>() {
             @Override
             public void success(MessageRP response) {
                 saveToFirebase(response.getMessage());
@@ -391,7 +391,7 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
         //Todo: give option or instructions to change it
 
         startProgress("Loading your user profile details");
-        APIMethods.getUserProfile(new APIResponseListener<UserRP>() {
+        APIMethods.getUserProfile(this, new APIResponseListener<UserRP>() {
             @Override
             public void success(UserRP response) {
                 dismissProgressDialog();
@@ -531,7 +531,7 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
         }
 
         startProgress("Checking linked businesses");
-        APIMethods.getUserProfile(new APIResponseListener<UserRP>() {
+        APIMethods.getUserProfile(this, new APIResponseListener<UserRP>() {
             @Override
             public void success(UserRP response) {
                 dismissProgressDialog();

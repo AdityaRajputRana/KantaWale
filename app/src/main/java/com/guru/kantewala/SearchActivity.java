@@ -114,7 +114,7 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
 
     private void fetchCompaniesFromServer(){
         binding.swiperefresh.setRefreshing(true);
-        APIMethods.search(1, binding.searchEt.getText().toString().trim(), selectedCategoryId, selectedState, new APIResponseListener<SearchRP>() {
+        APIMethods.search(this, 1, binding.searchEt.getText().toString().trim(), selectedCategoryId, selectedState, new APIResponseListener<SearchRP>() {
             @Override
             public void success(SearchRP response) {
                 searchRP = response;
@@ -170,7 +170,7 @@ public class SearchActivity extends AppCompatActivity implements SubscriptionInt
         }
         processSemaphore++;
         updateUI();
-        APIMethods.getCategories(new APIResponseListener<CategoryRP>() {
+        APIMethods.getCategories(this, new APIResponseListener<CategoryRP>() {
             @Override
             public void success(CategoryRP response) {
                 processSemaphore--;

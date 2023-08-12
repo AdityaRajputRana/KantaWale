@@ -194,7 +194,7 @@ public class EditCompanyActivity extends AppCompatActivity {
 
     private void saveImageBlock(String blockName) {
         startProgress("Creating new Product");
-        APIMethods.createImageBlock(myCompanyRP.getCompany().getId(), blockName, new APIResponseListener<MessageRP>() {
+        APIMethods.createImageBlock(this, myCompanyRP.getCompany().getId(), blockName, new APIResponseListener<MessageRP>() {
             @Override
             public void success(MessageRP response) {
                 showSuccess(response.getMessage().replace("Block", "Product"), new RegisterActivity.OnDismissListener() {
@@ -214,7 +214,7 @@ public class EditCompanyActivity extends AppCompatActivity {
     }
     private void saveImageBlock(String blockName, CompanyImages.ImageBlock block) {
         startProgress("Creating new Image Block");
-        APIMethods.editImageBlock(block, myCompanyRP.getCompany().getId(), blockName, new APIResponseListener<MessageRP>() {
+        APIMethods.editImageBlock(this, block, myCompanyRP.getCompany().getId(), blockName, new APIResponseListener<MessageRP>() {
             @Override
             public void success(MessageRP response) {
                 showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
@@ -338,7 +338,7 @@ public class EditCompanyActivity extends AppCompatActivity {
                 selectedStateIndex);
 
         startProgress("Saving company details");
-        APIMethods.editCompanyDetails(req, new APIResponseListener<MessageRP>() {
+        APIMethods.editCompanyDetails(this, req, new APIResponseListener<MessageRP>() {
             @Override
             public void success(MessageRP response) {
                 showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
@@ -382,7 +382,7 @@ public class EditCompanyActivity extends AppCompatActivity {
     private void fetchData() {
         binding.progressBar.setVisibility(View.VISIBLE);
 
-        APIMethods.getCompany(new APIResponseListener<MyCompanyRP>() {
+        APIMethods.getCompany(this, new APIResponseListener<MyCompanyRP>() {
             @Override
             public void success(MyCompanyRP response) {
                 binding.progressBar.setVisibility(View.GONE);
@@ -546,7 +546,7 @@ public class EditCompanyActivity extends AppCompatActivity {
 
     private void deleteImageFromServer(CompanyImages.ImageBlock.Image image) {
         startProgress("Deleting Image");
-        APIMethods.deleteImage(image, new APIResponseListener<MessageRP>() {
+        APIMethods.deleteImage(this, image, new APIResponseListener<MessageRP>() {
             @Override
             public void success(MessageRP response) {
                 showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
@@ -571,7 +571,7 @@ public class EditCompanyActivity extends AppCompatActivity {
         binding.progressBar.setVisibility(View.GONE);
         if (categoryRP == null) {
             binding.progressBar.setVisibility(View.VISIBLE);
-            APIMethods.getCategories(new APIResponseListener<CategoryRP>() {
+            APIMethods.getCategories(this, new APIResponseListener<CategoryRP>() {
                 @Override
                 public void success(CategoryRP response) {
                     categoryRP = response;
@@ -621,7 +621,7 @@ public class EditCompanyActivity extends AppCompatActivity {
 
     private void saveSelectedCategories() {
         startProgress("Saving Changes");
-        APIMethods.updateCategories(myCompanyRP.getCompany().getId(), binding.tagsGroup.getCheckedChipIds(), new APIResponseListener<MessageRP>() {
+        APIMethods.updateCategories(this, myCompanyRP.getCompany().getId(), binding.tagsGroup.getCheckedChipIds(), new APIResponseListener<MessageRP>() {
             @Override
             public void success(MessageRP response) {
                 showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
@@ -754,7 +754,7 @@ public class EditCompanyActivity extends AppCompatActivity {
 
     private void deleteImageBlock(CompanyImages.ImageBlock block) {
         startProgress("Deleting");
-        APIMethods.deleteImageBlock(block, new APIResponseListener<MessageRP>() {
+        APIMethods.deleteImageBlock(this, block, new APIResponseListener<MessageRP>() {
             @Override
             public void success(MessageRP response) {
                 showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {

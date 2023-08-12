@@ -29,7 +29,7 @@ public class UnlockedStatesRP {
         if (rp != null){
             listener.onGotUnlockedStates(rp.getUnlockedStates());
         } else {
-            APIMethods.getUnlockedStates(new APIResponseListener<UnlockedStatesRP>() {
+            APIMethods.getUnlockedStates(context, new APIResponseListener<UnlockedStatesRP>() {
                 @Override
                 public void success(UnlockedStatesRP response) {
                     rp = response;
@@ -45,9 +45,9 @@ public class UnlockedStatesRP {
         }
     }
 
-    public static void loadUnlockStates(){
+    public static void loadUnlockStates(Activity context){
         if (rp == null){
-            APIMethods.getUnlockedStates(new APIResponseListener<UnlockedStatesRP>() {
+            APIMethods.getUnlockedStates(context, new APIResponseListener<UnlockedStatesRP>() {
                 @Override
                 public void success(UnlockedStatesRP response) {
                     rp = response;

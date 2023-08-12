@@ -1,5 +1,6 @@
 package com.guru.kantewala.rest.api;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -21,9 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class API {
-    public static void getData(APIResponseListener listener, Object rawData, String endpoint, Class klass){
+    public static void getData(APIResponseListener listener, Object rawData, String endpoint, Class klass, Context context){
         try {
-            String data = HashUtils.getHashedData(rawData);
+            String data = HashUtils.getHashedData(rawData, context, endpoint);
             JSONObject request = new JSONObject(data);
             String url = VolleyClient.getBaseUrl() + endpoint + VolleyClient.suffix;
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -80,9 +81,9 @@ public class API {
 
 
     }
-    public static void postData(APIResponseListener listener, Object rawData, String endpoint, Class klass){
+    public static void postData(APIResponseListener listener, Object rawData, String endpoint, Class klass, Context context){
         try {
-            String data = HashUtils.getHashedData(rawData);
+            String data = HashUtils.getHashedData(rawData, context, endpoint);
             JSONObject request;
             Log.i("eta", data);
             if (data.equals("\"{}\"")){
@@ -173,11 +174,11 @@ public class API {
 
     }
 
-    public static void postFile(FileTransferResponseListener listener, Object rawData, String endpoint, Class klass,
+    public static void postFile(Context context, FileTransferResponseListener listener, Object rawData, String endpoint, Class klass,
                                 String name, String fileType, byte[] file){
         try {
             String encodedData = "";
-            AppRequest request = HashUtils.getHashedDataObject(rawData);
+            AppRequest request = HashUtils.getHashedDataObject(rawData, context, endpoint);
             Log.i("encodedData", request.getData());
             if (request != null){
                 encodedData = request.getData();

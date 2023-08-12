@@ -117,7 +117,7 @@ public class ProfileFragment extends Fragment {
             return;
         }
 
-        APIMethods.getUserProfile(new APIResponseListener<UserRP>() {
+        APIMethods.getUserProfile(getActivity(), new APIResponseListener<UserRP>() {
             @Override
             public void success(UserRP response) {
                 userRP = response;

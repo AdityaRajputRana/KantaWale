@@ -267,7 +267,7 @@ public class LoginActivity extends AppCompatActivity implements PhoneAuthHelper.
 
     private void confirmNewUser() {
 
-        APIMethods.getUserProfile(new APIResponseListener<UserRP>() {
+        APIMethods.getUserProfile(this, new APIResponseListener<UserRP>() {
             @Override
             public void success(UserRP response) {
                 dismissProgressDialog();

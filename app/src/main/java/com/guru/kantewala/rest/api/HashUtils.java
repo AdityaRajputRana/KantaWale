@@ -1,5 +1,6 @@
 package com.guru.kantewala.rest.api;
 
+import android.content.Context;
 import android.util.Base64;
 
 import com.google.gson.Gson;
@@ -21,7 +22,7 @@ public class HashUtils {
         return String.valueOf(random.nextInt(900));
     }
 
-    public static String getHashedData(Object obj){
+    public static String getHashedData(Object obj, Context context, String endpoint){
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         if (isHashingEnabled) {
             String salt = getRandomSalt();
@@ -29,7 +30,7 @@ public class HashUtils {
             String input = salt + gson.toJson(obj) + String.valueOf(timestamp) + APP_SECRET;
             String hash = md5(input);
 
-            InputRequest inputRequest = new InputRequest(salt, obj, timestamp, hash);
+            InputRequest inputRequest = new InputRequest(salt, obj, timestamp, hash, context, endpoint);
             String inputReqStr = gson.toJson(inputRequest);
             String encodedInput = toBase64(inputReqStr);
             AppRequest appRequest = new AppRequest(encodedInput);
@@ -40,7 +41,7 @@ public class HashUtils {
         }
     }
 
-    public static AppRequest getHashedDataObject(Object obj){
+    public static AppRequest getHashedDataObject(Object obj, Context context, String endpoint){
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         if (isHashingEnabled) {
             String salt = getRandomSalt();
@@ -48,7 +49,7 @@ public class HashUtils {
             String input = salt + gson.toJson(obj) + String.valueOf(timestamp) + APP_SECRET;
             String hash = md5(input);
 
-            InputRequest inputRequest = new InputRequest(salt, obj, timestamp, hash);
+            InputRequest inputRequest = new InputRequest(salt, obj, timestamp, hash, context, endpoint);
             String inputReqStr = gson.toJson(inputRequest);
             String encodedInput = toBase64(inputReqStr);
             AppRequest appRequest = new AppRequest(encodedInput);

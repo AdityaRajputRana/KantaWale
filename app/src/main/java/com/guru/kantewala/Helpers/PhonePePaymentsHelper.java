@@ -80,7 +80,7 @@ public class PhonePePaymentsHelper {
         this.activity = activity;
         this.listener = listener;
         this.user = FirebaseAuth.getInstance().getCurrentUser();
-        APIMethods.getUserProfile(new APIResponseListener<UserRP>() {
+        APIMethods.getUserProfile(activity, new APIResponseListener<UserRP>() {
             @Override
             public void success(UserRP response) {
                 mUser = response;
@@ -113,7 +113,7 @@ public class PhonePePaymentsHelper {
     }
 
     public void generateOrder(ArrayList<State> states, SubscriptionPack pack){
-        APIMethods.generatePhonePeOrder(states, pack, new APIResponseListener<PhonePeOrderRP>() {
+        APIMethods.generatePhonePeOrder(activity, states, pack, new APIResponseListener<PhonePeOrderRP>() {
             @Override
             public void success(PhonePeOrderRP response) {
                 startPayments(response);
@@ -130,7 +130,7 @@ public class PhonePePaymentsHelper {
 
 
     public void verifySuccess(Intent data) {
-        APIMethods.verifyPhonePeOrder(phonePeOrderRP.getOrderId(), new APIResponseListener<MessageRP>() {
+        APIMethods.verifyPhonePeOrder(activity, phonePeOrderRP.getOrderId(), new APIResponseListener<MessageRP>() {
             @Override
             public void success(MessageRP response) {
                 listener.success(response.getMessage());

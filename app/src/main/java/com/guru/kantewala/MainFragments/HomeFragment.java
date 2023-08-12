@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment {
 
     private void fetchDashboardData() {
         binding.swiperefresh.setRefreshing(true);
-        APIMethods.getDashboard(new APIResponseListener<DashboardRP>() {
+        APIMethods.getDashboard(getActivity(), new APIResponseListener<DashboardRP>() {
             @Override
             public void success(DashboardRP response) {
                 dashboardRP = response;
@@ -130,7 +130,7 @@ public class HomeFragment extends Fragment {
             return;
         }
 
-        APIMethods.getCategories(new APIResponseListener<CategoryRP>() {
+        APIMethods.getCategories(getActivity(), new APIResponseListener<CategoryRP>() {
             @Override
             public void success(CategoryRP response) {
                 categoryRP = response;

@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements SubscriptionInter
     }
 
     private void loadLeastPriorityData() {
-        UnlockedStatesRP.loadUnlockStates();
+        UnlockedStatesRP.loadUnlockStates(this);
     }
 
     private void checkAttachments() {

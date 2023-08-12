@@ -60,7 +60,7 @@ public class CompanyActivity extends AppCompatActivity {
 
     private void fetchCompanyDetails() {
         binding.progressBar.setVisibility(View.VISIBLE);
-        APIMethods.getCompany(cid, isRecommended, new APIResponseListener<Company>() {
+        APIMethods.getCompany(this, cid, isRecommended, new APIResponseListener<Company>() {
             @Override
             public void success(Company response) {
                 company = response;

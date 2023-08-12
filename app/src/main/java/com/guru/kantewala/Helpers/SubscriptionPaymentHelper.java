@@ -54,7 +54,7 @@ public class SubscriptionPaymentHelper {
         this.activity = activity;
         this.listener = listener;
         this.user = FirebaseAuth.getInstance().getCurrentUser();
-        APIMethods.getUserProfile(new APIResponseListener<UserRP>() {
+        APIMethods.getUserProfile(activity, new APIResponseListener<UserRP>() {
             @Override
             public void success(UserRP response) {
                 mUser = response;
@@ -82,7 +82,7 @@ public class SubscriptionPaymentHelper {
     }
 
     public void generateOrder(ArrayList<State> states, SubscriptionPack pack){
-        APIMethods.getOrderId(states, pack, new APIResponseListener<LessonOrderIdRp>() {
+        APIMethods.getOrderId(activity, states, pack, new APIResponseListener<LessonOrderIdRp>() {
             @Override
             public void success(LessonOrderIdRp response) {
                 startPayments(response);
@@ -102,7 +102,7 @@ public class SubscriptionPaymentHelper {
     }
 
     private void verifySuccess(String s) {
-        APIMethods.verifyPayment(s, orderIdRp.getOrder().getId(), new APIResponseListener<MessageRP>() {
+        APIMethods.verifyPayment(activity, s, orderIdRp.getOrder().getId(), new APIResponseListener<MessageRP>() {
             @Override
             public void success(MessageRP response) {
                 listener.success(response.getMessage());
