@@ -15,6 +15,9 @@ public class EndPoints {
    public static String generateOrder = "generateOrder";
    public static String verifyOrder = "verifyOrder";
 
+   public static String generatePhonePeOrder = "generatePhonePeOrder";
+   public static String verifyPhonePeOrder = "verifyPhonePeOrder";
+
 
    public static String getMyCompany = "getMyCompany";
    public static String saveCompanyDetails = "saveCompanyDetails";

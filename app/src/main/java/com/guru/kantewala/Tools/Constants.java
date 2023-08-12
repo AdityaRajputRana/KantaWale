@@ -5,6 +5,17 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Constants {
+    public static String pgUnavailableTitle = "Issue with Payments";
+    public static String getPgUnavailableBody = "Due to some issues our online payment option is not available.\n" +
+            "\n" +
+            "\n" +
+            "For purchase packages please contact us on below numbers.\n" +
+            "\n" +
+            "908 124 8882\n" +
+            "908 124 8883\n" +
+            "908 124 8884\n" +
+            "908 124 8885\n" +
+            "908 124 8886";
     public static String helpTitle = "Help";
     public static String termsUrl = "https://weighmall.com/terms-and-condition.php";
     private static List<String> indianStates;

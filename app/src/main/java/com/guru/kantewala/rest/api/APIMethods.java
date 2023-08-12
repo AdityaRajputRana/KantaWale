@@ -29,6 +29,7 @@ import com.guru.kantewala.rest.response.LessonOrderIdRp;
 import com.guru.kantewala.rest.response.MessageRP;
 import com.guru.kantewala.rest.response.MyCompanyRP;
 import com.guru.kantewala.rest.response.PackHistoryRP;
+import com.guru.kantewala.rest.response.PhonePeOrderRP;
 import com.guru.kantewala.rest.response.SearchRP;
 import com.guru.kantewala.rest.response.SubscriptionPackagesRP;
 import com.guru.kantewala.rest.response.UnlockedStatesRP;
@@ -124,6 +125,16 @@ public class APIMethods {
     public static void getOrderId(ArrayList<State> states, SubscriptionPack pack, APIResponseListener<LessonOrderIdRp> listener){
         GenerateOrderReq req = new GenerateOrderReq(pack, states);
         API.postData(listener, req, EndPoints.generateOrder, LessonOrderIdRp.class);
+    }
+
+    public static void generatePhonePeOrder(ArrayList<State> states, SubscriptionPack pack, APIResponseListener<PhonePeOrderRP> listener, String upiId){
+        GenerateOrderReq req = new GenerateOrderReq(pack, states, upiId);
+        API.postData(listener, req, EndPoints.generatePhonePeOrder, PhonePeOrderRP.class);
+    }
+
+    public static void verifyPhonePeOrder(String order_id, APIResponseListener<MessageRP> listener){
+        VerifyLessonPaymentReq req = new VerifyLessonPaymentReq(order_id);
+        API.postData(listener, req, EndPoints.verifyPhonePeOrder, MessageRP.class);
     }
 
     public static void verifyPayment(String s, String order_id, APIResponseListener<MessageRP> listener){

@@ -112,6 +112,30 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    <LinearLayout
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/white"
+        android:elevation="10dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_height="match_parent"
+        android:id="@+id/paymentsLayout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Complete Payment using..."
+            android:fontFamily="@font/inter_bold"
+            android:textSize="18sp"
+            android:textColor="@color/black" />
+
+
+    </LinearLayout>
+
 
     <com.google.android.material.button.MaterialButton
         app:layout_constraintBottom_toBottomOf="parent"

@@ -101,7 +101,7 @@ public class API {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                Log.i("Lesson Response", response.toString());
+                                Log.i("eta Response", response.toString());
                                 Boolean successful = response.getBoolean("success");
                                 if (successful) {
                                     if (response.getString("data") != null
@@ -113,8 +113,9 @@ public class API {
                                             data = response.getString("data");
                                         } else {
                                              data = response.getJSONObject("data").toString();
-                                        }
+                                         }
 //                                    String decodedData = HashUtils.fromBase64(data);
+                                        Log.i("eta rsp data", data);
                                         if (klass == String.class)
                                             listener.success(data);
                                         else

@@ -23,4 +23,9 @@ public class VerifyLessonPaymentReq {
         this.razorpay_payment_id = paymentData.getPaymentId();
         this.razorpay_signature = paymentData.getSignature();
     }
+
+    public VerifyLessonPaymentReq(String order_id) {
+        this.order_id = order_id;
+        this.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
 }

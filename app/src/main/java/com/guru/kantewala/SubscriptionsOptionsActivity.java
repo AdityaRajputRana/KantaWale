@@ -1,12 +1,16 @@
 package com.guru.kantewala;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.style.SubscriptSpan;
 import android.view.View;
@@ -14,27 +18,38 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.guru.kantewala.Adapters.ChecklistRVAdapter;
+import com.guru.kantewala.Helpers.PhonePePaymentsHelper;
 import com.guru.kantewala.Helpers.SubscriptionPaymentHelper;
 import com.guru.kantewala.Models.State;
 import com.guru.kantewala.Models.SubscriptionPack;
 import com.guru.kantewala.Tools.Constants;
 import com.guru.kantewala.databinding.ActivitySubscriptionsOptionsBinding;
 import com.guru.kantewala.databinding.DialogStateVerficationBinding;
+import com.guru.kantewala.databinding.ItemUpiAppBinding;
 import com.guru.kantewala.rest.requests.VerifyLessonPaymentReq;
 import com.guru.kantewala.rest.response.UnlockedStatesRP;
+import com.phonepe.intent.sdk.api.UPIApplicationInfo;
 import com.razorpay.PaymentData;
 import com.razorpay.PaymentResultWithDataListener;
 
 import java.util.ArrayList;
 
-public class SubscriptionsOptionsActivity extends AppCompatActivity  implements SubscriptionPaymentHelper.Listener, PaymentResultWithDataListener {
+public class SubscriptionsOptionsActivity extends AppCompatActivity  implements SubscriptionPaymentHelper.Listener,PhonePePaymentsHelper.Listener, PaymentResultWithDataListener {
 
     ActivitySubscriptionsOptionsBinding binding;
     ChecklistRVAdapter adapter;
     ChecklistRVAdapter.ChecklistListener checklistListener;
     SubscriptionPack pack;
     SubscriptionPaymentHelper helper;
+    PhonePePaymentsHelper phonePeHelper;
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 108){
+            phonePeHelper.verifySuccess(data);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +58,13 @@ public class SubscriptionsOptionsActivity extends AppCompatActivity  implements 
         setContentView(binding.getRoot());
 
         helper = SubscriptionPaymentHelper.newInstance(getApplicationContext(), this, this);
+        phonePeHelper = PhonePePaymentsHelper.newInstance(getApplicationContext(), this, this);
         loadLocalData();
         setListeners();
         loadData();
     }
+
+
 
     private void loadLocalData() {
         pack = new Gson().fromJson(getIntent().getStringExtra("pack"), SubscriptionPack.class);
@@ -111,13 +129,36 @@ public class SubscriptionsOptionsActivity extends AppCompatActivity  implements 
     }
 
     private void showCustomPaymentOptions(ArrayList<State> selectedStateOptions){
-        boolean phonePay = false;
+        boolean phonePay = true;
         if (phonePay){
-            //PhonePay helper here
+            phonePeHelper.generateOrder(selectedStateOptions, pack);
         } else {
             helper.generateOrder(selectedStateOptions, pack);
         }
     }
+
+
+//    private void showPhonePePaymentsPage(ArrayList<State> selectedStateOptions) {
+//        binding.paymentsLayout.setVisibility(View.VISIBLE);
+//        for (UPIApplicationInfo app: phonePeHelper.getUpiApps()){
+//            ItemUpiAppBinding binding = ItemUpiAppBinding.inflate(getLayoutInflater());
+//            binding.appName.setText(app.getApplicationName());
+//            try {
+//                Drawable icon = this.getPackageManager().getApplicationIcon(app.getPackageName());
+//                binding.imageView.setImageDrawable(icon);
+//                SubscriptionsOptionsActivity.this.binding.paymentsLayout.addView(binding.getRoot());
+//            } catch (PackageManager.NameNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//
+//            binding.getRoot().setOnClickListener(view->launchPhonePeUPICheckoutFlow(app, selectedStateOptions));
+//        }
+//    }
+//
+//    private void launchPhonePeUPICheckoutFlow(UPIApplicationInfo app, ArrayList<State> selectedStateOptions) {
+//        binding.paymentsLayout.setVisibility(View.GONE);
+//        phonePeHelper.generateOrder(selectedStateOptions, pack, app);
+//    }
 
     private void confirmCheckout(){
         ArrayList<State> selectedStateOptions = adapter.getSelectedStates();

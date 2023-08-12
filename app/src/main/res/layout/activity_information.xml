@@ -52,7 +52,7 @@
             android:text="Recommended Company Listing"
             android:fontFamily="@font/inter_bold"
             android:textColor="@color/color_cta"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/bodyTxt"
@@ -63,7 +63,8 @@
             android:text="You can get your company featured on the recommended companies section of our app's first page.\n\nThe price for the listing is 99,900 rupees for 6 months.\n\nTo purchase this plan or know more details contact on +91 73591 96573"
             android:fontFamily="@font/inter_medium"
             android:textColor="@color/primaryText"
-            android:textSize="16sp" />
+            android:layout_marginTop="2dp"
+            android:textSize="18sp" />
 
     </LinearLayout>
 

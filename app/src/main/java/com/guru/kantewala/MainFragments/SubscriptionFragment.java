@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.guru.kantewala.Adapters.SubscriptionPackageAdapter;
 import com.guru.kantewala.Helpers.SubscriptionInterface;
+import com.guru.kantewala.InformationActivity;
 import com.guru.kantewala.Models.SubscriptionPack;
 import com.guru.kantewala.SubscriptionsOptionsActivity;
+import com.guru.kantewala.Tools.Constants;
 import com.guru.kantewala.Tools.Methods;
 import com.guru.kantewala.databinding.FragmentSubscriptionBinding;
 import com.guru.kantewala.rest.api.APIMethods;
@@ -95,9 +97,18 @@ public class SubscriptionFragment extends Fragment {
     }
 
     private void subscribe(SubscriptionPack selectedPack) {
-        String pack = new Gson().toJson(selectedPack);
-        Intent intent = new Intent(getActivity(), SubscriptionsOptionsActivity.class);
-        intent.putExtra("pack", pack);
-        startActivity(intent);
+
+        Intent i = new Intent(getActivity(), InformationActivity.class);
+        i.putExtra("isBody", true);
+        i.putExtra("isHead", true);
+        i.putExtra("head", Constants.pgUnavailableTitle);
+        i.putExtra("body", Constants.getPgUnavailableBody);
+        startActivity(i);
+
+
+//        String pack = new Gson().toJson(selectedPack);
+//        Intent intent = new Intent(getActivity(), SubscriptionsOptionsActivity.class);
+//        intent.putExtra("pack", pack);
+//        startActivity(intent);
     }
 }
