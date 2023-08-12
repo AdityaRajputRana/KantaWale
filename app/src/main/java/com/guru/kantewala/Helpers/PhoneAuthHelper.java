@@ -16,6 +16,10 @@ import com.google.firebase.auth.FirebaseAuthMissingActivityForRecaptchaException
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.guru.kantewala.Tools.Methods;
+import com.guru.kantewala.rest.api.APIMethods;
+import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
+import com.guru.kantewala.rest.response.MessageRP;
 
 import java.util.concurrent.TimeUnit;
 
@@ -125,19 +129,38 @@ public class PhoneAuthHelper {
                 .addOnCompleteListener(context, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            if (task.getResult().getAdditionalUserInfo().isNewUser())
-                                authMessage(true, "New user joined!", 11);
-                            else
-                                authMessage(true, "Sign In Successful!", 10);
-                        } else {
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                authMessage(false, "The otp entered was incorrect", 6);
-                            } else {
-                                authMessage(false, task.getException().getMessage(), 7);
-                            }
-                        }
+                        saveDeviceIdOnServer(task);
                     }
                 });
+    }
+
+    private void saveDeviceIdOnServer(Task<AuthResult> task) {
+        APIMethods.saveDeviceId(context, new APIResponseListener<MessageRP>() {
+            @Override
+            public void success(MessageRP response) {
+                verifyNewUser(task);
+            }
+
+            @Override
+            public void fail(String code, String message, String redirectLink, boolean retry, boolean cancellable) {
+                Methods.showFailedAlert(context, code, message, redirectLink, false, true);
+                verifyNewUser(task);
+            }
+        });
+    }
+
+    private void verifyNewUser(Task<AuthResult> task) {
+        if (task.isSuccessful()) {
+            if (task.getResult().getAdditionalUserInfo().isNewUser())
+                authMessage(true, "New user joined!", 11);
+            else
+                authMessage(true, "Sign In Successful!", 10);
+        } else {
+            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                authMessage(false, "The otp entered was incorrect", 6);
+            } else {
+                authMessage(false, task.getException().getMessage(), 7);
+            }
+        }
     }
 }

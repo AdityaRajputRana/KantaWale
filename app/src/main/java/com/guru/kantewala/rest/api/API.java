@@ -1,5 +1,6 @@
 package com.guru.kantewala.rest.api;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -10,7 +11,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
+import com.guru.kantewala.Tools.Methods;
 import com.guru.kantewala.rest.api.interfaces.APIResponseListener;
 import com.guru.kantewala.rest.api.interfaces.FileTransferResponseListener;
 import com.guru.kantewala.rest.requests.App.AppRequest;
@@ -125,6 +128,9 @@ public class API {
                                         listener.convertData(null);
                                     }
                                 } else {
+                                    if (response.getString("message").contains("LOGOUT")) {
+                                        Methods.showForceLogOutDialog((Activity) context);
+                                    }
                                     listener.fail("2", response.getString("message"), "", true, true);
                                 }
                             } catch (Exception e) {

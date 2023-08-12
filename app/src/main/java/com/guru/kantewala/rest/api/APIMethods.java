@@ -41,6 +41,11 @@ import java.util.List;
 
 public class APIMethods {
 
+    public static void saveDeviceId(Context context, APIResponseListener<MessageRP> listener){
+        HomeReq req = new HomeReq();
+        API.postData(listener, req, EndPoints.verifyDeviceId, MessageRP.class, context);
+    }
+
     public static void uploadImageForBlock(Uri fileUri, Context context, CompanyImages.ImageBlock block, FileTransferResponseListener<MessageRP> listener){
         byte[] file = Utils.getImageBytes(fileUri, context);
         ImageBlockReq req = new ImageBlockReq(block.getId());

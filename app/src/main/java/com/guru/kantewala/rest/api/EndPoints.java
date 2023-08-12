@@ -32,5 +32,7 @@ public class EndPoints {
    public static String purchaseHistory = "purchaseHistory";
    public static String unlockedStates = "getUserStates";
 
+   public static String verifyDeviceId = "saveDeviceId";
+
 
 }

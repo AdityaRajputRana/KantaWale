@@ -2,15 +2,44 @@ package com.guru.kantewala.Tools;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.guru.kantewala.LoginActivity;
 import com.guru.kantewala.R;
 import com.guru.kantewala.databinding.DialogLoadingBinding;
 import com.guru.kantewala.rest.api.HashUtils;
 public class Methods {
+
+    private static boolean isLogOutShown = false;
+
+    public static void showForceLogOutDialog(Activity context){
+        if (isLogOutShown){
+            return;
+        }
+        isLogOutShown = true;
+        FirebaseAuth.getInstance().signOut();
+        new AlertDialog.Builder(context)
+                .setTitle("Logged Out")
+                .setMessage("You have been logged out of this device due to new login on another device")
+                .setCancelable(false)
+                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        isLogOutShown = false;
+                        Intent i = new Intent(context, LoginActivity.class);
+                        context.startActivity(i);
+                    }
+                })
+                .show();
+        Log.i("Eta", "logging out");
+    }
 
     public static String dKey = "OmRldmVsb3Blcg";
     public static void showInvalidSearchTermSignature(Activity activity){
@@ -23,6 +52,9 @@ public class Methods {
     }
 
     public static void showFailedAlert(Activity activity, String code, String message, String redirectLink, boolean retry, boolean cancellable){
+        if (isLogOutShown){
+            return;
+        }
         message = message + " (EC"+code+")";
         showError(activity, message, cancellable);
     }
