@@ -98,17 +98,17 @@ public class SubscriptionFragment extends Fragment {
 
     private void subscribe(SubscriptionPack selectedPack) {
 
-        Intent i = new Intent(getActivity(), InformationActivity.class);
-        i.putExtra("isBody", true);
-        i.putExtra("isHead", true);
-        i.putExtra("head", Constants.pgUnavailableTitle);
-        i.putExtra("body", Constants.getPgUnavailableBody);
-        startActivity(i);
+//        Intent i = new Intent(getActivity(), InformationActivity.class);
+//        i.putExtra("isBody", true);
+//        i.putExtra("isHead", true);
+//        i.putExtra("head", Constants.pgUnavailableTitle);
+//        i.putExtra("body", Constants.getPgUnavailableBody);
+//        startActivity(i);
 
 
-//        String pack = new Gson().toJson(selectedPack);
-//        Intent intent = new Intent(getActivity(), SubscriptionsOptionsActivity.class);
-//        intent.putExtra("pack", pack);
-//        startActivity(intent);
+        String pack = new Gson().toJson(selectedPack);
+        Intent intent = new Intent(getActivity(), SubscriptionsOptionsActivity.class);
+        intent.putExtra("pack", pack);
+        startActivity(intent);
     }
 }

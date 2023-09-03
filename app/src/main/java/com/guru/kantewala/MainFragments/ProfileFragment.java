@@ -153,6 +153,15 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    private void startRegistrationFlow(){
+        ProfileUtils.saveProfileEditRequired(getActivity(), true);
+        Intent i = new Intent(getActivity(), RegisterActivity.class);
+        i.putExtra("signUpPending", true);
+        i.putExtra("sentFromLogin", true);
+        startActivity(i);
+        getActivity().finish();
+    }
+
     private void updateUI() {
         if (userRP.getName() != null && !userRP.getName().isEmpty()){
             binding.nameTxt.setText(userRP.getName());
