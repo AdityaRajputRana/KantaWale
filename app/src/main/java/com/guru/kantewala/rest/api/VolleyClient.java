@@ -11,7 +11,7 @@ public class VolleyClient {
     public static String BASE_URL = "https://weighmall.com/kantewale/api/v1/";
 
     public static String getBaseUrl() {
-        if (true)
+        if (false)
             return testURL;
         return BASE_URL;
     }

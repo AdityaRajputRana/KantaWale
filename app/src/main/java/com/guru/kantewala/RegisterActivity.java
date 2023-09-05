@@ -309,12 +309,14 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
     }
 
     private void startMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
         if (mode == Mode.EDIT){
             Toast.makeText(this, "Saved changes!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Account created!", Toast.LENGTH_SHORT).show();
+            intent = new Intent(this, EditCompanyActivity.class);
+            intent.putExtra("sentFromRegistrationFlowFlag", true);
         }
-        Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
@@ -550,6 +552,7 @@ public class RegisterActivity extends AppCompatActivity implements PhoneAuthHelp
     }
 
     private void userDetailsAlreadyExistFlow(UserRP userRP) {
+        mode = Mode.EDIT;
         DialogLoadingBinding mBinding = DialogLoadingBinding.inflate(getLayoutInflater());
         mBinding.progressBar.setVisibility(View.GONE);
         mBinding.titleTxt.setText("Business Details Found");

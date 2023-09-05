@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.google.android.material.chip.Chip;
 import com.guru.kantewala.Adapters.CompanyImagesRVAdapter;
@@ -142,6 +144,11 @@ public class EditCompanyActivity extends AppCompatActivity {
     }
 
     private void setListeners() {
+        binding.skipBtn.setOnClickListener(view->{
+            startActivity(new Intent(this, MainActivity.class));
+            Toast.makeText(this, "Welcome to "+getString(R.string.app_name), Toast.LENGTH_SHORT).show();
+            this.finish();
+        });
         binding.continueBtn.setOnClickListener(view->{
             if (areCompanyDetailsValid()){
                 saveCompanyDetails();
@@ -344,8 +351,13 @@ public class EditCompanyActivity extends AppCompatActivity {
                 showSuccess(response.getMessage(), new RegisterActivity.OnDismissListener() {
                     @Override
                     public void onCancel() {
-                        loadUI();
-                        fetchData();
+                        if (getIntent().getBooleanExtra("sentFromRegistrationFlowFlag", false)){
+                            startActivity(new Intent(EditCompanyActivity.this, MainActivity.class));
+                            EditCompanyActivity.this.finish();
+                        } else {
+                            loadUI();
+                            fetchData();
+                        }
                     }
                 });
             }
@@ -358,6 +370,9 @@ public class EditCompanyActivity extends AppCompatActivity {
     }
 
     private void loadUI() {
+        if (getIntent().getBooleanExtra("sentFromRegistrationFlowFlag", false)){
+            binding.skipBtn.setVisibility(View.VISIBLE);
+        }
         binding.companyDetailsLayout.setVisibility(View.GONE);
         binding.companyImageLayout.setVisibility(View.GONE);
         binding.progressBar.setVisibility(View.VISIBLE);
